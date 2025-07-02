@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01. BOX</title>
+</head>
+<style>
+
+.container1 {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center; /*주축*/ 
+    align-content: center;   /*교차축 (컨텐드 덩어리로 움직임)*/
+    align-items: center;  /* 아이템 개별 위치 조절*/
+    /* justify-items: end; */
+    gap:10px;
+    height: 300px;
+    border: 2px solid black;
+}
+
+.box {
+    width:60px;
+    height:60px;
+    background-color: rgb(26, 214, 126);
+    border:2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box2 {
+    width:30px;
+    height:60px;
+    background-color: rgb(26, 214, 126);
+    border:2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box4 {
+    width:60px;
+    height:30px;
+    background-color: rgb(26, 214, 126);
+    border:2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+</style>
+<body>
+    
+<div class="container1">
+    <div class="box">1</div>
+    <div class="box2">2</div>
+    <div class="box">3</div>
+    <div class="box4">4</div>
+    <div class="box">5</div>
+    <div class="box">6</div>
+</div>
+
+</body>
+</html>

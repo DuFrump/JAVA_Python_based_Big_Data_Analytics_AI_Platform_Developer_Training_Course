@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08. selector</title>
+</head>
+
+<style>
+    /* p {
+        background-color: aquamarine;
+    } */
+
+    .class01 {
+        background-color: chartreuse;
+    }
+
+    #id01 {
+        background-color: chocolate;
+    }
+
+    /* div p {
+        background-color: blueviolet;
+    }
+
+    div > p {
+        background-color: brown;
+    } */
+
+     h1 + p {
+        background-color: firebrick;
+     }
+
+     h2 ~ p {
+        background-color: thistle;
+     }
+
+     a:hover {
+        color: aqua;
+     }
+
+     a:active {
+        color: blueviolet;
+     }
+</style>
+
+<body>
+    <p>태그 선택자</p>
+    <p class="class01">클래스 선택자</p>
+    <p id="id01">아이디 선택자</p>
+
+    <div>
+        <h1>제목</h1>
+        <p>첫 번째</p>
+        <section>
+            <p>두 번째</p>
+        </section>
+    </div>
+
+    <div>
+        <h2>제목</h2>
+        <p>첫 번째 이웃</p>
+        <p>두 번째 이웃</p>
+    </div>
+
+    <a href="http://www.naver.com">네이버</a>
+</body>
+
+</html>

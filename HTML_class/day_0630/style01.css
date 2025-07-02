@@ -1,0 +1,156 @@
+body {
+    padding: 20px;
+}
+
+header {
+    background-color: bisque;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header a {
+    text-decoration: none;
+    color: gray;
+    
+}
+
+header img {
+    size-adjust: 20%;
+    position: absolute;
+    left: 50px;
+    width: 15vw;
+    max-width: 150px;
+}
+
+nav {
+    display: flex;
+    gap:50px;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    color:rgb(74, 74, 94);
+    font-size:40px;
+}
+
+.banner-section {
+    margin-top: 30px;
+    /* border: 10px solid blue; */
+    /* padding: 30px 10px 30px 10px; */
+    padding: 30px;
+    margin-bottom: 10px;
+}
+
+.banner {
+    width: 100%;
+    /* border: 5px dotted red; */
+}
+
+.goods {
+    display:flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.goods-box {
+    width: 350px;
+    /* height: 450px; */
+    box-shadow: 0px 0px 7px black;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(to bottom, white, beige 65%);
+    /* border: 3px solid black; */
+}
+
+.goods-box img {
+    display: block;
+    margin: auto;
+    width: 100%
+}
+
+.goods-box img:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+.middle {
+    display: flex;
+    padding: 0 30px 0 30px;
+}
+
+aside {
+    width: 300px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    /* border: 5px solid blue; */
+}
+
+aside p {
+    /* background-color: brown; */
+    font-weight: bold;
+    text-align: center;
+}
+
+.border_blue {
+    border: 5px solid blue;
+}
+
+.practice {
+    font-size: 30px;
+    background-color: antiquewhite;
+}
+
+.div_flex {
+    display: flex;
+}
+
+.div_block img {
+    display: block;
+}
+
+.goods_box_button_group {
+    display: flex;
+    gap: 20px;
+    margin-top: 60px;
+    margin-left: 12px;
+}
+
+.goods_box_button {
+    width: 150px;
+    height: 40px;
+    font-size: 17px;
+    font-weight: bold;
+    border: 0.5px solid black;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px black;
+    cursor: pointer;
+}
+
+.goods_box_button:hover {
+    background-color: gray;
+}
+
+footer {
+    display: flex;
+    gap: 300px;
+    background-color: gray;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    margin-top: 15px;
+    padding: 50px;
+    color: white;
+}
+
+footer a:link {
+    color: white;
+}
+
+footer a:visited {
+    color: yellow;
+}

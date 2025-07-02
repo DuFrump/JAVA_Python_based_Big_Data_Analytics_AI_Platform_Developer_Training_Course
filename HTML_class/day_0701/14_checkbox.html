@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14. Check Box</title>
+</head>
+
+<body>
+    <input type="checkbox" id="agree"> 약관 동의
+    <button onclick="checkAgree()">다음</button>
+
+    <script>
+        function checkAgree() {
+            const checked = document.getElementById("agree").checked;
+
+            if (!checked) {
+                alert("약관에 동의해주세요.")
+            } else {
+                alert("다음으로 넘어갑니다.")
+            }
+        }
+    </script>
+</body>
+
+</html>

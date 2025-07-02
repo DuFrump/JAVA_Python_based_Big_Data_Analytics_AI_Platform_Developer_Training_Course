@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>18. 마지막 예제</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      line-height: 1.5;
+      background-color: #f9f9f9;
+    }
+
+    header h1 {
+      text-align: center;
+      border: 2px solid #333;
+      padding: 1rem;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 800px;
+      background-color: #fff;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    #main01, #main02, #main03 {
+      flex: 1 1 45%;
+      min-width: 300px;
+      max-width: 600px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px auto;
+      border: solid;
+    }
+
+    iframe {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      border: none;
+    }
+
+    figcaption {
+      font-size: 12px;
+      color: #555;
+      margin-top: 5px;
+    }
+
+    hr {
+      margin: 20px 0;
+      border: none;
+      border-top: 1px solid #ddd;
+    }
+
+    h1, h2, h3 {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>오늘의 뉴스</h1>
+  </header>
+
+  <main>
+    <div id="main01">
+      <h2>🤦‍♂️ 제주도 학생과 교사의 야차룰</h2>
+      <hr>
+      <img src="/HTML_class/images/제주_초딩_교사_야차.png" alt="야차룰">
+      <hr>
+      <p><b style="font-size: large;">“야차룰 계약서를 쓰고 싸우자”</b><br><br>
+
+        &nbsp;&nbsp;&nbsp; 최근 도내 중학교 교사가 학생 가족의 민원에 시달려 스스로 목숨을 끊은 데 이어서 또 다시 사건 
+        사고가 발생하고 있습니다. <br><br>
+
+        오늘(25일) 경찰청에 따르면 도내 한 특성화고를 다니던 학생이 지난달
+        27일 오전 학교 징계로 사회봉사를 가던 중 인솔 교사를 주먹으로 폭행, 퇴학 처분 후 검찰에 송치되었습니다. <br><br>
+
+        어제(24일)는 도내 한 초등학교에서 교사가 학생들에게 부적절한 언행을 한 사건도 알려졌습니다. 
+        제주도교육청에 따르면 교사가 학생들을 불러내 <q>야차룰 계약서를 쓰고 싸우자, 힘들면 칼로 나를 찔러도 된다</q>
+        라는 말을 한 것으로 알려졌습니다. 학교 측은 교사를 병가, 연가 및 학교장 경고 처분 했고 학생들에게는 심리 치료를 
+        지원 중입니다. 제주시교육지원청은 사안 접수 이후 학교를 직접 방문해 현장 조사를 벌였으며, 현재 상황을 지속적으로 
+        모니터링하고 있는 것으로 알려졌습니다.</p>
+
+        <hr>
+
+        <label>기사 만족도 : <input type="range" name="satisfy"></label><br><br> <button type="submit">제출</button>
+
+    </div>
+
+    <div id="main02">
+      <h3>👱‍♂️👨‍💼 동영상 삽입</h3>
+      <figure>
+        <iframe src="https://www.youtube.com/embed/O0WT0zhDHvU?si=ioEVLIKLUceUzSin" title="YouTube video player" allowfullscreen></iframe>
+        <figcaption>"야차룰"이란 무엇인가?</figcaption>
+      </figure>
+      <hr>
+    </div>
+
+    <div id="main03">
+        <h3>👍위 기사가 흥미로웠다면?</h3>
+        <form>
+            <fieldset>
+                <legend>회원 가입</legend>
+                
+                <label>이름 : <input type="text"></label><br>
+                <label>나이 : <input type="number" min="0" max="120"></label><br>
+                <label>이메일 : <input type="email"></label><br><br>
+                <label>아이디 : <input type="text"></label><br>
+                <label>비밀번호 : <input type="password"></label><br><br>
+
+                <button type="reset">리셋</button>
+                <button type="submit">제출</button>
+            </fieldset>
+        </form>
+    </div>
+  </main>
+</body>
+</html>

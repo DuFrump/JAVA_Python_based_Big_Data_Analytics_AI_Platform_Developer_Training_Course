@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>디스플레이와 위치 속성 예제</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px;
+    }
+
+    h2 {
+      margin-top: 50px;
+    }
+
+    /* 공통 박스 스타일 */
+    .demo-box {
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #888;
+      background-color: #f0f8ff;
+      width: 200px;
+    }
+
+    /* display 예시 */
+    .block {
+      display: block;
+    }
+
+    .inline {
+      display: inline;
+      background-color: #ffd54f;
+      width: auto; /* 무시됨 */
+    }
+
+    .inline-block {
+      display: inline-block;
+      background-color: #a5d6a7;
+    }
+
+    .none {
+      display: none;
+    }
+
+    /* position 예시 */
+    .static {
+      position: static;
+    }
+
+    .relative {
+      position: relative;
+      top: 10px;
+      left: 20px;
+      background-color: #b3e5fc;
+    }
+
+    .absolute-wrapper {
+      position: relative;
+      border: 1px dashed gray;
+      height: 150px;
+    }
+
+    .absolute {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #ef9a9a;
+    }
+
+    .fixed {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #ce93d8;
+      z-index: 10;
+    }
+
+    /* z-index 예시 */
+    .z-container {
+      position: relative;
+      height: 120px;
+    }
+
+    .z-box1 {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(255, 87, 34, 0.7);
+      width: 120px;
+      height: 100px;
+      z-index: 1;
+    }
+
+    .z-box2 {
+      position: absolute;
+      top: 30px;
+      left: 50px;
+      background-color: rgba(33, 150, 243, 0.7);
+      width: 120px;
+      height: 100px;
+      z-index: 2;
+    }
+
+    /* visibility 예시 */
+    .visible-box {
+      background-color: #81d4fa;
+    }
+
+    .hidden-box {
+      background-color: #ffccbc;
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📐 display / position / z-index / visibility 예제</h1>
+
+  <h2>1. display</h2>
+  <div class="demo-box block">display: block (한 줄 차지)</div>
+  <span class="demo-box inline">display: inline (가로만)</span>
+  <span class="demo-box inline-block">display: inline-block (inline + 크기 조절)</span>
+  <div class="demo-box none">display: none (보이지 않음)</div>
+
+  <h2>2. position</h2>
+  <div class="demo-box static">position: static (기본값)</div>
+  <div class="demo-box relative">position: relative (자기 위치 기준 이동)</div>
+
+  <div class="absolute-wrapper">
+    <div class="demo-box absolute">position: absolute (부모 기준)</div>
+  </div>
+
+  <div class="demo-box fixed">position: fixed (스크롤해도 고정)</div>
+
+  <h2>3. z-index</h2>
+  <div class="z-container">
+    <div class="z-box1">z-index: 1</div>
+    <div class="z-box2">z-index: 2 (위에 올라감)</div>
+  </div>
+
+  <h2>4. visibility</h2>
+  <div class="demo-box visible-box">visibility: visible (기본값)</div>
+  <div class="demo-box hidden-box">visibility: hidden (공간 차지하지만 안 보임)</div>
+
+</body>
+</html>

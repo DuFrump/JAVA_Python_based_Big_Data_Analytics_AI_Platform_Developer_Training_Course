@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>!!전자기기 구매!!</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        /* 헤더 */
+        .head_main {
+            height: 200px;
+            background-color: cornflowerblue;
+            padding: 5px;
+            margin-bottom: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #header_logo img {
+            width: 200px;
+            position: absolute;
+        }
+
+        #header_info {
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: 5px;
+        }
+
+        #header_nav {
+            display: flex;
+            gap: 70px;
+        }
+
+        #header_nav a {
+            text-decoration: none;
+            font-size: 0.6em;
+            letter-spacing: 5px;
+            color: black;
+            font-weight: normal;
+        }
+
+        #header_nav a:hover {
+            font-size: 70%;
+            color: lightgray;
+        }
+
+        #header_nav a:active {
+            color: white;
+        }
+
+        #header_banner {
+            width: 98vw;
+            height: auto;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            justify-items: center;
+        }
+
+        #header_banner img {
+            width: 99vw;
+            height: auto;
+            max-height: 350px;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            justify-items: center;
+        }
+
+        /* 바디 */
+        main {
+            display: flex;
+
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            justify-items: center;
+        }
+
+        .items {
+            margin-right: 10px;
+            width: 85vw;
+            margin-right: 10px;
+            
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+
+            align-items: center;
+            justify-items: center;
+        }
+
+        .item_box {
+            border: 1px solid rgb(17, 178, 231);
+            border-radius: 4px;
+            width: 20vw;
+
+            justify-items: center;
+
+            box-shadow: 3px 2px 2px lightblue;
+        }
+
+        .item_box strong {
+            color: red;
+        }
+
+        .item_box:hover {
+            cursor: pointer;
+            transform: translateY(-5px);
+        }
+
+        .btn_group {
+            display: flex;
+            gap: 20px;
+
+            margin-bottom: 20px;
+        }
+
+        .item_box_button {
+            border: 1px solid lightgray;
+            width: 8vw;
+            height: 4vh;
+            border-radius: 7px;
+
+            background: linear-gradient(white, lightblue)
+        }
+
+        .item_box_button:hover {
+            background: lightblue;
+            
+            cursor: pointer;
+        }
+
+        .item_box_button:active {
+            background: darkblue;
+            color: white;
+
+            cursor: pointer;
+        }
+
+        .item_box img {
+            width: 18vw;
+            height: 200px;
+            object-fit: contain;
+
+            display:flex;
+        }
+
+        aside img {
+            height: 100vh;
+            width: auto;
+        }
+
+        /* 푸터 */
+        footer {
+            margin-top: 20px;
+            display: flex;
+            gap: 10vw;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 100;
+            line-height: 2.5;            
+            color: white;
+
+            background-color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <section id="header_total">
+            <div id="header_logo">
+                <a href="/0702_quiz/quiz.html"><img src="/0702_quiz/imgs/logo_img.png" alt="로고_이미지"></a>
+            </div>
+            
+            <section class="head_main">
+                <div id="header_info">
+                    <h1>전자기기 구매 사이트</h1>
+
+                    <nav id="header_nav">
+                        <a href="#laptop">노트북</a>
+                        <a href="#smartphone">스마트폰</a>
+                        <a href="#tablet">태블릿</a>
+                    </nav>
+                </div>
+            </section>
+        </section>
+
+        <section id="header_banner">
+            <img src="/0702_quiz/imgs/head_banner.jpg" alt="전자제품_세일_베너">
+        </section>
+    </header>
+
+    <main>
+        <section class="items">
+            <div class="item_box" id="laptop">
+                <img src="/0702_quiz/imgs/Laptop-PNG-Free-Download.png" alt="노트북_사진">
+                <h3>LaptopOO</h3>
+                <p>₩000,000 >> <strong>₩000,000</strong></p><br>
+                <p>설명란</p><br>
+                <div class="btn_group">
+                    <button class="item_box_button">구매하기</button>
+                    <button class="item_box_button">장바구니</button>
+                </div>
+            </div>
+
+            <div class="item_box" id="laptop">
+                <img src="/0702_quiz/imgs/Laptop-PNG-Free-Download.png" alt="노트북_사진">
+                <h3>LaptopOO</h3>
+                <p>₩000,000 >> <strong>₩000,000</strong></p><br>
+                <p>설명란</p><br>
+                <div class="btn_group">
+                    <button class="item_box_button">구매하기</button>
+                    <button class="item_box_button">장바구니</button>
+                </div>
+            </div>
+
+            <div class="item_box" id="laptop">
+                <img src="/0702_quiz/imgs/Laptop-PNG-Free-Download.png" alt="노트북_사진">
+                <h3>LaptopOO</h3>
+                <p>₩000,000 >> <strong>₩000,000</strong></p><br>
+                <p>설명란</p><br>
+                <div class="btn_group">
+                    <button class="item_box_button">구매하기</button>
+                    <button class="item_box_button">장바구니</button>
+                </div>
+            </div>
+
+            <div class="item_box" id="laptop">
+                <img src="/0702_quiz/imgs/Laptop-PNG-Free-Download.png" alt="노트북_사진">
+                <h3>LaptopOO</h3>
+                <p>₩000,000 >> <strong>₩000,000</strong></p><br>
+                <p>설명란</p><br>
+                <div class="btn_group">
+                    <button class="item_box_button">구매하기</button>
+                    <button class="item_box_button">장바구니</button>
+                </div>
+            </div>
+
+            <div class="item_box" id="smartphone">
+                <img src="/0702_quiz/imgs/smtp.png" alt="스마트폰_사진">
+                <h3>SmartphoneOO</h3>
+                <p>₩000,000 >> <strong>₩000,000</strong></p><br>
+                <p>설명란</p><br>
+                <div class="btn_group">
+                    <button class="item_box_button">구매하기</button>
+                    <button class="item_box_button">장바구니</button>
+                </div>
+            </div>
+
+            <div class="item_box" id="smartphone">
+                <img src="/0702_quiz/imgs/smtp.png" alt="스마트폰_사진">
+                <h3>SmartphoneOO</h3>
+                <p>₩000,000 >> <strong>₩000,000</strong></p><br>
+                <p>설명란</p><br>
+                <div class="btn_group">
+                    <button class="item_box_button">구매하기</button>
+                    <button class="item_box_button">장바구니</button>
+                </div>
+            </div>
+
+            <div class="item_box" id="tablet">
+                <img src="/0702_quiz/imgs/tab.png" alt="태블릿_사진">
+                <h3>TabletOO</h3>
+                <p>₩000,000 >> <strong>₩000,000</strong></p><br>
+                <p>설명란</p><br>
+                <div class="btn_group">
+                    <button class="item_box_button">구매하기</button>
+                    <button class="item_box_button">장바구니</button>
+                </div>
+            </div>
+            
+            <div class="item_box" id="tablet">
+                <img src="/0702_quiz/imgs/tab.png" alt="태블릿_사진">
+                <h3>TabletOO</h3>
+                <p>₩000,000 >> <strong>₩000,000</strong></p><br>
+                <p>설명란</p><br>
+                <div class="btn_group">
+                    <button class="item_box_button">구매하기</button>
+                    <button class="item_box_button">장바구니</button>
+                </div>
+            </div>
+        </section>
+
+        <aside class="ad">
+            <img src="/0702_quiz/imgs/aside_adv.png" alt="어사이드_광고">
+        </aside>
+    </main>
+
+    <footer>
+        <ul>
+            <li>이용 약관</li>
+            <li>개인정보 처리방침</li>
+            <li>사업자 정보 확인</li>
+        </ul>
+
+        <ul>
+            <li>자주 묻는 질문</li>
+            <li>공지사항 링크</li>
+            <li>사이트맵</li>
+        </ul>
+
+        <ul>
+            <li>대표 : 아무개</li>
+            <li>주소 : OO구 OO로 OOO</li>
+            <li>tel : 000-000-0000 <br> &copy; 2025 Your Company Name. All rights reserved.</li>
+        </ul>
+    </footer>
+</body>
+
+</html>

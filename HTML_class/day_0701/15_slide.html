@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15. slide</title>
+</head>
+
+<body>
+    <h2>이미지 슬라이드</h2>
+    <img src="/HTML_class/images/img1.png" alt="풍선1" width="500px" id="img_frame">
+    
+    <script>
+        const imgs = ["/HTML_class/images/img1.png", "/HTML_class/images/img2.png", "/HTML_class/images/img3.png"];
+        let index = 0;
+
+        setInterval(() => {
+            index = (index + 1) % imgs.length;
+
+            document.getElementById("img_frame").src = imgs[index];
+        }, 4000);
+    </script>
+</body>
+
+</html>

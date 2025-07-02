@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16. select box</title>
+</head>
+
+<body>
+    <label> 배경색 선택:
+        <select onchange="changeBG(this.value)">
+            <option value="">--선택--</option>
+            <option value="lightblue">하늘색</option>
+            <option value="lightgreen">연두색</option>
+            <option value="lightpink">핑크색</option>
+        </select>
+    </label>
+
+    <script>
+        function changeBG(color) {
+            document.body.style.backgroundColor = color;
+        }
+    </script>
+</body>
+
+</html>

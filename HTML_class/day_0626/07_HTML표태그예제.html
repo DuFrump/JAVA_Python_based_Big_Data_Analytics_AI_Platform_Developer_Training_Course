@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        caption {
+            font-weight: bold ;
+            font-size: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td, th {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+    <title>07. 표테그 예제</title>
+</head>
+
+<body>
+    <header>
+        <h2>학생 성적표</h2>
+    </header>
+
+    <main>
+        <table>
+            <caption>2025학년도 1학기 중간고사 성적표</caption>
+
+            <tr>
+                <th rowspan="2">이름</th>
+                <th colspan="3">과목별 점수</th>
+            </tr>
+            <tr>
+                <th>국어</th>
+                <th>수학</th>
+                <th>영어</th>
+            </tr>
+            <tr>
+                <th>홍길동</th>
+                <td>90</td>
+                <td>95</td>
+                <td>85</td>
+            </tr>
+            <tr>
+                <th>김영희</th>
+                <td>88</td>
+                <td>92</td>
+                <td>81</td>
+            </tr>
+            <tr>
+                <th>이철수</th>
+                <td>76</td>
+                <td rowspan="2", colspan="2">찢겨진 부분</td>
+            </tr>
+            <tr>
+                <th>평균</th>
+                <td>84.7</td>
+            </tr>
+        </table>
+    </main>
+</body>
+
+</html>

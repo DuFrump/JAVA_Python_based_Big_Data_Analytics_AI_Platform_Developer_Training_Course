@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17. 폼 관련 03</title>
+</head>
+
+<body>
+    <form>
+        <fieldset>
+            <legend> 기타 정보 입력 3</legend>
+
+            <!---- 드롭다운 ---->
+            <label> 국가 선택 : 
+                <select name="" id="">
+                    <optgroup label="asia">
+                        <option value="kr">대한민국</option>
+                        <option value="jp">일본</option>
+                        <option value="cn">중국</option>
+                    </optgroup>
+
+                    <optgroup label="europe">
+                        <option value="esp">스페인</option>
+                        <option value="eng">영국</option>
+                        <option value="ger">독일</option>
+                    </optgroup>
+                </select>
+            </label>
+
+            <!-- 자동완성 -->
+            <br><br>
+            <label> 좋아하는 과일:
+                <input list="fruits" name="fruit">
+
+                <datalist id="fruits">
+                    <option value="apple">
+                    <option value="banana">
+                    <option value="cherry">
+                    <option value="melon">
+                </datalist>
+            </label><br><br>
+
+            <!----여러줄 텍스트---->
+            <label> 자기 소개 : <br>
+                <textarea name="self_intro" rows="4" cols="40"></textarea>
+            </label><br><br>
+
+            <!---버튼--->
+            <button type="submit" onclick="alert('제출이 완료 되었습니다.')">제출</button>
+            <button type="reset" onclick="alert('리셋이 완료 되었습니다.')">리셋</button>
+            <button onclick="alert('누르지 말라고 했지?')">누르지 마시오!</button>
+        </fieldset>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01. Event Handling</title>
+</head>
+
+<body>
+    <!-- JS 두 개만 -->
+     <!-- addEventListener -->
+
+     <div id="container">
+        <h1>할 일</h1>
+        <input type="text" id="text">
+        <button id="add">Add</button>
+        <button id="clear">Clear</button>
+     </div>
+
+     <script>
+        const container = document.getElementById('container');
+        const text = document.getElementById('text');
+
+        const addButton = document.getElementById('add');
+        const clearButton = document.getElementById('clear');
+
+        addButton.addEventListener('click', function() {
+            const pTag = document.createElement('p');
+
+            pTag.textContent = text.value;
+
+            container.appendChild(pTag);
+        });
+
+        clearButton.addEventListener('click', function() {
+            const pTags = document.querySelectorAll('div p')
+
+            for (i = 0; i < pTags.length; i++) {
+                pTags[i].remove();
+            }
+        })
+     </script>
+</body>
+
+</html>

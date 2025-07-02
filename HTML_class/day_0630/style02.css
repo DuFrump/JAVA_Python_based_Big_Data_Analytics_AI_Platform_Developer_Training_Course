@@ -1,0 +1,162 @@
+/* 베이스 */
+
+a:link {
+    color:black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    color: rgba(148, 0, 0, 0.692);;
+}
+
+a:active {
+    color:rgba(104, 1, 1, 0.705);
+    text-decoration: none;
+}
+
+a:visited {
+    color: yellow;
+    text-decoration: none;
+}
+
+button {
+    width: 100px;
+    height: 45px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+button:hover {
+    background-color: rgba(148, 0, 0, 0.692);
+    cursor: pointer;
+}
+
+button:active {
+    background-color: rgba(104, 1, 1, 0.705);
+}
+
+
+/* 헤더 배너 */
+
+header {
+    margin: 30px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+header h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 35px;
+}
+
+#logo {
+    width: 50px;
+    height: auto;
+}
+
+header a {
+    border: 20px;
+    margin: 7vmax;
+    font-size: 17px;
+}
+
+
+/* 메인 베너 */
+
+.main_page {
+    display: flex;
+    flex-direction: row;
+    margin: 30px;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.main_img_banner_container {
+    margin: 10px;
+    padding: 0px 20px 0px 20px;
+}
+
+.main_img_banner {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    border: 1px solid black;
+    display: block;
+}
+
+.goods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.goods_box {
+    width: 250px;
+    height: auto;
+    box-shadow: 0px 0px 7px black;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.goods_box img {
+    border: 1px solid black;
+    display: block;
+    margin: auto;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.goods_box h3 {
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.goods_box p {
+    font-weight: 100;
+    font-size: 15px;
+}
+
+.price {
+    text-align: right;
+}
+
+
+/* 광고 베너 */
+
+aside {
+    width: 300px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+aside img {
+    width: 150%;
+    height: auto;
+    position: sticky;
+}
+
+
+/* 풋터 */
+
+footer {
+    display: flex;
+    gap: 30px;
+    background-color: lightgray;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    margin-top: 15px;
+    padding: 50px;
+    color: black;
+    font-size: 13px;
+}

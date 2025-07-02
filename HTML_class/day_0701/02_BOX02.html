@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02. BOX</title>
+</head>
+<style>
+    .container {
+        margin-top: 100px;
+        margin-left: 20px;
+        width:400px;
+        height: 30px;
+        display:flex;
+        border: 5px dotted blue;
+    }
+
+    .box1 {
+        flex: 1 1 30%;
+        background-color: rgb(197, 197, 252);
+        border:1px solid black;
+        text-align: center;
+    }
+
+    .box2 {
+        flex: 1 2 30%;
+        background-color: rgb(252, 164, 164);
+        border:1px solid black;
+        text-align: center;
+    }
+
+    .box3 {
+        flex: 2 1 40%;
+        background-color: rgb(85, 143, 250);
+        border:1px solid black;
+        text-align: center;
+    }
+</style>
+
+
+<body>
+    <!-- 박스 두개 만들어주세요
+     컨테이너 너비 600px , 플렉스
+     박스크기 임시로 하시고
+     박스 색깔이랑 보더 주세요 -->
+
+    <div class="container">
+        <div class="box1">box1</div>
+        <div class="box2">box2</div>
+        <div class="box3">box3</div>
+    </div>
+
+</body>
+</html>

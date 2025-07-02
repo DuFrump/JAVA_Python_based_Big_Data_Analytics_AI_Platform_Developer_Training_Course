@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11. JS</title>
+</head>
+
+<body>
+    <h2 id="question">식사는 맛있게 하셨나요?</h2>
+    <button onclick="func01()">넵, 맛있게 먹었습니다.</button>    
+    <button onclick="func02()">굶었습니다ㅠㅠ.</button>    
+    <button onclick="func03()">먹었는데 체한거 같습니다..</button>    
+    <button onclick="func04()">덕분에...</button>    
+
+    <script>
+        function func01() {
+            document.getElementById("question").innerHTML = "맛있게 먹었다니 다행입니다.";
+        }
+
+        function func02() {
+            document.getElementById("question").innerHTML = "<i>식사를 하시지 않으셨군요.. 배고프시겠네요.</i>";
+        }
+
+        function func03() {
+            document.getElementById("question").innerText = "<i>오우.. 약이라도 가져다드릴까요?</i>";
+        }
+
+        // display: none; 까지 다 표시가 된다.
+        function func04() {
+            document.getElementById("question").textContent = "아, 그러시군요. 맛있게 드셨다니 좋네요.";
+        }
+    </script>
+</body>
+
+</html>

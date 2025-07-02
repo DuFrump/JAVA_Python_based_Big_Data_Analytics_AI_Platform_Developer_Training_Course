@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16. 폼 관련 02</title>
+</head>
+
+<body>
+    <h1>폼 관련 02</h1>
+
+    <form>
+        <img src="/HTML_class/images/linda_gif.gif" alt="움짤">
+
+        <fieldset>
+            <legend>기타 정보 입력</legend>
+
+            <label>검색 : <input type="search" name="search"></label><br><br>
+
+            <label>만족도 : <input type="range" name="satisfy"></label><br><br>
+
+            <label>좋아하는 색 : <input type="color" name="fav_color"></label><br><br>
+
+            <p>정보 제공 동의</p>
+            <label><input type="checkbox" name="agreement" required> 동의 </label>
+
+            <p>채널이 맘에 들었습니까?</p>
+            <label><input type="checkbox" name="subscribe"> 구독 </label>
+            <label><input type="checkbox" name="like"> 좋아요 </label>
+            <label><input type="checkbox" name="comment"> 댓글 </label>
+            <label><input type="checkbox" name="alert"> 알림설정 </label>
+
+            <p>성별</p>
+            <label><input type="radio" name="gender" value="male">남성</label>
+            <label><input type="radio" name="gender" value="female">여성</label><br><br>
+
+            <label>날짜 + 시간 (local) <input type="datetime-local" name="dttlocal"><label><br><br>
+            <label>날짜 : <input type="date" name="dt"></label><br><br>
+            <label>월 : <input type="month" name="month"></label><br><br>
+            <label>주:  <input type="week" name="week"></label><br><br>
+            <label>시간 : <input type="time" name="time"></label><br><br>
+
+            <label>파일 업로드 : <input type="file" name="upload"></label><br><br><br><br>
+
+            <button type="submit">제출</button>
+            <button type="reset">리셋</button>
+        </fieldset>
+    </form>
+</body>
+
+</html>

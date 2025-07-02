@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09. 박스 그리드 예제</title>
+</head>
+
+<style>
+    /* 예제 1 */
+    * {
+        box-sizing: border-box;
+        margin: 0px;
+        padding: 0px;
+    }
+    
+    .container {
+        width: 500px;
+        height: 500px;
+        background-color: bisque;
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        justify-items: center;
+
+        margin-bottom: 50px;
+    }
+
+    .box {
+        width: 60px;
+        height: 60px;
+        border: 1px solid black;
+    }
+
+    .box02 {
+        width: 50px;
+        height: 60px;
+        border: 1px solid black;
+    }
+
+    .box05 {
+        width: 60px;
+        height: 50px;
+        border: 1px solid black;
+    }   
+
+    .box08 {
+        width: 40px;
+        height: 50px;
+        border: 1px solid black;
+    }
+
+
+    /* 예제 2 */
+    .container02 {
+        height: 35px;
+        width: 600px;
+
+        border: 5px dotted black;
+        display: grid;
+        grid-template-columns: 1.5fr 1.5fr 3fr;
+
+        margin-bottom: 50px;
+    }
+
+    .boxxy {
+        border: 1px solid black;
+        text-align: center;
+    }
+
+
+    /* 예제3 */
+    .container03 {
+        height: 500px;
+        width: 500px;
+        margin-bottom: 50px;
+
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+
+        gap: 10px;
+
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        justify-items: center;
+    }
+
+    .boxx {
+        width: 115px;
+        height: 115px;
+        text-align: center;
+        background-color: beige;
+        border: black solid 1px;;
+    }
+
+
+    /* 예제4 */
+    .container04 {
+        display: grid;
+        grid-template-areas: 
+            "header header"
+            "sidebar main"
+            "footer footer"
+        ;
+        grid-template-columns: 1fr 3fr;
+        gap: 10px;
+        padding: 10px;
+        height: 500px;
+        width: 500px;
+    }
+
+    .header {
+        background-color: beige;
+        padding: 20px;
+        grid-area: header;
+    }
+
+    .sidebar {
+        background-color: lightcoral;
+        padding: 20px;
+        grid-area: sidebar;
+    }
+
+    .main {
+        background-color: lightblue;
+        padding: 20px;
+        grid-area: main;
+    }
+
+    .footer {
+        background-color: lightgrey;
+        padding: 20px;
+        grid-area: footer;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="box">1</div>
+        <div class="box02">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+        <div class="box05">5</div>
+        <div class="box">6</div>
+        <div class="box">7</div>
+        <div class="box08">8</div>
+        <div class="box">9</div>
+    </div>
+
+    <div class="container02">
+        <div class="boxxy" style="background-color: brown;">box1</div>
+        <div class="boxxy" style="background-color: blue;">box2</div>
+        <div class="boxxy"style="background-color: yellow">box3</div>
+    </div>
+
+    <div class="container03">
+        <div class="boxx">1</div>
+        <div class="boxx">2</div>
+        <div class="boxx">3</div>
+        <div class="boxx">4</div>
+        <div class="boxx">5</div>
+        <div class="boxx">6</div>
+        <div class="boxx">7</div>
+        <div class="boxx">8</div>
+        <div class="boxx">9</div>
+        <div class="boxx">10</div>
+        <div class="boxx">11</div>
+        <div class="boxx">12</div>
+        <div class="boxx">13</div>
+        <div class="boxx">14</div>
+        <div class="boxx">15</div>
+        <div class="boxx">16</div>
+    </div>
+
+    <div class="conatiner04">
+        <div class="header">헤더</div>
+        <div class="sidebar">사이드바</div>
+        <div class="main">메인 컨텐트 영역</div>
+        <div class="footer">푸터</div>
+    </div>
+</body>
+
+</html>

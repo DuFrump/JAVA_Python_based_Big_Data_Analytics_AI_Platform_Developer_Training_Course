@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13. get HTML</title>
+</head>
+
+
+<body>
+    <h2 id="greeting01">안녕하세요.</h2>
+    <h2 class="greeting02">안녕하세요2.</h2>    
+    <h1>안녕하세요3.</h1>   
+    
+    <script>
+        const sentence1 = document.getElementById('greeting01');
+        const sentence2 = document.getElementsByClassName('greeting02');
+        const sentence3 = document.querySelector('h1');
+
+        sentence1.textContent = "이건 아이디로 불러온"
+        sentence3.textContent = "이건 쿼리셀렉터로 불러온"
+        sentence2[0].textContent = "이건 클래스로 불러온"
+    </script>
+</body>
+
+</html>
