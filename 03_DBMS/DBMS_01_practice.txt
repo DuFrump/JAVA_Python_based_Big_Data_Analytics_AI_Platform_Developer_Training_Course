@@ -1,0 +1,149 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 19
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE day01_practice;
+Database changed
+mysql> SELECT * FROM student_information;
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+| student_id | name   | gender | birth_date | phone         | email              | address        | enrollment_date | status | major  |
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+|     240300 | 김무개 | M      | 2000-05-18 | 010-1135-8789 | kimaf233@gmail.com | 00구 00동 0000 | 2025-03-21      | 재학   | 전기과 |
+|     240301 | 김연아 | F      | 2006-09-27 | 010-6652-7533 | kya7533@naver.com  | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240302 | 이무개 | F      | 2006-11-30 | 010-5646-3257 | dkdk4899@naver.com | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240303 | 양지훈 | M      | 2005-07-18 | 010-6665-0887 | yjh980@gmail.com   | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
+|     240304 | 홍무개 | F      | 2005-08-18 | 010-5565-0187 | ddkd1233@gmail.com | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE student_information ADD COLUMN work VARCHAR(50) AFTER student_id;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM student_information;
++------------+------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+| student_id | work | name   | gender | birth_date | phone         | email              | address        | enrollment_date | status | major  |
++------------+------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+|     240300 | NULL | 김무개 | M      | 2000-05-18 | 010-1135-8789 | kimaf233@gmail.com | 00구 00동 0000 | 2025-03-21      | 재학   | 전기과 |
+|     240301 | NULL | 김연아 | F      | 2006-09-27 | 010-6652-7533 | kya7533@naver.com  | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240302 | NULL | 이무개 | F      | 2006-11-30 | 010-5646-3257 | dkdk4899@naver.com | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240303 | NULL | 양지훈 | M      | 2005-07-18 | 010-6665-0887 | yjh980@gmail.com   | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
+|     240304 | NULL | 홍무개 | F      | 2005-08-18 | 010-5565-0187 | ddkd1233@gmail.com | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
++------------+------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE student_information DROP COLUMN work;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM student_information;
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+| student_id | name   | gender | birth_date | phone         | email              | address        | enrollment_date | status | major  |
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+|     240300 | 김무개 | M      | 2000-05-18 | 010-1135-8789 | kimaf233@gmail.com | 00구 00동 0000 | 2025-03-21      | 재학   | 전기과 |
+|     240301 | 김연아 | F      | 2006-09-27 | 010-6652-7533 | kya7533@naver.com  | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240302 | 이무개 | F      | 2006-11-30 | 010-5646-3257 | dkdk4899@naver.com | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240303 | 양지훈 | M      | 2005-07-18 | 010-6665-0887 | yjh980@gmail.com   | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
+|     240304 | 홍무개 | F      | 2005-08-18 | 010-5565-0187 | ddkd1233@gmail.com | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE status SET '휴학' WHERE name = '홍무개';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''휴학' WHERE name = '홍무개'' at line 1
+mysql> UPDATE student_information SET status = '휴학' WHERE name = '김무개';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM student_information;
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+| student_id | name   | gender | birth_date | phone         | email              | address        | enrollment_date | status | major  |
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+|     240300 | 김무개 | M      | 2000-05-18 | 010-1135-8789 | kimaf233@gmail.com | 00구 00동 0000 | 2025-03-21      | 휴학   | 전기과 |
+|     240301 | 김연아 | F      | 2006-09-27 | 010-6652-7533 | kya7533@naver.com  | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240302 | 이무개 | F      | 2006-11-30 | 010-5646-3257 | dkdk4899@naver.com | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240303 | 양지훈 | M      | 2005-07-18 | 010-6665-0887 | yjh980@gmail.com   | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
+|     240304 | 홍무개 | F      | 2005-08-18 | 010-5565-0187 | ddkd1233@gmail.com | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE student_information SET phone = '010-0000-0000';
+Query OK, 5 rows affected (0.00 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> SELECT * FROM student_information;
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+| student_id | name   | gender | birth_date | phone         | email              | address        | enrollment_date | status | major  |
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+|     240300 | 김무개 | M      | 2000-05-18 | 010-0000-0000 | kimaf233@gmail.com | 00구 00동 0000 | 2025-03-21      | 휴학   | 전기과 |
+|     240301 | 김연아 | F      | 2006-09-27 | 010-0000-0000 | kya7533@naver.com  | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240302 | 이무개 | F      | 2006-11-30 | 010-0000-0000 | dkdk4899@naver.com | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240303 | 양지훈 | M      | 2005-07-18 | 010-0000-0000 | yjh980@gmail.com   | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
+|     240304 | 홍무개 | F      | 2005-08-18 | 010-0000-0000 | ddkd1233@gmail.com | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
++------------+--------+--------+------------+---------------+--------------------+----------------+-----------------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE student_information SET email = 'OOOOOO@gmail.com';
+ERROR 1062 (23000): Duplicate entry 'OOOOOO@gmail.com' for key 'student_information.email'
+mysql> INSERT INTO student_information (name, gender, birth_date, phone, email, address, enrollment_date, status, major) VALUES ('박무개', 'M', 2006-02-22, '010-0000-0000', 'ankdof1597@naver.com', '00구 00동 0000', '2025-03-21', '전기과'), ('박지성', 'M', 2005-03-23, '010-0000-0000', 'bkikdo344@naver.com', '00구 00동 0000', '2025-03-21', '휴학', '컴공과'), ('윤무개', 'M', 2005-12-23, '010-0000-0000', 'gkwjdddk24@naver.com', '00구 00동 0000', '2025-03-21', '재학', '컴공과'), ('윤무개', 'F', 2006-04-12, '010-0000-0000', 'nasoji2255@naver.com', '00구 00동 0000', '2025-03-21', '재학', '컴공과');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO student_information (name, gender, birth_date, phone, email, address, enrollment_date, status, major) VALUES ('박무개', 'M', 2006-02-22, '010-0000-0000', 'ankdof1597@naver.com', '00구 00동 0000', '2025-03-21', '재학', '전기과'), ('박지성', 'M', 2005-03-23, '010-0000-0000', 'bkikdo344@naver.com', '00구 00동 0000', '2025-03-21', '휴학', '컴공과'), ('윤무개', 'M', 2005-12-23, '010-0000-0000', 'gkwjdddk24@naver.com', '00구 00동 0000', '2025-03-21', '재학', '컴공과'), ('윤무개', 'F', 2006-04-12, '010-0000-0000', 'nasoji2255@naver.com', '00구 00동 0000', '2025-03-21', '재학', '컴공과');
+ERROR 1292 (22007): Incorrect date value: '1982' for column 'birth_date' at row 1
+mysql> INSERT INTO student_information (name, gender, birth_date, phone, email, address, enrollment_date, status, major) VALUES ('박무개', 'M', '2006-02-22', '010-0000-0000', 'ankdof1597@naver.com', '00구 00동 0000', '2025-03-21', '재학', '전기과'), ('박지성', 'M', 2005-03-23, '010-0000-0000', 'bkikdo344@naver.com', '00구 00동 0000', '2025-03-21', '휴학', '컴공과'), ('윤무개', 'M', 2005-12-23, '010-0000-0000', 'gkwjdddk24@naver.com', '00구 00 동 0000', '2025-03-21', '재학', '컴공과'), ('윤무개', 'F', 2006-04-12, '010-0000-0000', 'nasoji2255@naver.com', '00구 00동 0000', '2025-03-21', '재학', '컴공과');
+ERROR 1292 (22007): Incorrect date value: '1979' for column 'birth_date' at row 2
+mysql> INSERT INTO student_information (name, gender, birth_date, phone, email, address, enrollment_date, status, major) VALUES ('박무개', 'M', '2006-02-22', '010-0000-0000', 'ankdof1597@naver.com', '00구 00동 0000', '2025-03-21', '재학', '전기과'), ('박지성', 'M', '2005-03-23', '010-0000-0000', 'bkikdo344@naver.com', '00구 00동 0000', '2025-03-21', '휴학', '컴공과'), ('윤무개', 'M', '2005-12-23', '010-0000-0000', 'gkwjdddk24@naver.com', '00구 00동 0000', '2025-03-21', '재학', '컴공과'), ('윤무개', 'F', '2006-04-12', '010-0000-0000', 'nasoji2255@naver.com', '00구 00동 0000', '2025-03-21', '재학', '컴공과');
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM student_information
+    -> ;
++------------+--------+--------+------------+---------------+----------------------+----------------+-----------------+--------+--------+
+| student_id | name   | gender | birth_date | phone         | email                | address        | enrollment_date | status | major  |
++------------+--------+--------+------------+---------------+----------------------+----------------+-----------------+--------+--------+
+|     240300 | 김무개 | M      | 2000-05-18 | 010-0000-0000 | kimaf233@gmail.com   | 00구 00동 0000 | 2025-03-21      | 휴학   | 전기과 |
+|     240301 | 김연아 | F      | 2006-09-27 | 010-0000-0000 | kya7533@naver.com    | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240302 | 이무개 | F      | 2006-11-30 | 010-0000-0000 | dkdk4899@naver.com   | 00구 00동 0000 | 2025-03-21      | 재학   | 기계과 |
+|     240303 | 양지훈 | M      | 2005-07-18 | 010-0000-0000 | yjh980@gmail.com     | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
+|     240304 | 홍무개 | F      | 2005-08-18 | 010-0000-0000 | ddkd1233@gmail.com   | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
+|     240309 | 박무개 | M      | 2006-02-22 | 010-0000-0000 | ankdof1597@naver.com | 00구 00동 0000 | 2025-03-21      | 재학   | 전기과 |
+|     240310 | 박지성 | M      | 2005-03-23 | 010-0000-0000 | bkikdo344@naver.com  | 00구 00동 0000 | 2025-03-21      | 휴학   | 컴공과 |
+|     240311 | 윤무개 | M      | 2005-12-23 | 010-0000-0000 | gkwjdddk24@naver.com | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
+|     240312 | 윤무개 | F      | 2006-04-12 | 010-0000-0000 | nasoji2255@naver.com | 00구 00동 0000 | 2025-03-21      | 재학   | 컴공과 |
++------------+--------+--------+------------+---------------+----------------------+----------------+-----------------+--------+--------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT name FROM student_information WHERE status = '재학';
++--------+
+| name   |
++--------+
+| 김연아 |
+| 이무개 |
+| 양지훈 |
+| 홍무개 |
+| 박무개 |
+| 윤무개 |
+| 윤무개 |
++--------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT name, major, status FROM student_information WHERE major IN ('컴공과', '전기과');
++--------+--------+--------+
+| name   | major  | status |
++--------+--------+--------+
+| 김무개 | 전기과 | 휴학   |
+| 양지훈 | 컴공과 | 재학   |
+| 홍무개 | 컴공과 | 재학   |
+| 박무개 | 전기과 | 재학   |
+| 박지성 | 컴공과 | 휴학   |
+| 윤무개 | 컴공과 | 재학   |
+| 윤무개 | 컴공과 | 재학   |
++--------+--------+--------+
+7 rows in set (0.00 sec)
