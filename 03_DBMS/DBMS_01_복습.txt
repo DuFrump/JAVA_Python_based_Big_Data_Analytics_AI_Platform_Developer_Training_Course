@@ -1,0 +1,538 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 21
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE ITKorea;
+Database changed
+mysql> SELECT * FROM employee;
++----+-----------+------+--------+--------------+--------+--------+
+| id | name      | age  | salary | position     | circle | gender |
++----+-----------+------+--------+--------------+--------+--------+
+|  1 | 홍길동    |   33 |   2800 | 영업사원     | NULL   | NULL   |
+|  2 | 기안84    |   38 |   4000 | 디자이너     | NULL   | NULL   |
+|  3 | 김코딩    |   27 |   2700 | 개발자       | NULL   | NULL   |
+|  4 | 손흥민    |   35 |   4800 | 마케터       | NULL   | NULL   |
+|  5 | 둘리      |   20 |   2500 | 디자이너     | NULL   | NULL   |
+|  6 | 유재석    |   42 |   4700 | 영업사원     | NULL   | NULL   |
++----+-----------+------+--------+--------------+--------+--------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE employee MODIFY COLUMN gender ENUM('M', 'F') NOT NULL;
+ERROR 1138 (22004): Invalid use of NULL value
+mysql> UPDATE employee SET circle = CASE WHEN age <= 30 THEN 'Movie' WHEN age BETWEEN 31 AND 39 THEN 'Hiking' WHEN age >= 40 THEN 'Fishing';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> UPDATE employee SET circle = CASE WHEN age <= 30 THEN 'Movie' WHEN age BETWEEN 31 AND 39 THEN 'Hiking' WHEN age >= 40 THEN 'Fishing' END;
+Query OK, 6 rows affected (0.00 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+-----------+------+--------+--------------+---------+--------+
+| id | name      | age  | salary | position     | circle  | gender |
++----+-----------+------+--------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | 영업사원     | Hiking  | NULL   |
+|  2 | 기안84    |   38 |   4000 | 디자이너     | Hiking  | NULL   |
+|  3 | 김코딩    |   27 |   2700 | 개발자       | Movie   | NULL   |
+|  4 | 손흥민    |   35 |   4800 | 마케터       | Hiking  | NULL   |
+|  5 | 둘리      |   20 |   2500 | 디자이너     | Movie   | NULL   |
+|  6 | 유재석    |   42 |   4700 | 영업사원     | Fishing | NULL   |
++----+-----------+------+--------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET gender = 'M';
+Query OK, 6 rows affected (0.00 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+-----------+------+--------+--------------+---------+--------+
+| id | name      | age  | salary | position     | circle  | gender |
++----+-----------+------+--------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | 개발자       | Movie   | M      |
+|  4 | 손흥민    |   35 |   4800 | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | 디자이너     | Movie   | M      |
+|  6 | 유재석    |   42 |   4700 | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> Hello, World!
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Hello, World!' at line 1
+mysql> HELLO, WORLD!
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'HELLO, WORLD!' at line 1
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| day01_practice     |
+| information_schema |
+| itcompany          |
+| itkorea            |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET gender = 'F' WHERE id = 3, 5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', 5' at line 1
+mysql> UPDATE employee SET gender = 'F' WHERE id = 3, id = 5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', id = 5' at line 1
+mysql> UPDATE employee SET gender = 'F' WHERE id BETWEEN (3, 5);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> UPDATE employee SET gender = 'F' WHERE id BETWEEN 3 AND 5;
+Query OK, 3 rows affected (0.00 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+-----------+------+--------+--------------+---------+--------+
+| id | name      | age  | salary | position     | circle  | gender |
++----+-----------+------+--------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | 마케터       | Hiking  | F      |
+|  5 | 둘리      |   20 |   2500 | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET gender = 'M' WHERE id = 4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+-----------+------+--------+--------------+---------+--------+
+| id | name      | age  | salary | position     | circle  | gender |
++----+-----------+------+--------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET gender = 'F' WHERE id = 1 OR 2;
+Query OK, 4 rows affected (0.00 sec)
+Rows matched: 6  Changed: 4  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+-----------+------+--------+--------------+---------+--------+
+| id | name      | age  | salary | position     | circle  | gender |
++----+-----------+------+--------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | 영업사원     | Hiking  | F      |
+|  2 | 기안84    |   38 |   4000 | 디자이너     | Hiking  | F      |
+|  3 | 김코딩    |   27 |   2700 | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | 마케터       | Hiking  | F      |
+|  5 | 둘리      |   20 |   2500 | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | 영업사원     | Fishing | F      |
++----+-----------+------+--------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET gender = 'M' WHERE id = 1, WHERE id = 2, WHERE id = 4, WHERE id = 6;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', WHERE id = 2, WHERE id = 4, WHERE id = 6' at line 1
+mysql> UPDATE employee SET gender = 'M' WHERE id IN (1, 2, 4, 6);
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+-----------+------+--------+--------------+---------+--------+
+| id | name      | age  | salary | position     | circle  | gender |
++----+-----------+------+--------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET gender = CASE WHEN name IN ('둘리', '김코딩') THEN 'F' ELSE 'M';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> UPDATE employee SET gender = CASE WHEN name IN ('둘리', '김코딩') THEN 'M' ELSE 'F' END;
+Query OK, 6 rows affected (0.00 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+-----------+------+--------+--------------+---------+--------+
+| id | name      | age  | salary | position     | circle  | gender |
++----+-----------+------+--------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | 영업사원     | Hiking  | F      |
+|  2 | 기안84    |   38 |   4000 | 디자이너     | Hiking  | F      |
+|  3 | 김코딩    |   27 |   2700 | 개발자       | Movie   | M      |
+|  4 | 손흥민    |   35 |   4800 | 마케터       | Hiking  | F      |
+|  5 | 둘리      |   20 |   2500 | 디자이너     | Movie   | M      |
+|  6 | 유재석    |   42 |   4700 | 영업사원     | Fishing | F      |
++----+-----------+------+--------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET gender = CASE WHEN name IN ('둘리', '김코딩') THEN 'F' ELSE 'M' END;
+Query OK, 6 rows affected (0.01 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+-----------+------+--------+--------------+---------+--------+
+| id | name      | age  | salary | position     | circle  | gender |
++----+-----------+------+--------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE employee ADD COLUMN grade VARCHAR(50) AFTER salary;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+-----------+------+--------+-------+--------------+---------+--------+
+| id | name      | age  | salary | grade | position     | circle  | gender |
++----+-----------+------+--------+-------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | NULL  | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | NULL  | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | NULL  | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | NULL  | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | NULL  | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | NULL  | 영업사원     | Fishing | M      |
++----+-----------+------+--------+-------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET grade = CASE WHEN salary >= 4000 THEN 'high' WHEN salary BETWEEN 3000 AND 4000 THEN 'middle' WHEN salary < 3000 THEN 'low' END;
+Query OK, 6 rows affected (0.01 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+-----------+------+--------+-------+--------------+---------+--------+
+| id | name      | age  | salary | grade | position     | circle  | gender |
++----+-----------+------+--------+-------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | low   | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | high  | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | low   | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | high  | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | low   | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | high  | 영업사원     | Fishing | M      |
++----+-----------+------+--------+-------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> RENAME TABLE employee TO people;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| day01_practice     |
+| information_schema |
+| itcompany          |
+| itkorea            |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_itkorea |
++-------------------+
+| people            |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM people;
++----+-----------+------+--------+-------+--------------+---------+--------+
+| id | name      | age  | salary | grade | position     | circle  | gender |
++----+-----------+------+--------+-------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | low   | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | high  | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | low   | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | high  | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | low   | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | high  | 영업사원     | Fishing | M      |
++----+-----------+------+--------+-------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE peoeple MODIFY COLUMN grade VARCHAR(100) AFTER salary;
+ERROR 1146 (42S02): Table 'itkorea.peoeple' doesn't exist
+mysql> ALTER TABLE people MODIFY COLUMN grade VARCHAR(100) AFTER salary;
+Query OK, 6 rows affected (0.06 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE people CHANGE COLUMN grade TO aaa;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TO aaa' at line 1
+mysql> ALTER TABLE people CHANGE COLUMN NAME grade TO aaa;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TO aaa' at line 1
+mysql> ALTER TABLE people CHANGE grade TO aaa;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TO aaa' at line 1
+mysql> ALTER TABLE people CHANGE grade salary_range VARCHAR(10);
+Query OK, 6 rows affected (0.04 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM people;
++----+-----------+------+--------+--------------+--------------+---------+--------+
+| id | name      | age  | salary | salary_range | position     | circle  | gender |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | low          | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | high         | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | low          | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | high         | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | low          | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | high         | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM people;
++----+-----------+------+--------+--------------+--------------+---------+--------+
+| id | name      | age  | salary | salary_range | position     | circle  | gender |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | low          | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | high         | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | low          | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | high         | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | low          | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | high         | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> SELECT * FROM people;
++----+-----------+------+--------+--------------+--------------+---------+--------+
+| id | name      | age  | salary | salary_range | position     | circle  | gender |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | low          | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | high         | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | low          | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | high         | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | low          | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | high         | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM people WHERE salary >= 4000 AND gender = 'M';
++----+-----------+------+--------+--------------+--------------+---------+--------+
+| id | name      | age  | salary | salary_range | position     | circle  | gender |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+|  2 | 기안84    |   38 |   4000 | high         | 디자이너     | Hiking  | M      |
+|  4 | 손흥민    |   35 |   4800 | high         | 마케터       | Hiking  | M      |
+|  6 | 유재석    |   42 |   4700 | high         | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT name, salary FROM people WHERE salary >= 4000 AND gender = 'M';
++-----------+--------+
+| name      | salary |
++-----------+--------+
+| 기안84    |   4000 |
+| 손흥민    |   4800 |
+| 유재석    |   4700 |
++-----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT name, salary FROM people WHERE salary >= 4000 AND gender = 'M' ORDER BY DESC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC' at line 1
+mysql> SELECT name, salary FROM people WHERE salary >= 4000 AND gender = 'M' ORDER BY DECS;
+ERROR 1054 (42S22): Unknown column 'DECS' in 'order clause'
+mysql> SELECT name, salary FROM people WHERE salary >= 4000 AND gender = 'M' ORDER BY DESC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC' at line 1
+mysql> SELECT name, salary FROM people WHERE salary >= 4000 AND gender = 'M' ORDER BY salary DESC;
++-----------+--------+
+| name      | salary |
++-----------+--------+
+| 손흥민    |   4800 |
+| 유재석    |   4700 |
+| 기안84    |   4000 |
++-----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT name, age, position FROM people WHERE position BETWEEN '영업사원' AND '마케터';
+Empty set (0.00 sec)
+
+mysql> SELECT name, age, position FROM people WHERE position IN ('영업사원', '마케터');
++-----------+------+--------------+
+| name      | age  | position     |
++-----------+------+--------------+
+| 홍길동    |   33 | 영업사원     |
+| 손흥민    |   35 | 마케터       |
+| 유재석    |   42 | 영업사원     |
++-----------+------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT name, age, position FROM people WHERE position IN ('영업사원', '마케터') ORDER BY age DESC;
++-----------+------+--------------+
+| name      | age  | position     |
++-----------+------+--------------+
+| 유재석    |   42 | 영업사원     |
+| 손흥민    |   35 | 마케터       |
+| 홍길동    |   33 | 영업사원     |
++-----------+------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT name, age, position FROM people WHERE position IN ('영업사원', '마케터') ORDER BY age DESC LIMIT 2;
++-----------+------+--------------+
+| name      | age  | position     |
++-----------+------+--------------+
+| 유재석    |   42 | 영업사원     |
+| 손흥민    |   35 | 마케터       |
++-----------+------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM people WHERE salary >= 3300 AND circle != 'Hiking';
++----+-----------+------+--------+--------------+--------------+---------+--------+
+| id | name      | age  | salary | salary_range | position     | circle  | gender |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+|  6 | 유재석    |   42 |   4700 | high         | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT name, salary FROM people WHERE salary BETWEEN 3000 AND 4000;
++----------+--------+
+| name     | salary |
++----------+--------+
+| 기안84   |   4000 |
++----------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM people WHERE position = '영%';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM people;
++----+-----------+------+--------+--------------+--------------+---------+--------+
+| id | name      | age  | salary | salary_range | position     | circle  | gender |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | low          | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | high         | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | low          | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | high         | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | low          | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | high         | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM people WHERE position = '영%';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM people WHERE position LIKE '영%';
++----+-----------+------+--------+--------------+--------------+---------+--------+
+| id | name      | age  | salary | salary_range | position     | circle  | gender |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | low          | 영업사원     | Hiking  | M      |
+|  6 | 유재석    |   42 |   4700 | high         | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT name, position FROM people WHERE position LIKE '영%';
++-----------+--------------+
+| name      | position     |
++-----------+--------------+
+| 홍길동    | 영업사원     |
+| 유재석    | 영업사원     |
++-----------+--------------+
+2 rows in set (0.00 sec)
+
+mysql>SELECT name, position FROM people WHERE
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SELECT * FROM people;
++----+-----------+------+--------+--------------+--------------+---------+--------+
+| id | name      | age  | salary | salary_range | position     | circle  | gender |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | low          | 영업사원     | Hiking  | M      |
+|  2 | 기안84    |   38 |   4000 | high         | 디자이너     | Hiking  | M      |
+|  3 | 김코딩    |   27 |   2700 | low          | 개발자       | Movie   | F      |
+|  4 | 손흥민    |   35 |   4800 | high         | 마케터       | Hiking  | M      |
+|  5 | 둘리      |   20 |   2500 | low          | 디자이너     | Movie   | F      |
+|  6 | 유재석    |   42 |   4700 | high         | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM people WHERE position LIKE '영___';
++----+-----------+------+--------+--------------+--------------+---------+--------+
+| id | name      | age  | salary | salary_range | position     | circle  | gender |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+|  1 | 홍길동    |   33 |   2800 | low          | 영업사원     | Hiking  | M      |
+|  6 | 유재석    |   42 |   4700 | high         | 영업사원     | Fishing | M      |
++----+-----------+------+--------+--------------+--------------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql>

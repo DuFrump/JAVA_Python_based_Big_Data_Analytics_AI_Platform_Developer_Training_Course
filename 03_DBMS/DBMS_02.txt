@@ -1,0 +1,4 @@
+RENAME TABLE 기존이름 TO 새이름; - 테이블 이름 바꾸기
+
+ALTER TABLE 테이블이름 CHANGE 기본이름 새이름 ...; - 컬럼 이름 / 속성 바꾸기
+
