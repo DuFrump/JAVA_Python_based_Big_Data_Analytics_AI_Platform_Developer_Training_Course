@@ -1,0 +1,94 @@
+오늘 배울 목록
+1. SQL 기본 문법
+2. 산술 연산자
+3. 텍스트 연산자
+4. 집계 함수
+5. TRUE / FALSE
+6. GROUP BY 조회
+
+-- 1. 테이블 완전 초기화 (ID도 1부터 다시 시작)
+TRUNCATE 테이블명;
+
+-- 2. 절대값으로 뽑아내기 (Absolute)
+SELECT ABS(열이름) AS 절대값 FROM 테이블명;
+
+-- 예제: 나이에서 50을 뺀 후 절대값으로 출력
+SELECT name, ABS(age - 50) AS reverse_age FROM employee ORDER BY age;
+
+-- 3. 제곱으로 뽑아내기 (Power)
+SELECT POW(열이름, 제곱수) AS 제곱 FROM 테이블명;
+
+-- 예제: 나이의 제곱을 계산해서 출력
+SELECT name, POW(age, 2) AS 제곱 FROM employee;
+
+-- 4. 루트로 뽑아내기 (Square Root)
+SELECT SQRT(열이름) AS 루트 FROM 테이블명;
+
+-- 예제: 나이의 제곱근을 출력
+SELECT name, age, SQRT(age) AS 루트 FROM employee;
+
+-- 5. 집계 함수 (MIN, MAX, COUNT, SUM, AVG)
+SELECT 집계함수(열이름) FROM 테이블명;
+
+-- 예시:
+-- 최소값: MIN(열이름)
+-- 최대값: MAX(열이름)
+-- 개수: COUNT(열이름)
+-- 총 합: SUM(열이름)
+-- 평균: AVG(열이름)
+-- 최고값: GREATEST(열이름들)
+-- 최소값: LEAST(열이름들)
+
+-- 예제: 급여의 최소값, 최대값, 개수, 총합, 평균
+SELECT MIN(salary), MAX(salary), COUNT(salary), SUM(salary), AVG(salary) FROM employee;
+
+-- 6. 여러 문자열을 하나로 합쳐서 반환 (CONCAT)
+SELECT CONCAT(속성) FROM 테이블명;
+
+-- 예제: 이름 앞에 "이름: "을 추가하여 출력
+SELECT CONCAT('이름: ', name) FROM employee;
+
+-- 7. 구분자를 사용하여 여러 문자열을 하나로 합쳐서 반환 (CONCAT_WS)
+SELECT CONCAT_WS('구분자', 속성1, 속성2, ...) FROM 테이블명;
+
+-- 예제: 이름, 나이, 급여를 공백으로 구분하여 출력
+SELECT CONCAT_WS(' ', name, age, salary) AS information FROM employee;
+
+-- 8. 문자열 일부 추출 (SUBSTR)
+SELECT SUBSTR(열이름, 시작위치, 길이) FROM 테이블명;
+
+-- 예제: 직위에서 두 번째 문자부터 끝까지 추출
+SELECT SUBSTR(position, 2) FROM employee;
+
+-- 9. 반올림 (ROUND)
+SELECT ROUND(열이름) AS 반올림된값 FROM 테이블명;
+
+-- 예제: 급여에 3.14를 곱한 후 반올림
+SELECT ROUND(salary * 3.14) AS retire FROM employee;
+
+-- 10. 올림 (CEIL)
+SELECT CEIL(열이름) AS 올림된값 FROM 테이블명;
+
+-- 예제: 급여에 3.14를 곱한 후 올림
+SELECT CEIL(salary * 3.14) AS retire FROM employee;
+
+-- 11. 내림 (FLOOR)
+SELECT FLOOR(열이름) AS 내림된값 FROM 테이블명;
+
+-- 예제: 급여에 3.14를 곱한 후 내림
+SELECT FLOOR(salary * 3.14) AS retire FROM employee;
+
+-- 12. 숫자 자르기 (TRUNCATE)
+SELECT TRUNCATE(열이름, 소수점자리수) AS 잘린값 FROM 테이블명;
+
+-- 예제: 급여에 3.14를 나눈 값을 소수점 2자리로 잘라서 출력
+SELECT TRUNCATE(salary / 3.14, 2) AS bonus FROM employee;
+
+-- 13. ABS: 절대값 구하기
+SELECT ABS(age - 50) AS reverse_age FROM employee ORDER BY age;
+
+-- 14. GREATEST: 여러 값 중 가장 큰 값 구하기
+SELECT name, GREATEST(age, salary) AS 최고값 FROM employee;
+
+-- 15. LEAST: 여러 값 중 가장 작은 값 구하기
+SELECT name, LEAST(age, salary) AS 최저값 FROM employee;

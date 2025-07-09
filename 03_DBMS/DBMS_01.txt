@@ -1,50 +1,100 @@
-=== 필기 ===
+-- 1. 데이터베이스 목록 보기
+SHOW DATABASES;
 
-명령어는 대문자로 적어주기.
+-- 2. 테이블 목록 보기
+SHOW TABLES;
 
-SHOW DATABASES; - 데이터 베이스 목록 보기
-SHOW TABLES; - 테이블 목록 보기
+-- 3. 데이터베이스 만들기
+CREATE DATABASE 데이터베이스_이름;
 
-CREATE DATABASE 데이터베이스_이름; - '데이터베이스_이름' 만들기
+-- 4. 데이터베이스 삭제
+DROP DATABASE 데이터베이스_이름;
 
-DROP DATABASE 데이터베이스_이름; - '데이터베이스_이름' 지우기
+-- 5. 데이터베이스로 진입하기
+USE 데이터베이스_이름;
 
+-- 6. 테이블 만들기
+CREATE TABLE 테이블_이름 (
+    열1 종류,
+    열2 종류,
+    ...
+);
 
-USE 데이터베이스_이름; - '데이터베이스_이름'으로 진입하기
+-- 예시: 'employee' 테이블 만들기
+CREATE TABLE employee (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    age INT,
+    position VARCHAR(100)
+);
 
-CREATE TABLE 테이블_이름 (열 종류); - '테이블_이름' 테이블 만들기
-ㄴ 열 예제 : (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50) NOT NULL, age INT, position VARCHAR(100));
-== id 열 : int / 자동 증가 / Primary key // name 열 : char / 50 byte / null 값은 안됨 // age 열 : int // position 열 : char / 100 byte
+-- 7. 테이블 정보 확인하기
+DESC 테이블_이름;
 
-DESC 테이블_이름; - '테이블_이름' 정보 확인하기
+-- 8. 테이블에 정보 추가 (행 추가)
+INSERT INTO 테이블_이름 (열1, 열2, ...) VALUES (값1, 값2, ...), (값1, 값2, ...), ...;
 
-INSERT INTO employee (테이블 속성들) VALUES (해당 속성 정보), (해당 속성 정보), (해당 속성 정보); - 테이블에 정보 추가 / 행 추가
-ㄴ 예제 : INSERT INTO employee (name, age, position) VALUES ('홍길동', 33, 'Sales-man'), ('기안84', 38, '디자이너'), ('양코딩', 28, '개발자');
+-- 예시: 'employee' 테이블에 데이터 추가
+INSERT INTO employee (name, age, position) 
+VALUES ('홍길동', 33, 'Sales-man'),
+       ('기안84', 38, '디자이너'),
+       ('양코딩', 28, '개발자');
 
-SELECT * FROM 테이블_이름; - 전체 테이블 출력 (* = 전체) // SELECT = 내가 뽑아올 컬럼 선택
+-- 9. 전체 테이블 출력
+SELECT * FROM 테이블_이름;
 
-SELECT * FROM 테이블_이름 ORDER BY 열_이름 DESC/ASC; - '열_이름'을 기준으로 내림/오름차순으로 정렬 후 전체 테이블을 출력
+-- 10. 정렬하여 출력 (내림차순 DESC / 오름차순 ASC)
+SELECT * FROM 테이블_이름 ORDER BY 열_이름 DESC;  -- 내림차순
+SELECT * FROM 테이블_이름 ORDER BY 열_이름 ASC;   -- 오름차순
 
-SELECT * FROM 테이블_이름 WHERE 조건; - 조건과 일치하는 행만 출력
-ㄴ 예제 : age >= 30 ... // 조건은 AND / OR 로 추가해 검색이 가능
+-- 11. 조건에 맞는 행만 출력
+SELECT * FROM 테이블_이름 WHERE 조건;
 
-ALTER TABLE 테이블_이름 ADD COLUMN 열_이름 INT; - 테이블_이름에 열_이름(정수형) 행 추가
-ㄴ 예제 : ALTER TABLE employee ADD COLUMN salary INT;
+-- 예시: age가 30 이상인 데이터만 출력
+SELECT * FROM employee WHERE age >= 30;
 
-ALTER TABLE 테이블_이름 ADD COLUMN 열_이름 INT AFTER 기존_열_이름; - 기존_열_이름 옆에 행 추가
-ㄴ 예제 : ALTER TABLE employee ADD COLUMN salad INT AFTER age;
+-- 12. 테이블에 열 추가 (새로운 컬럼 추가)
+ALTER TABLE 테이블_이름 ADD COLUMN 열_이름 INT;
 
-ALTER TABLE 테이블_이름 DROP COLUMN 열_이름; - 테이블_이름에 열_이름 행 삭제
-ㄴ 예제 : ALTER TABLE employee DROP COLUMN salad;
+-- 예시: 'employee' 테이블에 'salary' 열 추가
+ALTER TABLE employee ADD COLUMN salary INT;
 
-ALTER TABLE 테이블_이름 MODIFY COLUMN 열_이름 열_속성 AFTER 열_이름 = 열 속성 변경 및 위치 이동
-ㄴ 예제 : ALTER TABLE employee MODIFY COLUMN gender ENUM('M', 'F') AFTER age;
+-- 13. 기존 열 옆에 열 추가
+ALTER TABLE 테이블_이름 ADD COLUMN 열_이름 INT AFTER 기존_열_이름;
 
-UPDATE 테이블_이름 SET 열_이름 = 변경할_값 WHERE 조건; - 테이블_이름 안 열_이름의 값을 변경
-ㄴ 예제 : UPDATE employee SET position = '영업사원' WHERE name = '홍길동';
+-- 예시: 'employee' 테이블에 'salary' 열을 'age' 뒤에 추가
+ALTER TABLE employee ADD COLUMN salary INT AFTER age;
 
-UPDATE 테이블_이름 SET 열_이름 = CASE WHEN 조건 THEN 변경_값 WHEN 조건 THEN 변경_값 END; - 조건 값에 만족하는 값의 열_이름 값을 변경_값으로 변경
-ㄴ 예제 : UPDATE employee SET circle = CASE WHEN age <= 32 THEN 'Movie' WHEN age = 33 THEN 'Hiking' WHEN age >= 34 THEN 'Fishing' END;
+-- 14. 열 삭제
+ALTER TABLE 테이블_이름 DROP COLUMN 열_이름;
 
-~ WHERE 열_이름 BETWEEN 값 AND 값; = 값들 사이의 값을 가지고 있는 행을 출력
+-- 예시: 'employee' 테이블에서 'salary' 열 삭제
+ALTER TABLE employee DROP COLUMN salary;
 
+-- 15. 열 이름이나 속성 변경 (위치 변경도 가능)
+ALTER TABLE 테이블_이름 MODIFY COLUMN 열_이름 열_속성 AFTER 기존_열_이름;
+
+-- 예시: 'employee' 테이블에서 'gender' 컬럼을 'ENUM' 타입으로 변경
+ALTER TABLE employee MODIFY COLUMN gender ENUM('M', 'F') AFTER age;
+
+-- 16. 데이터 업데이트
+UPDATE 테이블_이름 SET 열_이름 = 변경할_값 WHERE 조건;
+
+-- 예시: 'employee' 테이블에서 '홍길동'의 'position'을 '영업사원'으로 변경
+UPDATE employee SET position = '영업사원' WHERE name = '홍길동';
+
+-- 17. 조건에 맞는 값 변경 (CASE WHEN)
+UPDATE 테이블_이름 SET 열_이름 = CASE WHEN 조건 THEN 변경_값 WHEN 조건 THEN 변경_값 END;
+
+-- 예시: 'employee' 테이블에서 나이에 따라 'circle' 컬럼 값을 변경
+UPDATE employee SET circle = CASE 
+    WHEN age <= 32 THEN 'Movie'
+    WHEN age = 33 THEN 'Hiking'
+    WHEN age >= 34 THEN 'Fishing' 
+END;
+
+-- 18. BETWEEN을 사용하여 범위에 맞는 값 출력
+SELECT * FROM 테이블_이름 WHERE 열_이름 BETWEEN 값1 AND 값2;
+
+-- 예시: 'age'가 20 이상 30 이하인 데이터를 출력
+SELECT * FROM employee WHERE age BETWEEN 20 AND 30;
