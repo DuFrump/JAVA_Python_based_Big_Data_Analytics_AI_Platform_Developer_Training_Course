@@ -92,3 +92,109 @@ SELECT name, GREATEST(age, salary) AS 최고값 FROM employee;
 
 -- 15. LEAST: 여러 값 중 가장 작은 값 구하기
 SELECT name, LEAST(age, salary) AS 최저값 FROM employee;
+
+-- 16. 데이터 형 변환 (CONVERT)
+-- 문자열을 다른 인코딩 형식으로 변환하거나, 숫자/날짜 형식으로 변환 가능
+
+-- 예제: name을 BINARY(이진 문자열)로 변환
+SELECT CONVERT(name USING BINARY) FROM employee;
+-- 예제: 날짜 형식의 문자열을 DATE로 변환
+SELECT CONVERT('2025-07-09', DATE);
+
+-- 17. 문자열 내 특정 위치 찾기 (INSTR)
+-- 특정 문자열이 처음 등장하는 위치를 반환 (없으면 0)
+
+-- 예제: position 컬럼에서 '개'라는 문자가 시작되는 위치 찾기
+SELECT name, INSTR(position, '개') AS 위치 FROM employee;
+-- 예제: 'abcdefg'에서 'd'의 위치
+SELECT INSTR('abcdefg', 'd');  -- 결과: 4
+
+-- 18. 문자열 치환 (REPLACE)
+-- 특정 문자열을 다른 문자열로 치환
+
+-- 예제: 직위에서 '사원'을 '매니저'로 바꾸기
+SELECT name, REPLACE(position, '사원', '매니저') AS 수정직위 FROM employee;
+-- 예제: 'Hello SQL'의 'SQL'을 'MySQL'로 변경
+SELECT REPLACE('Hello SQL', 'SQL', 'MySQL');  -- 결과: Hello MySQL
+
+-- 19. 오른쪽에 문자 채우기 (RPAD)
+-- 지정한 길이까지 오른쪽에 특정 문자로 채움
+
+-- 예제: 이름을 10글자로 맞추고 남는 공간은 '-'로 채움
+SELECT name, RPAD(name, 10, '-') AS 패딩이름 FROM employee;
+-- 예제: 'Hi'를 길이 5로 만들고 오른쪽에 * 채움
+SELECT RPAD('Hi', 5, '*');  -- 결과: Hi***
+
+-- 20. 왼쪽에 문자 채우기 (LPAD)
+-- 지정한 길이까지 왼쪽에 특정 문자로 채움
+
+-- 예제: 나이를 5자리 숫자로 만들고, 앞에 0 채움
+SELECT name, LPAD(age, 5, '0') AS 패딩나이 FROM employee;
+-- 예제: '9'를 길이 4로 만들고 앞에 0 채움
+SELECT LPAD('9', 4, '0');  -- 결과: 0009
+
+-- 21. 데이터 형식 변환 (CAST)
+-- 컬럼이나 값을 다른 타입으로 변환
+
+-- 예제: 나이를 문자열로 변환
+SELECT name, CAST(age AS CHAR) AS 문자나이 FROM employee;
+-- 예제: '2025-07-09' 문자열을 DATE 형식으로 변환
+SELECT CAST('2025-07-09' AS DATE) AS 날짜형식;
+
+
+=============================================
+-- GROUP BY: 동일한 값을 갖는 행을 그룹화하여 집계 함수와 함께 사용함
+
+-- 기본 문법
+SELECT 그룹기준열, 집계함수(열) FROM 테이블명
+GROUP BY 그룹기준열;
+
+-- 자주 사용하는 집계 함수들
+-- COUNT(): 개수 / SUM(): 합계 / AVG(): 평균 / MIN(): 최소값 / MAX(): 최대값
+
+-- 1. 직위(position)별 평균 급여 구하기
+SELECT position, AVG(salary) AS 평균급여
+FROM employee
+GROUP BY position;
+
+-- 2. 부서별 총 급여 구하기 + 내림차순 정렬
+SELECT position, SUM(salary) AS `총급여`
+FROM employee
+GROUP BY position
+ORDER BY `총급여` DESC;
+
+-- 3. 직위별 인원 수 구하기
+SELECT position, COUNT(*) AS 인원수
+FROM employee
+GROUP BY position;
+
+-- 4. 성별(gender)별 최대 나이 구하기
+SELECT gender, MAX(age) AS 최고나이
+FROM employee
+GROUP BY gender;
+
+-- 5. 그룹 조건 추가(HAVING)
+-- 급여 합계가 8000 이상인 직위만 보기
+SELECT position, SUM(salary) AS 총급여
+FROM employee
+GROUP BY position
+HAVING SUM(salary) >= 8000;
+
+-- 6. GROUP BY 여러 개 (다중 그룹화)
+-- 직위와 성별 조합으로 평균 급여 보기
+SELECT position, gender, AVG(salary) AS 평균급여
+FROM employee
+GROUP BY position, gender;
+
+-- 💡 참고
+-- GROUP BY 이후 SELECT에 나오는 컬럼은 반드시
+-- 1) GROUP BY 대상 컬럼
+-- 2) 집계 함수로 묶인 컬럼
+-- 둘 중 하나여야 함
+
+-- ❌ 오류 예시 (MySQL 설정에 따라 에러):
+SELECT position, salary FROM employee GROUP BY position;
+-- salary는 집계 함수로 묶이지 않았고, 그룹 기준에도 없기 때문
+
+-- ✅ 올바른 방식:
+SELECT position, MAX(salary) FROM employee GROUP BY position;

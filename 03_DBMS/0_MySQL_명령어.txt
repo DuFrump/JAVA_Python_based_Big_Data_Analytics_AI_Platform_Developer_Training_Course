@@ -1,0 +1,148 @@
+📚 실무용 SQL 명령어 풀 리스트 (설명 중심)
+
+-- 기본 조회 및 조작
+SELECT                  -- 데이터 조회
+FROM                    -- 데이터 조회 대상 테이블
+WHERE                   -- 조건 지정
+ORDER BY                -- 정렬 (ASC/DESC)
+LIMIT                   -- 결과 행 개수 제한
+DISTINCT                -- 중복 제거
+AS                      -- 별칭(alias) 지정
+
+-- 집계 및 그룹핑
+GROUP BY                -- 그룹화
+HAVING                  -- 그룹 조건
+COUNT()                 -- 개수 계산
+SUM()                   -- 합계
+AVG()                   -- 평균
+MIN()                   -- 최소값
+MAX()                   -- 최대값
+
+-- 삽입, 수정, 삭제
+INSERT INTO             -- 데이터 삽입
+VALUES                  -- 삽입할 값들
+UPDATE                  -- 데이터 수정
+SET                     -- 수정할 컬럼 지정
+DELETE FROM             -- 데이터 삭제
+
+-- 테이블/DB 생성 및 삭제
+CREATE DATABASE         -- 데이터베이스 생성
+DROP DATABASE           -- 데이터베이스 삭제
+CREATE TABLE            -- 테이블 생성
+DROP TABLE              -- 테이블 삭제
+TRUNCATE TABLE          -- 테이블 데이터 초기화
+USE                     -- 사용할 DB 선택
+
+-- 테이블 수정
+ALTER TABLE             -- 테이블 구조 변경
+ADD COLUMN              -- 컬럼 추가
+DROP COLUMN             -- 컬럼 삭제
+MODIFY COLUMN           -- 컬럼 속성 변경
+CHANGE COLUMN           -- 컬럼 이름 + 속성 변경
+RENAME TABLE            -- 테이블 이름 변경
+
+-- 키 제약 조건
+PRIMARY KEY             -- 기본 키
+FOREIGN KEY             -- 외래 키
+REFERENCES              -- 참조할 테이블과 컬럼
+NOT NULL                -- NULL 금지
+UNIQUE                  -- 고유값
+DEFAULT                 -- 기본값 설정
+AUTO_INCREMENT          -- 자동 증가
+
+-- 패턴 매칭 및 조건
+LIKE                    -- 문자열 패턴 비교
+IN                      -- 여러 값 중 포함 여부
+BETWEEN                 -- 범위 검색
+IS NULL / IS NOT NULL   -- NULL 여부 확인
+CASE WHEN THEN ELSE END -- 조건문
+
+-- 날짜 및 시간 함수
+NOW()                   -- 현재 날짜 + 시간
+CURDATE()               -- 현재 날짜
+CURTIME()               -- 현재 시간
+DATEDIFF()              -- 날짜 차이 계산
+DATE_FORMAT()           -- 날짜 형식 변경
+YEAR(), MONTH(), DAY()  -- 년/월/일 추출
+
+-- 문자열 함수
+CONCAT(), CONCAT_WS()   -- 문자열 결합
+SUBSTR(), LEFT(), RIGHT() -- 문자열 자르기
+LENGTH(), CHAR_LENGTH() -- 길이 계산
+UPPER(), LOWER()        -- 대소문자 변환
+TRIM(), LTRIM(), RTRIM()-- 공백 제거
+REPLACE()               -- 문자열 치환
+REVERSE()               -- 문자열 뒤집기
+INSTR(), LOCATE()       -- 위치 찾기
+LPAD(), RPAD()          -- 패딩
+FORMAT()                -- 숫자 천단위 콤마
+ASCII()                 -- 문자 → ASCII
+
+-- 수학 함수
+ROUND(), CEIL(), FLOOR()-- 반올림/올림/내림
+ABS()                   -- 절대값
+MOD()                   -- 나머지
+POWER(), SQRT()         -- 제곱, 제곱근
+RAND()                  -- 랜덤값
+
+-- 조인 (JOIN)
+INNER JOIN              -- 교집합
+LEFT JOIN               -- 왼쪽 기준 외부조인
+RIGHT JOIN              -- 오른쪽 기준 외부조인
+FULL OUTER JOIN         -- 전체 외부조인 (MySQL 미지원, UNION으로 대체)
+SELF JOIN               -- 자기 자신과 조인
+
+-- 서브쿼리 및 집합 연산
+SUBQUERY                -- 하위 쿼리
+EXISTS / NOT EXISTS     -- 존재 여부
+IN (SELECT ...)         -- 서브쿼리 결과 포함 여부
+UNION / UNION ALL       -- 집합 합치기 (중복 제거/포함)
+INTERSECT / MINUS       -- 교집합 / 차집합 (MySQL은 직접 미지원)
+
+-- 트랜잭션 제어
+START TRANSACTION       -- 트랜잭션 시작
+COMMIT                  -- 저장
+ROLLBACK                -- 되돌리기
+SAVEPOINT               -- 중간 저장점
+SET autocommit = 0/1    -- 자동 커밋 설정
+
+-- 인덱스
+CREATE INDEX            -- 인덱스 생성
+DROP INDEX              -- 인덱스 삭제
+SHOW INDEX              -- 인덱스 정보 확인
+
+-- 사용자 관리 및 권한
+CREATE USER             -- 사용자 생성
+DROP USER               -- 사용자 삭제
+GRANT                   -- 권한 부여
+REVOKE                  -- 권한 회수
+SHOW GRANTS             -- 권한 확인
+SET PASSWORD            -- 비밀번호 설정
+
+-- 뷰 (View)
+CREATE VIEW             -- 뷰 생성
+DROP VIEW               -- 뷰 삭제
+REPLACE VIEW            -- 뷰 재정의
+
+-- 저장 프로시저 / 함수
+DELIMITER               -- 구분자 변경
+CREATE PROCEDURE        -- 저장 프로시저 생성
+CALL                    -- 프로시저 호출
+CREATE FUNCTION         -- 사용자 정의 함수 생성
+RETURN                  -- 함수 반환값
+
+-- 트리거
+CREATE TRIGGER          -- 트리거 생성
+BEFORE / AFTER INSERT   -- 삽입 전/후 실행
+BEFORE / AFTER UPDATE   -- 수정 전/후 실행
+BEFORE / AFTER DELETE   -- 삭제 전/후 실행
+
+-- 테이블/서버 점검 및 유지보수
+CHECK TABLE             -- 테이블 무결성 검사
+ANALYZE TABLE           -- 테이블 통계 갱신
+OPTIMIZE TABLE          -- 테이블 조각 최적화
+FLUSH PRIVILEGES        -- 권한 테이블 재적용
+
+-- 외부 데이터 입출력
+LOAD DATA INFILE        -- 외부 파일로부터 데이터 로드
+SELECT ... INTO OUTFILE -- 쿼리 결과를 파일로 저장
