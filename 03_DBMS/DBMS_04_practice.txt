@@ -1,0 +1,2629 @@
+Microsoft Windows [Version 10.0.19045.4780]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\admin>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 34
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE ITCompany;
+Database changed
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 | 영업사원 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           3 | 디자이너 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           4 | 개발자   |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           3 | 디자이너 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           3 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           2 | 마케터   |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           4 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           2 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 | 법무팀   |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           4 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) AS average_salary FROM employee GROUP BY position;
++----------+----------------+
+| position | average_salary |
++----------+----------------+
+| 영업사원 |      3450.0000 |
+| 디자이너 |      3233.3333 |
+| 개발자   |      3766.6667 |
+| 마케터   |      3150.0000 |
+| 법무팀   |      4200.0000 |
++----------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position, COUNT(*) FROM employee GROUP BY position;
++----------+----------+
+| position | COUNT(*) |
++----------+----------+
+| 영업사원 |        4 |
+| 디자이너 |        3 |
+| 개발자   |        3 |
+| 마케터   |        2 |
+| 법무팀   |        1 |
++----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) AS average_salary FROM employee GROUP BY position ORDER BY average_salary DESC LIMIT 1;
++----------+----------------+
+| position | average_salary |
++----------+----------------+
+| 법무팀   |      4200.0000 |
++----------+----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) AS avg_salary FROM employee GROUP BY position ORDER BY avg_salary DESC LIMIT 1;
++----------+------------+
+| position | avg_salary |
++----------+------------+
+| 법무팀   |  4200.0000 |
++----------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT position, COUNT(*) AS total FROM employee WHERE circle IS NOT NULL GROUP BY position HAVING total >= 3;
++----------+-------+
+| position | total |
++----------+-------+
+| 영업사원 |     4 |
+| 디자이너 |     3 |
++----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT position, COUNT(*) AS total FROM employee WHERE circle IS NOT NULL GROUP BY position HAVING total >= 3 ORDER BY total;
++----------+-------+
+| position | total |
++----------+-------+
+| 디자이너 |     3 |
+| 영업사원 |     4 |
++----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> 987987654654321321
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '987987654654321321' at line 1
+mysql> SELECT position, SUM(salary) FROM employee GROUP BY position WHERE SUM(salary) >= 10000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE SUM(salary) >= 10000' at line 1
+mysql> SELECT position, SUM(salary) FROM employee GROUP BY position HAVING SUM(salary) >= 10000;
++----------+-------------+
+| position | SUM(salary) |
++----------+-------------+
+| 영업사원 |       13800 |
+| 개발자   |       11300 |
++----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT position, SUM(salary) AS total_sal FROM employee GROUP BY position HAVING total_sal >= 10000;
++----------+-----------+
+| position | total_sal |
++----------+-----------+
+| 영업사원 |     13800 |
+| 개발자   |     11300 |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT position, SUM(salary) AS total_sal FROM employee GROUP BY position HAVING total_sal >= 10000 ORDER BY total_sal;
++----------+-----------+
+| position | total_sal |
++----------+-----------+
+| 개발자   |     11300 |
+| 영업사원 |     13800 |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT position, SUM(salary) AS total_sal FROM employee GROUP BY position HAVING total_sal >= 10000 ORDER BY total_sal DESC;
++----------+-----------+
+| position | total_sal |
++----------+-----------+
+| 영업사원 |     13800 |
+| 개발자   |     11300 |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) AS avg_sal FROM employee WHERE gender = 'M' GROUP BY position WHERE avg_sal >= 3000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE avg_sal >= 3000' at line 1
+mysql> SELECT position, AVG(salary) AS avg_sal FROM employee WHERE gender = 'M' GROUP BY position HAVING avg_sal >= 3000;
++----------+-----------+
+| position | avg_sal   |
++----------+-----------+
+| 영업사원 | 3500.0000 |
+| 디자이너 | 3250.0000 |
+| 개발자   | 3150.0000 |
+| 마케터   | 3800.0000 |
++----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) AS avg_sal FROM employee WHERE gender = 'M' GROUP BY position HAVING avg_sal >= 3000 ORDER BY avg_sal DESC;
++----------+-----------+
+| position | avg_sal   |
++----------+-----------+
+| 마케터   | 3800.0000 |
+| 영업사원 | 3500.0000 |
+| 디자이너 | 3250.0000 |
+| 개발자   | 3150.0000 |
++----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT gender, position, AVG(salary) AS avg_sal FROM employee WHERE gender = 'M' GROUP BY position HAVING avg_sal >= 3000 ORDER BY avg_sal DESC;
++--------+----------+-----------+
+| gender | position | avg_sal   |
++--------+----------+-----------+
+| M      | 마케터   | 3800.0000 |
+| M      | 영업사원 | 3500.0000 |
+| M      | 디자이너 | 3250.0000 |
+| M      | 개발자   | 3150.0000 |
++--------+----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) AS avg_sal FROM employee WHERE gender = 'M' GROUP BY position HAVING avg_sal >= 3000 ORDER BY avg_sal DESC;
++----------+-----------+
+| position | avg_sal   |
++----------+-----------+
+| 마케터   | 3800.0000 |
+| 영업사원 | 3500.0000 |
+| 디자이너 | 3250.0000 |
+| 개발자   | 3150.0000 |
++----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT position, COUNT(*) FROM employee WHERE start_date LIKE (2025%) GROUP BY position HAVING COUNT(*) >= 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') GROUP BY position HAVING COUNT(*) >= 2' at line 1
+mysql> SELECT position, COUNT(*) FROM employee WHERE start_date LIKE ('2025%') GROUP BY position HAVING COUNT(*) >= 2;
++----------+----------+
+| position | COUNT(*) |
++----------+----------+
+| 디자이너 |        3 |
+| 마케터   |        2 |
+| 영업사원 |        2 |
+| 개발자   |        2 |
++----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT position, COUNT(*) FROM employee WHERE start_date >= 2025-01-01 GROUP BY position HAVING COUNT(*) >= 2;
++----------+----------+
+| position | COUNT(*) |
++----------+----------+
+| 영업사원 |        4 |
+| 디자이너 |        3 |
+| 개발자   |        3 |
+| 마케터   |        2 |
++----------+----------+
+4 rows in set, 1 warning (0.00 sec)
+
+mysql> SELECT position, COUNT(*) FROM employee WHERE start_date >= '2025-01-01' GROUP BY position HAVING COUNT(*) >= 2;
++----------+----------+
+| position | COUNT(*) |
++----------+----------+
+| 디자이너 |        3 |
+| 마케터   |        2 |
+| 영업사원 |        2 |
+| 개발자   |        2 |
++----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee
+    -> ;
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 | 영업사원 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           3 | 디자이너 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           4 | 개발자   |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           3 | 디자이너 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           3 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           2 | 마케터   |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           4 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           2 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 | 법무팀   |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           4 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT circle, MIN(age) FROM employee ORDER BY circle HAVING MIN(age) <= 30;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'HAVING MIN(age) <= 30' at line 1
+mysql> SELECT circle, MIN(age) FROM employee WHERE MIN(age) <= 30 ORDER BY circle;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT circle, MIN(age) FROM employee GROUP BY circle HAVING MIN(age) <= 30;
++--------+----------+
+| circle | MIN(age) |
++--------+----------+
+| Movie  |       20 |
++--------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT circle, MIN(age) FROM employee WHERE circle IS NOT NULL GROUP BY circle HAVING MIN(age) <= 30;
++--------+----------+
+| circle | MIN(age) |
++--------+----------+
+| Movie  |       20 |
++--------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT circle, MIN(age) FROM employee WHERE circle IS NOT NULL GROUP BY circle HAVING MIN(age) >= 30;
++---------+----------+
+| circle  | MIN(age) |
++---------+----------+
+| Hiking  |       33 |
+| Fishing |       38 |
++---------+----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT('이름 : ', name) FROM employee;
++-------------------------+
+| CONCAT('이름 : ', name) |
++-------------------------+
+| 이름 : 기안84           |
+| 이름 : 김연아           |
+| 이름 : 둘리             |
+| 이름 : 레이첼           |
+| 이름 : 로스             |
+| 이름 : 모니카           |
+| 이름 : 아이유           |
+| 이름 : 양코딩           |
+| 이름 : 유재석           |
+| 이름 : 조이             |
+| 이름 : 챈들러           |
+| 이름 : 피비             |
+| 이름 : 홍길동           |
++-------------------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT position, CONCAT(position, '(', COUNT(*), ')명') FROM employee GROUP BY position;
++----------+----------------------------------------+
+| position | CONCAT(position, '(', COUNT(*), ')명') |
++----------+----------------------------------------+
+| 영업사원 | 영업사원(4)명                          |
+| 디자이너 | 디자이너(3)명                          |
+| 개발자   | 개발자(3)명                            |
+| 마케터   | 마케터(2)명                            |
+| 법무팀   | 법무팀(1)명                            |
++----------+----------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position, CONCAT(position, ' (', COUNT(*), ')명') FROM employee GROUP BY position;
++----------+-----------------------------------------+
+| position | CONCAT(position, ' (', COUNT(*), ')명') |
++----------+-----------------------------------------+
+| 영업사원 | 영업사원 (4)명                          |
+| 디자이너 | 디자이너 (3)명                          |
+| 개발자   | 개발자 (3)명                            |
+| 마케터   | 마케터 (2)명                            |
+| 법무팀   | 법무팀 (1)명                            |
++----------+-----------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(position, ' (', COUNT(*), ')명') FROM employee GROUP BY position;
++-----------------------------------------+
+| CONCAT(position, ' (', COUNT(*), ')명') |
++-----------------------------------------+
+| 영업사원 (4)명                          |
+| 디자이너 (3)명                          |
+| 개발자 (3)명                            |
+| 마케터 (2)명                            |
+| 법무팀 (1)명                            |
++-----------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position, CONCAT(position, ' (', COUNT(*), '명)') FROM employee GROUP BY position;
++----------+-----------------------------------------+
+| position | CONCAT(position, ' (', COUNT(*), '명)') |
++----------+-----------------------------------------+
+| 영업사원 | 영업사원 (4명)                          |
+| 디자이너 | 디자이너 (3명)                          |
+| 개발자   | 개발자 (3명)                            |
+| 마케터   | 마케터 (2명)                            |
+| 법무팀   | 법무팀 (1명)                            |
++----------+-----------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position, CONCAT(position, ' (', COUNT(*), '명)') AS 직책별_인원 FROM employee GROUP BY position;
++----------+----------------+
+| position | 직책별_인원    |
++----------+----------------+
+| 영업사원 | 영업사원 (4명) |
+| 디자이너 | 디자이너 (3명) |
+| 개발자   | 개발자 (3명)   |
+| 마케터   | 마케터 (2명)   |
+| 법무팀   | 법무팀 (1명)   |
++----------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> REPLACE employee WHERE position = '개발자' TO '프로그래머';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE position = '개발자' TO '프로그래머'' at line 1
+mysql> SELECT name, REPLACE(position, '개발자', '프로그래머' FROM employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM employee' at line 1
+mysql> SELECT name, REPLACE(position, '개발자', '프로그래머') FROM employee;
++--------+-------------------------------------------+
+| name   | REPLACE(position, '개발자', '프로그래머') |
++--------+-------------------------------------------+
+| 홍길동 | 영업사원                                  |
+| 기안84 | 디자이너                                  |
+| 양코딩 | 프로그래머                                |
+| 둘리   | 디자이너                                  |
+| 유재석 | 영업사원                                  |
+| 레이첼 | 디자이너                                  |
+| 모니카 | 마케터                                    |
+| 피비   | 영업사원                                  |
+| 조이   | 영업사원                                  |
+| 챈들러 | 프로그래머                                |
+| 로스   | 마케터                                    |
+| 김연아 | 법무팀                                    |
+| 아이유 | 프로그래머                                |
++--------+-------------------------------------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT name, REPLACE(position, '개발자', '프로그래머') AS '수정된 직위' FROM employee;
++--------+-------------+
+| name   | 수정된 직위 |
++--------+-------------+
+| 홍길동 | 영업사원    |
+| 기안84 | 디자이너    |
+| 양코딩 | 프로그래머  |
+| 둘리   | 디자이너    |
+| 유재석 | 영업사원    |
+| 레이첼 | 디자이너    |
+| 모니카 | 마케터      |
+| 피비   | 영업사원    |
+| 조이   | 영업사원    |
+| 챈들러 | 프로그래머  |
+| 로스   | 마케터      |
+| 김연아 | 법무팀      |
+| 아이유 | 프로그래머  |
++--------+-------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT REPLACE(position, '개발자', '프로그래머') AS '수정된 직위', COUNT(*) FROM employee GROUP BY '수정된 직위';
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.employee.position' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT REPLACE(position, '개발자', '프로그래머') AS '수정된 직위', COUNT(*) FROM employee GROUP BY 수정된 직위;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '직위' at line 1
+mysql> SELECT REPLACE(position, '개발자', '프로그래머') AS 수정된 직위, COUNT(*) FROM employee GROUP BY 수정된 직위;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '직위, COUNT(*) FROM employee GROUP BY 수정된 직위' at line 1
+mysql> SELECT REPLACE(position, '개발자', '프로그래머') AS '수정된 직위', COUNT(*) FROM employee GROUP BY '수정된 직위';
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.employee.position' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT REPLACE(position, '개발자', '프로그래머') AS mod_pos, COUNT(*) FROM employee GROUP BY mod_pos;
++------------+----------+
+| mod_pos    | COUNT(*) |
++------------+----------+
+| 영업사원   |        4 |
+| 디자이너   |        3 |
+| 프로그래머 |        3 |
+| 마케터     |        2 |
+| 법무팀     |        1 |
++------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT REPLACE(position, '개발자', '프로그래머') AS `수정된 직위`, COUNT(*) FROM employee GROUP BY `수정된 직위`;
++-------------+----------+
+| 수정된 직위 | COUNT(*) |
++-------------+----------+
+| 영업사원    |        4 |
+| 디자이너    |        3 |
+| 프로그래머  |        3 |
+| 마케터      |        2 |
+| 법무팀      |        1 |
++-------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT INSTR(position, '%자%') AS ja_group, AVG(salary) FROM employee GROUP BY ja_group;
++----------+-------------+
+| ja_group | AVG(salary) |
++----------+-------------+
+|        0 |   3484.6154 |
++----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT position WHERE INSTR(position, '%자%') AS ja_group, AVG(salary) FROM employee GROUP BY ja_group;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS ja_group, AVG(salary) FROM employee GROUP BY ja_group' at line 1
+mysql> SELECT position, AVG(salary) FROM employee WHERE INSTR(position, '%자%') GROUP BY position;
+Empty set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) FROM employee WHERE INSTR(position, '자') GROUP BY position;
++----------+-------------+
+| position | AVG(salary) |
++----------+-------------+
+| 디자이너 |   3233.3333 |
+| 개발자   |   3766.6667 |
++----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT INSTR('개발자', '김');
++-----------------------+
+| INSTR('개발자', '김') |
++-----------------------+
+|                     0 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT INSTR('개발자', '양');
++-----------------------+
+| INSTR('개발자', '양') |
++-----------------------+
+|                     0 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT INSTR(position, '양');
+ERROR 1054 (42S22): Unknown column 'position' in 'field list'
+mysql> SELECT INSTR(position, '양') FROM employee;
++-----------------------+
+| INSTR(position, '양') |
++-----------------------+
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
++-----------------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT INSTR('개발자', '양') FROM employee;
++-----------------------+
+| INSTR('개발자', '양') |
++-----------------------+
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
+|                     0 |
++-----------------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT INSTR('개발자', '발');
++-----------------------+
+| INSTR('개발자', '발') |
++-----------------------+
+|                     2 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT INSTR('개발자', '발') FROM employee;
++-----------------------+
+| INSTR('개발자', '발') |
++-----------------------+
+|                     2 |
+|                     2 |
+|                     2 |
+|                     2 |
+|                     2 |
+|                     2 |
+|                     2 |
+|                     2 |
+|                     2 |
+|                     2 |
+|                     2 |
+|                     2 |
+|                     2 |
++-----------------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) FROM employee WHERE INSTR(position, '자') > 0 GROUP BY position;
++----------+-------------+
+| position | AVG(salary) |
++----------+-------------+
+| 디자이너 |   3233.3333 |
+| 개발자   |   3766.6667 |
++----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) FROM employee WHERE INSTR(position, '자') > 0 GROUP BY position;
++----------+-------------+
+| position | AVG(salary) |
++----------+-------------+
+| 디자이너 |   3233.3333 |
+| 개발자   |   3766.6667 |
++----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) AS avg_sal, MAX(salary) AS max_sal, MIN(salary) AS min_sal FROM employee GROUP BY psition;
++----------+-----------+---------+---------+
+| position | avg_sal   | max_sal | min_sal |
++----------+-----------+---------+---------+
+| 영업사원 | 3450.0000 |    4700 |    2800 |
+| 디자이너 | 3233.3333 |    4000 |    2500 |
+| 개발자   | 3766.6667 |    5000 |    2700 |
+| 마케터   | 3150.0000 |    3800 |    2500 |
+| 법무팀   | 4200.0000 |    4200 |    4200 |
++----------+-----------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) AS avg_sal, MAX(salary) AS max_sal, MIN(salary) AS min_sal FROM employee GROUP BY position WITH ROLLUP;
++----------+-----------+---------+---------+
+| position | avg_sal   | max_sal | min_sal |
++----------+-----------+---------+---------+
+| 개발자   | 3766.6667 |    5000 |    2700 |
+| 디자이너 | 3233.3333 |    4000 |    2500 |
+| 마케터   | 3150.0000 |    3800 |    2500 |
+| 법무팀   | 4200.0000 |    4200 |    4200 |
+| 영업사원 | 3450.0000 |    4700 |    2800 |
+| NULL     | 3484.6154 |    5000 |    2500 |
++----------+-----------+---------+---------+
+6 rows in set (0.01 sec)
+
+mysql> SELECT position, AVG(salary) AS avg_sal, MAX(salary) AS max_sal, MIN(salary), SUM(salary) AS min_sal FROM employee GROUP BY position WITH ROLLUP;
++----------+-----------+---------+-------------+---------+
+| position | avg_sal   | max_sal | MIN(salary) | min_sal |
++----------+-----------+---------+-------------+---------+
+| 개발자   | 3766.6667 |    5000 |        2700 |   11300 |
+| 디자이너 | 3233.3333 |    4000 |        2500 |    9700 |
+| 마케터   | 3150.0000 |    3800 |        2500 |    6300 |
+| 법무팀   | 4200.0000 |    4200 |        4200 |    4200 |
+| 영업사원 | 3450.0000 |    4700 |        2800 |   13800 |
+| NULL     | 3484.6154 |    5000 |        2500 |   45300 |
++----------+-----------+---------+-------------+---------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) AS avg_sal, MAX(salary) AS max_sal, MIN(salary) AS min_sal, SUM(salary) AS sum_sal FROM employee GROUP BY position WITH ROLLUP;
++----------+-----------+---------+---------+---------+
+| position | avg_sal   | max_sal | min_sal | sum_sal |
++----------+-----------+---------+---------+---------+
+| 개발자   | 3766.6667 |    5000 |    2700 |   11300 |
+| 디자이너 | 3233.3333 |    4000 |    2500 |    9700 |
+| 마케터   | 3150.0000 |    3800 |    2500 |    6300 |
+| 법무팀   | 4200.0000 |    4200 |    4200 |    4200 |
+| 영업사원 | 3450.0000 |    4700 |    2800 |   13800 |
+| NULL     | 3484.6154 |    5000 |    2500 |   45300 |
++----------+-----------+---------+---------+---------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) AS avg_sal, MAX(salary) AS max_sal, MIN(salary) AS min_sal, SUM(salary) AS sum_sal FROM employee GROUP BY position WITH ROLLUP AS roll_up;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS roll_up' at line 1
+mysql> SELECT position, AVG(salary) AS avg_sal, MAX(salary) AS max_sal, MIN(salary) AS min_sal, SUM(salary) AS sum_sal FROM employee GROUP BY position WITH ROLLUP;
++----------+-----------+---------+---------+---------+
+| position | avg_sal   | max_sal | min_sal | sum_sal |
++----------+-----------+---------+---------+---------+
+| 개발자   | 3766.6667 |    5000 |    2700 |   11300 |
+| 디자이너 | 3233.3333 |    4000 |    2500 |    9700 |
+| 마케터   | 3150.0000 |    3800 |    2500 |    6300 |
+| 법무팀   | 4200.0000 |    4200 |    4200 |    4200 |
+| 영업사원 | 3450.0000 |    4700 |    2800 |   13800 |
+| NULL     | 3484.6154 |    5000 |    2500 |   45300 |
++----------+-----------+---------+---------+---------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT position FROM employee;
++----------+
+| position |
++----------+
+| 영업사원 |
+| 디자이너 |
+| 개발자   |
+| 마케터   |
+| 법무팀   |
++----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position FROM employee GROUP BY position;
++----------+
+| position |
++----------+
+| 영업사원 |
+| 디자이너 |
+| 개발자   |
+| 마케터   |
+| 법무팀   |
++----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position, COUNT(circle) FROM employee GROUP BY position;
++----------+---------------+
+| position | COUNT(circle) |
++----------+---------------+
+| 영업사원 |             4 |
+| 디자이너 |             3 |
+| 개발자   |             2 |
+| 마케터   |             2 |
+| 법무팀   |             0 |
++----------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 | 영업사원 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           3 | 디자이너 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           4 | 개발자   |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           3 | 디자이너 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           3 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           2 | 마케터   |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           4 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           2 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 | 법무팀   |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           4 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT position, DISTINCT(circle) FROM employee GROUP BY position;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DISTINCT(circle) FROM employee GROUP BY position' at line 1
+mysql> SELECT position, COUNT(circle) FROM employee GROUP BY position;
++----------+---------------+
+| position | COUNT(circle) |
++----------+---------------+
+| 영업사원 |             4 |
+| 디자이너 |             3 |
+| 개발자   |             2 |
+| 마케터   |             2 |
+| 법무팀   |             0 |
++----------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position, COUNT(DISTINCT(circle)) FROM employee GROUP BY position;
++----------+-------------------------+
+| position | COUNT(DISTINCT(circle)) |
++----------+-------------------------+
+| 개발자   |                       2 |
+| 디자이너 |                       2 |
+| 마케터   |                       2 |
+| 법무팀   |                       0 |
+| 영업사원 |                       3 |
++----------+-------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT name, salary FROM employee WHERE salary >= (AVG(salary)) ;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT name, salary FROM employee WHERE salary > (AVG(SUM(salary));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SELECT name, salary FROM employee WHERE salary > (SELECT AVG(salary) FROM employee);
++--------+--------+
+| name   | salary |
++--------+--------+
+| 기안84 |   4000 |
+| 유재석 |   4700 |
+| 챈들러 |   3600 |
+| 로스   |   3800 |
+| 김연아 |   4200 |
+| 아이유 |   5000 |
++--------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee WHERE salary > (SELECT AVG(salary) FROM employee);
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  2 | 기안84 |   38 | M      |           3 | 디자이너 |   4000 | high   | Fishing | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+| 11 | 챈들러 |   33 | M      |           4 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           2 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 | 법무팀   |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           4 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee WHERE (SELECT MAX(salary) FROM employee;);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> SELECT * FROM employee WHERE (SELECT MAX(salary) FROM employee);
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 | 영업사원 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           3 | 디자이너 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           4 | 개발자   |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           3 | 디자이너 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           3 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           2 | 마케터   |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           4 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           2 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 | 법무팀   |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           4 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT name FROM employee WHERE salary = (SELECT MAX(salary) FROM employee);
++--------+
+| name   |
++--------+
+| 아이유 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM employee WHERE start_date = (SELECT MIN(start_date) FROM employee);
++----+--------+------+--------+-------------+----------+--------+-------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+-------+---------+------------+
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high  | Fishing | 2021-03-01 |
++----+--------+------+--------+-------------+----------+--------+-------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT position FROM employee WHERE salary >= (SELECT AVG(salary) FROM employee WHERE position = '디자이너') AND position = ' 디자이너';
++----------+
+| position |
++----------+
+| 디자이너 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT name, position, salary FROM employee WHERE salary >= (SELECT AVG(salary) FROM employee WHERE position = '디자이너') AND position = '디자이너';
++--------+----------+--------+
+| name   | position | salary |
++--------+----------+--------+
+| 기안84 | 디자이너 |   4000 |
++--------+----------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(salary) FROM employee WHERE position = '디자이너';
++-------------+
+| AVG(salary) |
++-------------+
+|   3233.3333 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM employee WHERE salary >= (SELECT AVG(salary) FROM employee WHERE position = '디자이너') AND position= '디자이너';N
++----+--------+------+--------+-------------+----------+--------+-------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+-------+---------+------------+
+|  2 | 기안84 |   38 | M      |           3 | 디자이너 |   4000 | high  | Fishing | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+-------+---------+------------+
+1 row in set (0.00 sec)
+
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'N' at line 1
+mysql> SELECT * FROM employee WHERE salary >= (SELECT salary FROM employee WHERE position = '개발자');
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT * FROM employee WHERE salary > ANY(SELECT salary FROM employee WHERE position = '개발자');
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 | 영업사원 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           3 | 디자이너 |   4000 | high   | Fishing | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           3 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           4 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           2 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 | 법무팀   |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           4 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee WHERE salary > ANY(SELECT salary FROM employee WHERE position = '영업사원');
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  2 | 기안84 |   38 | M      |           3 | 디자이너 |   4000 | high   | Fishing | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           3 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           4 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           2 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 | 법무팀   |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           4 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee WHERE salary > ANY(SELECT salary FROM employee WHERE position = '법무팀');
++----+--------+------+--------+-------------+----------+--------+-------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+-------+---------+------------+
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high  | Fishing | 2021-03-01 |
+| 14 | 아이유 |   34 | F      |           4 | 개발자   |   5000 | high  | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+-------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 | 영업사원 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           3 | 디자이너 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           4 | 개발자   |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           3 | 디자이너 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           3 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           2 | 마케터   |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           4 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           2 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 | 법무팀   |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           4 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT gender, AVG(salary) AS avg_sal, (SELECT AVG(salary) FROM employee) AS tatal_avg_sal FROM employee;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'itcompany.employee.gender'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT gender, AVG(salary) AS avg_sal, (SELECT AVG(salary) FROM employee) AS tatal_avg_sal FROM employee GROUP BY gender;
++--------+-----------+---------------+
+| gender | avg_sal   | tatal_avg_sal |
++--------+-----------+---------------+
+| M      | 3387.5000 |     3484.6154 |
+| F      | 3640.0000 |     3484.6154 |
++--------+-----------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT gender, AVG(salary) AS avg_sal, (SELECT AVG(salary) FROM employee) AS tatal_avg_sal, 1 FROM employee GROUP BY gender;
++--------+-----------+---------------+---+
+| gender | avg_sal   | tatal_avg_sal | 1 |
++--------+-----------+---------------+---+
+| M      | 3387.5000 |     3484.6154 | 1 |
+| F      | 3640.0000 |     3484.6154 | 1 |
++--------+-----------+---------------+---+
+2 rows in set (0.00 sec)
+
+mysql> SELECT name FROM employee WHERE position IN ('디자이너', '개발자');
++--------+
+| name   |
++--------+
+| 기안84 |
+| 양코딩 |
+| 둘리   |
+| 레이첼 |
+| 챈들러 |
+| 아이유 |
++--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT name FROM employee WHERE position IN (SELECT salary FROM employee WHERE salary > 4000);
+Empty set (0.00 sec)
+
+mysql> SELECT name FROM employee WHERE position IN (SELECT position FROM employee WHERE salary > 4000);
++--------+
+| name   |
++--------+
+| 홍길동 |
+| 양코딩 |
+| 유재석 |
+| 피비   |
+| 조이   |
+| 챈들러 |
+| 김연아 |
+| 아이유 |
++--------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT position FROM employee WHERE salary > 4000
+    -> ;
++----------+
+| position |
++----------+
+| 영업사원 |
+| 법무팀   |
+| 개발자   |
++----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT name FROM employee WHERE position IN (SELECT position FROM employee WHERE salary > 4000) AND salary > 4000;
++--------+
+| name   |
++--------+
+| 유재석 |
+| 김연아 |
+| 아이유 |
++--------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT name, salary, grade FROM employee WHERE grade = (SELECT MAX(salary) FROM employee);
+Empty set, 9 warnings (0.00 sec)
+
+mysql> SELECT name, salary, grade FROM employee WHERE grade = (SELECT grade FROM employee WHERE salary = (SELECT MAX(salary) FROM employee));
++--------+--------+-------+
+| name   | salary | grade |
++--------+--------+-------+
+| 기안84 |   4000 | high  |
+| 유재석 |   4700 | high  |
+| 김연아 |   4200 | high  |
+| 아이유 |   5000 | high  |
++--------+--------+-------+
+4 rows in set (0.00 sec)
+
+mysql> GGGGGGGGGGGGOOOOOOOOOOOOOOOOOOOOOOOOOOOOOODDDDDDDDDDDDD
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'GGGGGGGGGGGGOOOOOOOOOOOOOOOOOOOOOOOOOOOOOODDDDDDDDDDDDD' at line 1
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| day01_practice     |
+| information_schema |
+| itcompany          |
+| itkorea            |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.02 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 | 영업사원 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           3 | 디자이너 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           4 | 개발자   |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           3 | 디자이너 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           3 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           2 | 마케터   |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           4 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           2 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 | 법무팀   |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           4 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> CREAT TABLE position(position_id INT PRIMARY_KEY, position_name VARCHAR(50) NOT NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREAT TABLE position(position_id INT PRIMARY_KEY, position_name VARCHAR(50) NOT ' at line 1
+mysql> CREATE TABLE position(position_id INT PRIMARY_KEY, position_name VARCHAR(50) NOT NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'position(position_id INT PRIMARY_KEY, position_name VARCHAR(50) NOT NULL)' at line 1
+mysql> CREATE TABLE position(position_id INT PRIMARY_KEY, position_name VARCHAR(50) NOT NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'position(position_id INT PRIMARY_KEY, position_name VARCHAR(50) NOT NULL)' at line 1
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_itcompany |
++---------------------+
+| employee            |
+| employee2           |
++---------------------+
+2 rows in set (0.01 sec)
+
+mysql> CREATE TABLE position(position_id INT PRIMARY KEY, position_name VARCHAR(50) NOT NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'position(position_id INT PRIMARY KEY, position_name VARCHAR(50) NOT NULL)' at line 1
+mysql> CREATE TABLE position (
+    ->   position_id INT PRIMARY KEY,
+    ->   position_name VARCHAR(50) NOT NULL
+    ->  );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> CREATE TABLE position (
+    ->   position_id INT PRIMARY KEY,
+    ->   position_name VARCHAR(50) NOT NULL
+    ->
+    -> ^C
+mysql>
+mysql> SELECT * FROM position;
+Empty set (0.00 sec)
+
+mysql> ADD TABLE position (position_name) VALUES ('영업사원'), ('디자이너'), ('개발자'), ('마케터'), ('법무팀');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ADD TABLE position (position_name) VALUES ('영업사원'), ('디자이너'), ('' at line 1
+mysql> INSERT INTO position (position_name) VALUES ('영업사원'), ('디자이너'), ('개발자'), ('마케터'), ('법무팀');
+ERROR 1364 (HY000): Field 'position_id' doesn't have a default value
+mysql> INSERT INTO position (position_name) VALUES ('영업사원'), ('디자이너'), ('개발자'), ('마케터'), ('법무팀');
+ERROR 1364 (HY000): Field 'position_id' doesn't have a default value
+mysql> DESC position;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| position_id   | int         | NO   | PRI | NULL    |       |
+| position_name | varchar(50) | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql
+mysql> UPDATE position SET position_name = '영업사원' WHERE position_id = 1;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE position SET position_name = '디자이너' WHERE position_id = 2;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE position SET position_name = '개발자' WHERE position_id = 3;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE position SET position_name = '마케터' WHERE position_id = 4;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE position SET position_name = '법무팀' WHERE position_id = 5;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> SELECT * FROM position;
+Empty set (0.00 sec)
+
+mysql> DESC position
+    -> ;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| position_id   | int         | NO   | PRI | NULL    |       |
+| position_name | varchar(50) | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT position_id FROM position
+    -> ;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO position (position_id, position_name) VALUES (1, '영업사원'), (2, '디자이너'), (3, '개발자'), (4, '마 터'), (5, ' 법무팀');
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM position;
++-------------+---------------+
+| position_id | position_name |
++-------------+---------------+
+|           1 | 영업사원      |
+|           2 | 디자이너      |
+|           3 | 개발자        |
+|           4 | 마케터        |
+|           5 | 법무팀        |
++-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> USE employee;
+ERROR 1049 (42000): Unknown database 'employee'
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 | 영업사원 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           3 | 디자이너 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           4 | 개발자   |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           3 | 디자이너 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           3 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           2 | 마케터   |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           4 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           2 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 | 법무팀   |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           4 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET position_id = CASE WHEN position = '영업사원' THEN 1, WHEN position = '디자이너' THEN 2, WHEN position = '개발자' THEN 3, WHEN position = '마케터' THEN 4, ELSE 5 END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', WHEN position = '디자이너' THEN 2, WHEN position = '개발자' THEN 3, WHE' at line 1
+mysql> UPDATE employee SET position_id = CASE WHEN position = '영업사원' THEN 1 WHEN position = '디자이너' THEN 2 WHEN position = '개발자' THEN 3 WHEN position = '마케터' THEN 4 ELSE 5 END;
+Query OK, 8 rows affected (0.01 sec)
+Rows matched: 13  Changed: 8  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 | 영업사원 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 | 디자이너 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 | 개발자   |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 | 디자이너 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 | 마케터   |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 | 법무팀   |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> ALTER TABLE employee DROP COLUMN position;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |           5 |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET position_id = NULL WHERE id = 13;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT * FROM position;
++-------------+---------------+
+| position_id | position_name |
++-------------+---------------+
+|           1 | 영업사원      |
+|           2 | 디자이너      |
+|           3 | 개발자        |
+|           4 | 마케터        |
+|           5 | 법무팀        |
++-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE employee ADD CONSTRAINT fg_position FOREIGN KEY (position_id) REFERENCES position (position_id) ON DELETE RESTRICT ON UPDATE CASCADE;
+Query OK, 13 rows affected (0.06 sec)
+Records: 13  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT * FROM position;
++-------------+---------------+
+| position_id | position_name |
++-------------+---------------+
+|           1 | 영업사원      |
+|           2 | 디자이너      |
+|           3 | 개발자        |
+|           4 | 마케터        |
+|           5 | 법무팀        |
++-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> DESC position;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| position_id   | int         | NO   | PRI | NULL    |       |
+| position_name | varchar(50) | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SHOW CREATE TABLE position;
++----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table    | Create Table                                                                                                                                                                                     |
++----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| position | CREATE TABLE `position` (
+  `position_id` int NOT NULL,
+  `position_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`position_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> INSERT INTO employee (name, age, position_id) VALUSES ('김개똥', 34, 7);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VALUSES ('김개똥', 34, 7)' at line 1
+mysql> INSERT INTO employee (name, age, position_id) VALUES ('김개똥', 34, 7);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`itcompany`.`employee`, CONSTRAINT `fg_position` FOREIGN KEY (`position_id`) REFERENCES `position` (`position_id`) ON DELETE RESTRICT ON UPDATE CASCADE)
+mysql> DELETE FROM position WHERE position_id = 1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`itcompany`.`employee`, CONSTRAINT `fg_position` FOREIGN KEY (`position_id`) REFERENCES `position` (`position_id`) ON DELETE RESTRICT ON UPDATE CASCADE)
+mysql> ON DELETE RESTRICT
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ON DELETE RESTRICT' at line 1
+mysql> UPDATE position SET position_id = 7 WHERE position_id = 4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           7 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           7 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e INNER JOIN position p ON e.position_id = p.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 유재석 | 영업사원      |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
+| 모니카 | 마케터        |
+| 로스   | 마케터        |
++--------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT a.name, b.position_name FROM employee a INNER JOIN position b ON a.position_id = b.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 유재석 | 영업사원      |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
+| 모니카 | 마케터        |
+| 로스   | 마케터        |
++--------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> UPDATE position SET position_id = 4 WHERE position_id = 7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT a.name, b.position_name FROM employee a INNER JOIN position b ON a.position_id = b.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 유재석 | 영업사원      |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
+| 모니카 | 마케터        |
+| 로스   | 마케터        |
++--------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT a.name, b.position_name FROM employee a INNER JOIN position b ON a.position_id = b.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 유재석 | 영업사원      |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
+| 모니카 | 마케터        |
+| 로스   | 마케터        |
++--------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e INNER JOIN position p ON e.position_id = p.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 유재석 | 영업사원      |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
+| 모니카 | 마케터        |
+| 로스   | 마케터        |
++--------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT * FROM position;
++-------------+---------------+
+| position_id | position_name |
++-------------+---------------+
+|           1 | 영업사원      |
+|           2 | 디자이너      |
+|           3 | 개발자        |
+|           4 | 마케터        |
+|           5 | 법무팀        |
++-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE position SET position_id = 7 WHERE position_id = 4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           7 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           7 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e INNER JOIN position p ON e.position_id = p.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 유재석 | 영업사원      |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
+| 모니카 | 마케터        |
+| 로스   | 마케터        |
++--------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           7 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           7 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT * FROM position;
++-------------+---------------+
+| position_id | position_name |
++-------------+---------------+
+|           1 | 영업사원      |
+|           2 | 디자이너      |
+|           3 | 개발자        |
+|           5 | 법무팀        |
+|           7 | 마케터        |
++-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE position SET position_id = 4 WHERE position_id = 7;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM position;
++-------------+---------------+
+| position_id | position_name |
++-------------+---------------+
+|           1 | 영업사원      |
+|           2 | 디자이너      |
+|           3 | 개발자        |
+|           4 | 마케터        |
+|           5 | 법무팀        |
++-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e INNER JOIN position p ON e.position_id = p.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 유재석 | 영업사원      |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
+| 모니카 | 마케터        |
+| 로스   | 마케터        |
++--------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e LEFT JOIN position p ON e.position_id = p.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 기안84 | 디자이너      |
+| 양코딩 | 개발자        |
+| 둘리   | 디자이너      |
+| 유재석 | 영업사원      |
+| 레이첼 | 디자이너      |
+| 모니카 | 마케터        |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 챈들러 | 개발자        |
+| 로스   | 마케터        |
+| 김연아 | NULL          |
+| 아이유 | 개발자        |
++--------+---------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT employee.name, position.position_name FROM employee LEFT JOIN position ON employee.position_id = position.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 기안84 | 디자이너      |
+| 양코딩 | 개발자        |
+| 둘리   | 디자이너      |
+| 유재석 | 영업사원      |
+| 레이첼 | 디자이너      |
+| 모니카 | 마케터        |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 챈들러 | 개발자        |
+| 로스   | 마케터        |
+| 김연아 | NULL          |
+| 아이유 | 개발자        |
++--------+---------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT employee.name, position.position_name FROM position LEFT JOIN employee ON employee.position_id = position.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 유재석 | 영업사원      |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
+| 모니카 | 마케터        |
+| 로스   | 마케터        |
+| NULL   | 법무팀        |
++--------+---------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT employee.name, position.position_name FROM position JOIN employee ON employee.position_id = position.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 유재석 | 영업사원      |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
+| 모니카 | 마케터        |
+| 로스   | 마케터        |
++--------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT employee.name, position.position_name FROM position RIGHT JOIN employee ON employee.position_id = position.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 기안84 | 디자이너      |
+| 양코딩 | 개발자        |
+| 둘리   | 디자이너      |
+| 유재석 | 영업사원      |
+| 레이첼 | 디자이너      |
+| 모니카 | 마케터        |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 챈들러 | 개발자        |
+| 로스   | 마케터        |
+| 김연아 | NULL          |
+| 아이유 | 개발자        |
++--------+---------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT employee.name, position.position_name FROM position RIGHT JOIN employee ON employee.position_id = position.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 기안84 | 디자이너      |
+| 양코딩 | 개발자        |
+| 둘리   | 디자이너      |
+| 유재석 | 영업사원      |
+| 레이첼 | 디자이너      |
+| 모니카 | 마케터        |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 챈들러 | 개발자        |
+| 로스   | 마케터        |
+| 김연아 | NULL          |
+| 아이유 | 개발자        |
++--------+---------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id;
++--------+------+---------------+
+| name   | age  | position_name |
++--------+------+---------------+
+| 홍길동 |   33 | 영업사원      |
+| 유재석 |   42 | 영업사원      |
+| 피비   |   33 | 영업사원      |
+| 조이   |   32 | 영업사원      |
+| 기안84 |   38 | 디자이너      |
+| 둘리   |   20 | 디자이너      |
+| 레이첼 |   31 | 디자이너      |
+| 양코딩 |   28 | 개발자        |
+| 챈들러 |   33 | 개발자        |
+| 아이유 |   34 | 개발자        |
+| 모니카 |   32 | 마케터        |
+| 로스   |   33 | 마케터        |
++--------+------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT e.name, age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id;
++--------+------+---------------+
+| name   | age  | position_name |
++--------+------+---------------+
+| 홍길동 |   33 | 영업사원      |
+| 유재석 |   42 | 영업사원      |
+| 피비   |   33 | 영업사원      |
+| 조이   |   32 | 영업사원      |
+| 기안84 |   38 | 디자이너      |
+| 둘리   |   20 | 디자이너      |
+| 레이첼 |   31 | 디자이너      |
+| 양코딩 |   28 | 개발자        |
+| 챈들러 |   33 | 개발자        |
+| 아이유 |   34 | 개발자        |
+| 모니카 |   32 | 마케터        |
+| 로스   |   33 | 마케터        |
++--------+------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT name, age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id;
++--------+------+---------------+
+| name   | age  | position_name |
++--------+------+---------------+
+| 홍길동 |   33 | 영업사원      |
+| 유재석 |   42 | 영업사원      |
+| 피비   |   33 | 영업사원      |
+| 조이   |   32 | 영업사원      |
+| 기안84 |   38 | 디자이너      |
+| 둘리   |   20 | 디자이너      |
+| 레이첼 |   31 | 디자이너      |
+| 양코딩 |   28 | 개발자        |
+| 챈들러 |   33 | 개발자        |
+| 아이유 |   34 | 개발자        |
+| 모니카 |   32 | 마케터        |
+| 로스   |   33 | 마케터        |
++--------+------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(*) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+----------+
+| position_name | COUNT(*) |
++---------------+----------+
+| 영업사원      |        4 |
+| 디자이너      |        3 |
+| 개발자        |        3 |
+| 마케터        |        2 |
++---------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(*) AS `총 직원수` FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+-----------+
+| position_name | 총 직원수 |
++---------------+-----------+
+| 영업사원      |         4 |
+| 디자이너      |         3 |
+| 개발자        |         3 |
+| 마케터        |         2 |
++---------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(e.id) AS `총 직원수` FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+-----------+
+| position_name | 총 직원수 |
++---------------+-----------+
+| 영업사원      |         4 |
+| 디자이너      |         3 |
+| 개발자        |         3 |
+| 마케터        |         2 |
++---------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 유재석 | 영업사원      |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
+| 모니카 | 마케터        |
+| 로스   | 마케터        |
++--------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE p.position_name = '개발 자';
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
++--------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(e.id) AS `총 직원수` FROM employee e RIGHT JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+-----------+
+| position_name | 총 직원수 |
++---------------+-----------+
+| 영업사원      |         4 |
+| 디자이너      |         3 |
+| 개발자        |         3 |
+| 마케터        |         2 |
+| 법무팀        |         0 |
++---------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(e.id) AS `총 직원수` FROM employee e LEFT JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+-----------+
+| position_name | 총 직원수 |
++---------------+-----------+
+| NULL          |         1 |
+| 영업사원      |         4 |
+| 디자이너      |         3 |
+| 개발자        |         3 |
+| 마케터        |         2 |
++---------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE p.position_name = '개발 자';
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
++--------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE p.position_name = '개발 자';
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
++--------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   4000 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT * FROM position;
++-------------+---------------+
+| position_id | position_name |
++-------------+---------------+
+|           1 | 영업사원      |
+|           2 | 디자이너      |
+|           3 | 개발자        |
+|           4 | 마케터        |
+|           5 | 법무팀        |
++-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT p.position_name, COUNT(*) AS `총 직원수` FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+-----------+
+| position_name | 총 직원수 |
++---------------+-----------+
+| 영업사원      |         4 |
+| 디자이너      |         3 |
+| 개발자        |         3 |
+| 마케터        |         2 |
++---------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(*) AS `총 직원수` FROM employee e RIGHT JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+-----------+
+| position_name | 총 직원수 |
++---------------+-----------+
+| 영업사원      |         4 |
+| 디자이너      |         3 |
+| 개발자        |         3 |
+| 마케터        |         2 |
+| 법무팀        |         1 |
++---------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(*) AS `총 직원수` FROM employee e LEFT JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+-----------+
+| position_name | 총 직원수 |
++---------------+-----------+
+| NULL          |         1 |
+| 영업사원      |         4 |
+| 디자이너      |         3 |
+| 개발자        |         3 |
+| 마케터        |         2 |
++---------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(e.id) AS `총 직원수` FROM employee e LEFT JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+-----------+
+| position_name | 총 직원수 |
++---------------+-----------+
+| NULL          |         1 |
+| 영업사원      |         4 |
+| 디자이너      |         3 |
+| 개발자        |         3 |
+| 마케터        |         2 |
++---------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(e.id) AS `총 직원수` FROM employee e RIGHT JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+-----------+
+| position_name | 총 직원수 |
++---------------+-----------+
+| 영업사원      |         4 |
+| 디자이너      |         3 |
+| 개발자        |         3 |
+| 마케터        |         2 |
+| 법무팀        |         0 |
++---------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE p.position_name = '개발 자';
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
++--------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE p.position_id = 3;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 양코딩 | 개발자        |
+| 챈들러 | 개발자        |
+| 아이유 | 개발자        |
++--------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id ORDER BY e.name;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 로스   | 마케터        |
+| 모니카 | 마케터        |
+| 아이유 | 개발자        |
+| 양코딩 | 개발자        |
+| 유재석 | 영업사원      |
+| 조이   | 영업사원      |
+| 챈들러 | 개발자        |
+| 피비   | 영업사원      |
+| 홍길동 | 영업사원      |
++--------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e RIGHT JOIN position p ON e.position_id = p.position_id ORDER BY e.name;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| NULL   | 법무팀        |
+| 기안84 | 디자이너      |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 로스   | 마케터        |
+| 모니카 | 마케터        |
+| 아이유 | 개발자        |
+| 양코딩 | 개발자        |
+| 유재석 | 영업사원      |
+| 조이   | 영업사원      |
+| 챈들러 | 개발자        |
+| 피비   | 영업사원      |
+| 홍길동 | 영업사원      |
++--------+---------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e LEFT JOIN position p ON e.position_id = p.position_id ORDER BY e.name;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 기안84 | 디자이너      |
+| 김연아 | NULL          |
+| 둘리   | 디자이너      |
+| 레이첼 | 디자이너      |
+| 로스   | 마케터        |
+| 모니카 | 마케터        |
+| 아이유 | 개발자        |
+| 양코딩 | 개발자        |
+| 유재석 | 영업사원      |
+| 조이   | 영업사원      |
+| 챈들러 | 개발자        |
+| 피비   | 영업사원      |
+| 홍길동 | 영업사원      |
++--------+---------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(e.name, '-', p.position) FROM employee e JOIN position p ON e.position_id = p.position_id;
+ERROR 1054 (42S22): Unknown column 'p.position' in 'field list'
+mysql> SELECT CONCAT(e.name, '-', p.position_name) FROM employee e JOIN position p ON e.position_id = p.position_id;
++--------------------------------------+
+| CONCAT(e.name, '-', p.position_name) |
++--------------------------------------+
+| 홍길동-영업사원                      |
+| 유재석-영업사원                      |
+| 피비-영업사원                        |
+| 조이-영업사원                        |
+| 기안84-디자이너                      |
+| 둘리-디자이너                        |
+| 레이첼-디자이너                      |
+| 양코딩-개발자                        |
+| 챈들러-개발자                        |
+| 아이유-개발자                        |
+| 모니카-마케터                        |
+| 로스-마케터                          |
++--------------------------------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(e.name, ' - ', p.position_name) FROM employee e JOIN position p ON e.position_id = p.position_id;
++----------------------------------------+
+| CONCAT(e.name, ' - ', p.position_name) |
++----------------------------------------+
+| 홍길동 - 영업사원                      |
+| 유재석 - 영업사원                      |
+| 피비 - 영업사원                        |
+| 조이 - 영업사원                        |
+| 기안84 - 디자이너                      |
+| 둘리 - 디자이너                        |
+| 레이첼 - 디자이너                      |
+| 양코딩 - 개발자                        |
+| 챈들러 - 개발자                        |
+| 아이유 - 개발자                        |
+| 모니카 - 마케터                        |
+| 로스 - 마케터                          |
++----------------------------------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(e.name, ' - ', p.position_name) FROM employee e LEFT JOIN position p ON e.position_id = p.position_id;
++----------------------------------------+
+| CONCAT(e.name, ' - ', p.position_name) |
++----------------------------------------+
+| 홍길동 - 영업사원                      |
+| 기안84 - 디자이너                      |
+| 양코딩 - 개발자                        |
+| 둘리 - 디자이너                        |
+| 유재석 - 영업사원                      |
+| 레이첼 - 디자이너                      |
+| 모니카 - 마케터                        |
+| 피비 - 영업사원                        |
+| 조이 - 영업사원                        |
+| 챈들러 - 개발자                        |
+| 로스 - 마케터                          |
+| NULL                                   |
+| 아이유 - 개발자                        |
++----------------------------------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(e.name, ' - ', p.position_name) FROM employee e RIGHT JOIN position p ON e.position_id = p.position_id;
++----------------------------------------+
+| CONCAT(e.name, ' - ', p.position_name) |
++----------------------------------------+
+| 홍길동 - 영업사원                      |
+| 유재석 - 영업사원                      |
+| 피비 - 영업사원                        |
+| 조이 - 영업사원                        |
+| 기안84 - 디자이너                      |
+| 둘리 - 디자이너                        |
+| 레이첼 - 디자이너                      |
+| 양코딩 - 개발자                        |
+| 챈들러 - 개발자                        |
+| 아이유 - 개발자                        |
+| 모니카 - 마케터                        |
+| 로스 - 마케터                          |
+| NULL                                   |
++----------------------------------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(e.name, ' - ', p.position_name) FROM employee e JOIN position p ON e.position_id = p.position_id;
++----------------------------------------+
+| CONCAT(e.name, ' - ', p.position_name) |
++----------------------------------------+
+| 홍길동 - 영업사원                      |
+| 유재석 - 영업사원                      |
+| 피비 - 영업사원                        |
+| 조이 - 영업사원                        |
+| 기안84 - 디자이너                      |
+| 둘리 - 디자이너                        |
+| 레이첼 - 디자이너                      |
+| 양코딩 - 개발자                        |
+| 챈들러 - 개발자                        |
+| 아이유 - 개발자                        |
+| 모니카 - 마케터                        |
+| 로스 - 마케터                          |
++----------------------------------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(e.name, ' - ', NULL) FROM employee e JOIN position p ON e.position_id = p.position_id;
++-----------------------------+
+| CONCAT(e.name, ' - ', NULL) |
++-----------------------------+
+| NULL                        |
+| NULL                        |
+| NULL                        |
+| NULL                        |
+| NULL                        |
+| NULL                        |
+| NULL                        |
+| NULL                        |
+| NULL                        |
+| NULL                        |
+| NULL                        |
+| NULL                        |
++-----------------------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(NULL, ' - ', p.position_name) FROM employee e JOIN position p ON e.position_id = p.position_id;
++--------------------------------------+
+| CONCAT(NULL, ' - ', p.position_name) |
++--------------------------------------+
+| NULL                                 |
+| NULL                                 |
+| NULL                                 |
+| NULL                                 |
+| NULL                                 |
+| NULL                                 |
+| NULL                                 |
+| NULL                                 |
+| NULL                                 |
+| NULL                                 |
+| NULL                                 |
+| NULL                                 |
++--------------------------------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(e.name, NULL, p.position_name) FROM employee e JOIN position p ON e.position_id = p.position_id;
++---------------------------------------+
+| CONCAT(e.name, NULL, p.position_name) |
++---------------------------------------+
+| NULL                                  |
+| NULL                                  |
+| NULL                                  |
+| NULL                                  |
+| NULL                                  |
+| NULL                                  |
+| NULL                                  |
+| NULL                                  |
+| NULL                                  |
+| NULL                                  |
+| NULL                                  |
+| NULL                                  |
++---------------------------------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(e.name, ' - ', p.position_name) FROM employee e JOIN position p ON e.position_id = p.position_id;
++----------------------------------------+
+| CONCAT(e.name, ' - ', p.position_name) |
++----------------------------------------+
+| 홍길동 - 영업사원                      |
+| 유재석 - 영업사원                      |
+| 피비 - 영업사원                        |
+| 조이 - 영업사원                        |
+| 기안84 - 디자이너                      |
+| 둘리 - 디자이너                        |
+| 레이첼 - 디자이너                      |
+| 양코딩 - 개발자                        |
+| 챈들러 - 개발자                        |
+| 아이유 - 개발자                        |
+| 모니카 - 마케터                        |
+| 로스 - 마케터                          |
++----------------------------------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, (SELECT AVG(age) FROM employee) FROM employee e JOIN position p ON e.position_id = p.position_id;
++---------------+---------------------------------+
+| position_name | (SELECT AVG(age) FROM employee) |
++---------------+---------------------------------+
+| 영업사원      |                         32.7692 |
+| 영업사원      |                         32.7692 |
+| 영업사원      |                         32.7692 |
+| 영업사원      |                         32.7692 |
+| 디자이너      |                         32.7692 |
+| 디자이너      |                         32.7692 |
+| 디자이너      |                         32.7692 |
+| 개발자        |                         32.7692 |
+| 개발자        |                         32.7692 |
+| 개발자        |                         32.7692 |
+| 마케터        |                         32.7692 |
+| 마케터        |                         32.7692 |
++---------------+---------------------------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG((SELECT AVG(salary) FROM employee GROUP BY position_id) FROM employee e JOIN position p ON e.position_id = p.position_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM employee e JOIN position p ON e.position_id = p.position_id' at line 1
+mysql> SELECT p.position_name, (SELECT AVG(salary) FROM employee GROUP BY position_id) FROM employee e JOIN position p ON e.position_id = p.position_id;
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT p.position_name, (SELECT AVG(salary) FROM employee GROUP BY position_id) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT p.position_name, (SELECT AVG(salary) FROM employee GROUP BY p.position_id) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.p.position_id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, (SELECT AVG(salary) FROM employee) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+------------------------------------+
+| position_name | (SELECT AVG(salary) FROM employee) |
++---------------+------------------------------------+
+| 영업사원      |                          3484.6154 |
+| 디자이너      |                          3484.6154 |
+| 개발자        |                          3484.6154 |
+| 마케터        |                          3484.6154 |
++---------------+------------------------------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, (SELECT position_id, AVG(salary) FROM employee GROUP BY position_id) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> SELECT p.position_name, AVG(salary) FROM employee GROUP BY position_id) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.po' at line 1
+mysql> SELECT p.position_name, AVG(salary) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+-------------+
+| position_name | AVG(salary) |
++---------------+-------------+
+| 영업사원      |   3450.0000 |
+| 디자이너      |   3233.3333 |
+| 개발자        |   3766.6667 |
+| 마케터        |   3150.0000 |
++---------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(age) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+----------+
+| position_name | AVG(age) |
++---------------+----------+
+| 영업사원      |  35.0000 |
+| 디자이너      |  29.6667 |
+| 개발자        |  31.6667 |
+| 마케터        |  32.5000 |
++---------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, p.position_id, AVG(age) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.p.position_id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, e.position_id, AVG(age) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.e.position_id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_id, AVG(age) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_id;
++-------------+----------+
+| position_id | AVG(age) |
++-------------+----------+
+|           1 |  35.0000 |
+|           2 |  29.6667 |
+|           3 |  31.6667 |
+|           4 |  32.5000 |
++-------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_id, e.name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE p.position_id IN (1, 2);
++-------------+--------+
+| position_id | name   |
++-------------+--------+
+|           1 | 홍길동 |
+|           1 | 유재석 |
+|           1 | 피비   |
+|           1 | 조이   |
+|           2 | 기안84 |
+|           2 | 둘리   |
+|           2 | 레이첼 |
++-------------+--------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.age >= 30;
++--------+---------------+
+| name   | position_name |
++--------+---------------+
+| 홍길동 | 영업사원      |
+| 기안84 | 디자이너      |
+| 유재석 | 영업사원      |
+| 레이첼 | 디자이너      |
+| 모니카 | 마케터        |
+| 피비   | 영업사원      |
+| 조이   | 영업사원      |
+| 챈들러 | 개발자        |
+| 로스   | 마케터        |
+| 아이유 | 개발자        |
++--------+---------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, e.name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (SELECT MAX(salary) FROM employee) GROUP BY p.position_name;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.e.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, e.name FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.e.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, MAX(e.salary) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+---------------+
+| position_name | MAX(e.salary) |
++---------------+---------------+
+| 영업사원      |          4700 |
+| 디자이너      |          4000 |
+| 개발자        |          5000 |
+| 마케터        |          3800 |
++---------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, e.name , MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.e.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+---------+
+| position_name | max_sal |
++---------------+---------+
+| 영업사원      |    4700 |
+| 디자이너      |    4000 |
+| 개발자        |    5000 |
+| 마케터        |    3800 |
++---------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, e.name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.name IN (SELECT MAX(salary) FROM employee) GROUP BY p.position_name;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.e.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, e.name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.e.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+---------+
+| position_name | max_sal |
++---------------+---------+
+| 영업사원      |    4700 |
+| 디자이너      |    4000 |
+| 개발자        |    5000 |
+| 마케터        |    3800 |
++---------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, e.name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.name = (SELECT position_id, MAX(salary) FROM employee GROUP BY position_id)  GROUP BY p.position_name;
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> SELECT p.position_name, e.name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.name = (SELECT name, MAX(salary) FROM employee GROUP BY position_id)  GROUP BY p.position_name;
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> SELECT p.position_name, e.name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.name = (SELECT name FROM employee WHERE name IS )  GROUP BY p.position_name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')  GROUP BY p.position_name' at line 1
+mysql> SELECT p.position_name, e.name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.name = (SELECT name FROM employee WHERE (SELECT position, MAX(salary) FROM employee GROUP BY position))  GROUP BY p.position_name;
+ERROR 1054 (42S22): Unknown column 'position' in 'field list'
+mysql> SELECT p.position_name, e.name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.name = (SELECT name FROM employee WHERE (SELECT position_id, MAX(salary) FROM employee GROUP BY position_id))  GROUP BY p.position_name;
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> SELECT p.position_name, e.name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.e.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+---------+
+| position_name | max_sal |
++---------------+---------+
+| 영업사원      |    4700 |
+| 디자이너      |    4000 |
+| 개발자        |    5000 |
+| 마케터        |    3800 |
++---------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, e.name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.name = (SELECT name FROM employee WHERE MAX(salary)) GROUP BY p.position_name;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT p.position_name, e.name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.name = (SELECT name FROM employee WHERE MAX(salary) GROUP BY position_id) GROUP BY p.position_name;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT p.position_name, e.name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.name = (SELECT name FROM employee WHERE MAX(salary) GROUP BY e.position_id) GROUP BY p.position_name;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT p.position_name, (SELECT e.position_id, e.name FROM employee e WHERE salary = MAX(salary) GROUP BY e.position_id), MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT e.name, p.position_name, MAX(e.salary) AS max_sal FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.name IN (SELECT name FROM employee WHERE salary >= MAX(salary)) GROUP BY p.position_name;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT
+    ->   p.position_name,
+    ->   e.name,
+    ->   e.salary AS max_salary
+    -> FROM employee e
+    -> JOIN position p ON e.position_id = p.position_id
+    -> WHERE (e.position_id, e.salary) IN (
+    ->   SELECT position_id, MAX(salary)
+    ->   FROM employee
+    ->   GROUP BY position_id
+    ->   GROUP BY position_id^C
+mysql> SELECT
+    ->   p.position_name,
+    ->   e.name,
+    ->   e.salary AS max_salary
+    -> FROM employee e
+    -> JOIN position p ON e.position_id = p.position_id
+    -> WHERE (e.position_id, e.salary) IN (
+    ->   SELECT position_id, MAX(salary)
+    ->   FROM employee
+    ->   GROUP BY position_id
+    -> );
++---------------+--------+------------+
+| position_name | name   | max_salary |
++---------------+--------+------------+
+| 영업사원      | 유재석 |       4700 |
+| 디자이너      | 기안84 |       4000 |
+| 개발자        | 아이유 |       5000 |
+| 마케터        | 로스   |       3800 |
++---------------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> )SELECT e.name, p.position_name, e.salary AS max_salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.position_id, e.salary) IN (SELECT position_id, MAX(salary) FROM employee GROUP BY position_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')SELECT e.name, p.position_name, e.salary AS max_salary FROM employee e JOIN pos' at line 1
+mysql> )SELECT p.position_name, e.name, e.salary AS max_salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.position_id, e.salary) IN (SELECT position_id, MAX(salary) FROM employee GROUP BY position_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')SELECT p.position_name, e.name, e.salary AS max_salary FROM employee e JOIN pos' at line 1
+mysql> )SELECT e.name, p.position_name, e.salary AS max_salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.position_id, e.salary) IN (SELECT position_id, MAX(salary) FROM employee GROUP BY position_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')SELECT e.name, p.position_name, e.salary AS max_salary FROM employee e JOIN pos' at line 1
+mysql> )SELECT e.name, p.position_name, e.salary AS max_salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.position_id, e.salary) IN (SELECT position_id, MAX(salary) FROM employee GROUP BY position_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')SELECT e.name, p.position_name, e.salary AS max_salary FROM employee e JOIN pos' at line 1
+mysql> SELECT
+    ->     ->   p.position_name,
+    ->     ->   e.name,
+    ->     ->   e.salary AS max_salary
+    ->     -> FROM employee e
+    ->     -> JOIN position p ON e.position_id = p.position_id
+    ->     -> WHERE (e.position_id, e.salary) IN (
+    ->     ->   SELECT position_id, MAX(salary)
+    ->     ->   FROM employee
+    ->     ->   GROUP BY position_id
+    ->     -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '->   p.position_name,
+    ->   e.name,
+    ->   e.salary AS max_salary
+    -> FR' at line 2
+mysql> SELECT
+    ->     ->   p.position_name,
+    ->     ->   e.name,
+    ->     ->   e.salary AS max_salary
+    ->     -> FROM employee e
+    ->     -> JOIN position p ON e.position_id = p.position_id
+    ->     -> WHERE (e.position_id, e.salary) IN (
+    ->     ->   SELECT position_id, MAX(salary)
+    ->     ->   FROM employee
+    ->     ->   GROUP BY position_id
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '->   p.position_name,
+    ->   e.name,
+    ->   e.salary AS max_salary
+    -> FR' at line 2
+mysql> SELECT
+    ->   p.position_name,
+    ->   e.name,
+    ->   e.salary AS max_salary
+    -> FROM employee e
+    -> JOIN position p ON e.position_id = p.position_id
+    -> WHERE (e.position_id, e.salary) IN (
+    ->   SELECT position_id, MAX(salary)
+    ->   FROM employee
+    ->   GROUP BY position_id
+    -> );
++---------------+--------+------------+
+| position_name | name   | max_salary |
++---------------+--------+------------+
+| 영업사원      | 유재석 |       4700 |
+| 디자이너      | 기안84 |       4000 |
+| 개발자        | 아이유 |       5000 |
+| 마케터        | 로스   |       3800 |
++---------------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->   p.position_name,
+    ->   e.name,
+    ->   e.salary AS max_salary
+    -> FROM employee e
+    -> JOIN position p ON e.position_id = p.position_id
+    -> WHERE (e.position_id, e.salary) IN (
+    ->   SELECT position_id, MAX(salary)
+    ->   FROM employee
+    ->   GROUP BY position_id
+    -> );
++---------------+--------+------------+
+| position_name | name   | max_salary |
++---------------+--------+------------+
+| 영업사원      | 유재석 |       4700 |
+| 디자이너      | 기안84 |       4000 |
+| 개발자        | 아이유 |       5000 |
+| 마케터        | 로스   |       3800 |
++---------------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.salary AS max_salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.position_id, e.salary) IN (SELECT position_id, MAX(salary) FROM employee GROUP BY position_id);
++--------+---------------+------------+
+| name   | position_name | max_salary |
++--------+---------------+------------+
+| 유재석 | 영업사원      |       4700 |
+| 기안84 | 디자이너      |       4000 |
+| 아이유 | 개발자        |       5000 |
+| 로스   | 마케터        |       3800 |
++--------+---------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.salary AS max_salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.position_id, e.salary) IN (SELECT position_id, MAX(salary) FROM employee GROUP BY position_id);
++--------+---------------+------------+
+| name   | position_name | max_salary |
++--------+---------------+------------+
+| 유재석 | 영업사원      |       4700 |
+| 기안84 | 디자이너      |       4000 |
+| 아이유 | 개발자        |       5000 |
+| 로스   | 마케터        |       3800 |
++--------+---------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (SELECT position_id, MIN(age) FROM employee GROUP BY position_id);
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.age, p.position_name) IN (SELECT position_id, MIN(age) FROM employee GROUP BY position_id);
+Empty set (0.00 sec)
+
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.age, e.position_id) IN (SELECT position_id, MIN(age) FROM employee GROUP BY position_id);
+Empty set (0.00 sec)
+
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.age, e.position_id IN (SELECT position_id, MIN(age) FROM employee GROUP BY position_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', e.position_id IN (SELECT position_id, MIN(age) FROM employee GROUP BY position' at line 1
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.age, p.position_id IN (SELECT position_id, MIN(age) FROM employee GROUP BY position_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', p.position_id IN (SELECT position_id, MIN(age) FROM employee GROUP BY position' at line 1
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE p.position_id, e.age IN (SELECT position_id, MIN(age) FROM employee GROUP BY position_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', e.age IN (SELECT position_id, MIN(age) FROM employee GROUP BY position_id)' at line 1
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (p.position_id, e.age) IN (SELECT position_id, MIN(age) FROM employee GROUP BY position_id);
++--------+------+---------------+
+| name   | age  | position_name |
++--------+------+---------------+
+| 조이   |   32 | 영업사원      |
+| 둘리   |   20 | 디자이너      |
+| 양코딩 |   28 | 개발자        |
+| 모니카 |   32 | 마케터        |
++--------+------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.age, p.position_id) IN (SELECT position_id, MIN(age) FROM employee GROUP BY position_id);
+Empty set (0.00 sec)
+
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (p.position_id, e.age) IN (SELECT position_id, MIN(age) FROM employee GROUP BY position_id);
++--------+------+---------------+
+| name   | age  | position_name |
++--------+------+---------------+
+| 조이   |   32 | 영업사원      |
+| 둘리   |   20 | 디자이너      |
+| 양코딩 |   28 | 개발자        |
+| 모니카 |   32 | 마케터        |
++--------+------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.name, e.start_date, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.start_date, p.position_name) IN (SELECT position_id, MIN(start_date) FROM employee GROUP BY position_id);
+Empty set, 12 warnings (0.00 sec)
+
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.age, e.start_date) IN (SELECT position_id, MIN(age) FROM employee GROUP BY position_id);
+Empty set (0.00 sec)
+
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.age, p.position_id) IN (SELECT position_id, MIN(age) FROM employee GROUP BY position_id);
+Empty set (0.00 sec)
+
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.start_date, p.position_id) IN (SELECT position_id, MIN(start_date) FROM employee GROUP BY position_id);
+Empty set (0.00 sec)
+
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (p.position_id, e.start_date) IN (SELECT position_id, MIN(start_date) FROM employee GROUP BY position_id);
++--------+------+---------------+
+| name   | age  | position_name |
++--------+------+---------------+
+| 유재석 |   42 | 영업사원      |
+| 기안84 |   38 | 디자이너      |
+| 둘리   |   20 | 디자이너      |
+| 레이첼 |   31 | 디자이너      |
+| 양코딩 |   28 | 개발자        |
+| 모니카 |   32 | 마케터        |
+| 로스   |   33 | 마케터        |
++--------+------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT e.name, e.start_date, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (p.position_id, e.start_date) IN (SELECT position_id, MIN(start_date) FROM employee GROUP BY position_id);
++--------+------------+---------------+
+| name   | start_date | position_name |
++--------+------------+---------------+
+| 유재석 | 2021-03-01 | 영업사원      |
+| 기안84 | 2025-07-09 | 디자이너      |
+| 둘리   | 2025-07-09 | 디자이너      |
+| 레이첼 | 2025-07-09 | 디자이너      |
+| 양코딩 | 2023-12-15 | 개발자        |
+| 모니카 | 2025-07-09 | 마케터        |
+| 로스   | 2025-07-09 | 마케터        |
++--------+------------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT e.name, e.start_date, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (p.position_id, e.start_date) IN (SELECT MIN(start_date), position_id FROM employee GROUP BY position_id);
+Empty set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.salary AS max_salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.position_id, e.salary) IN (SELECT position_id, MAX(salary) FROM employee GROUP BY position_id);
++--------+---------------+------------+
+| name   | position_name | max_salary |
++--------+---------------+------------+
+| 유재석 | 영업사원      |       4700 |
+| 기안84 | 디자이너      |       4000 |
+| 아이유 | 개발자        |       5000 |
+| 로스   | 마케터        |       3800 |
++--------+---------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.salary AS max_salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.salary, e.position_id) IN (SELECT position_id, MAX(salary) FROM employee GROUP BY position_id);
+Empty set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.salary AS max_salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (e.position_id, e.salary) IN (SELECT position_id, MAX(salary) FROM employee GROUP BY position_id);
++--------+---------------+------------+
+| name   | position_name | max_salary |
++--------+---------------+------------+
+| 유재석 | 영업사원      |       4700 |
+| 기안84 | 디자이너      |       4000 |
+| 아이유 | 개발자        |       5000 |
+| 로스   | 마케터        |       3800 |
++--------+---------------+------------+
+4 rows in set (0.00 sec)
+
+mysql>

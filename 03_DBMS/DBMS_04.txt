@@ -1,0 +1,241 @@
+-- =============================================
+-- WITH ROLLUP: 그룹별 집계 결과 + 전체 총계(합계, 평균 등)도 함께 보여줌
+
+-- 기본 문법
+SELECT 그룹기준열, 집계함수(열)
+FROM 테이블명
+GROUP BY 그룹기준열 WITH ROLLUP;
+
+-- 예제: 직위별 총 급여와 전체 총 급여까지 출력
+SELECT position, SUM(salary) AS 총급여
+FROM employee
+GROUP BY position WITH ROLLUP;
+
+-- 결과의 마지막 행(position = NULL)은 전체 합계를 의미함
+
+-- =============================================
+-- DISTINCT: 중복 제거
+
+-- 기본 문법
+SELECT DISTINCT 열이름 FROM 테이블명;
+
+-- 1. 중복된 직위(position)를 하나씩만 출력
+SELECT DISTINCT position FROM employee;
+
+-- 2. 이름과 직위의 조합이 중복되지 않는 행만 출력
+SELECT DISTINCT name, position FROM employee;
+
+-- 참고: SELECT DISTINCT COUNT(*) ... 은 COUNT의 기준이 전체 행 수이므로
+--      SELECT COUNT(DISTINCT 열) 형식으로 써야 정확한 중복제거 개수 가능
+
+-- 예제: 중복 없는 직위 수
+SELECT COUNT(DISTINCT position) FROM employee;
+
+-- =============================================
+-- 서브쿼리 + ANY: 서브쿼리에서 나오는 값 중 "하나라도" 만족하는 조건이 있으면 TRUE
+
+-- 기본 문법
+SELECT 컬럼 FROM 테이블명
+WHERE 열 연산자 ANY (서브쿼리);
+
+-- 예제: employee 테이블에서 급여가 부서 3(디자이너) 중 한 명의 급여보다 높은 사람들
+SELECT name, salary
+FROM employee
+WHERE salary > ANY (
+  SELECT salary
+  FROM employee
+  WHERE position_id = 3
+);
+
+-- 추가 참고: 
+-- > ANY (3000, 4000, 5000) 은 결국 OR 조건들과 같은 의미 (salary > 3000 OR > 4000 ...)
+
+-- =============================================
+-- 서브쿼리 + IN: 서브쿼리에서 나온 값이 해당 열에 존재하면 TRUE (즉, 포함 여부)
+
+-- 기본 문법
+SELECT 컬럼 FROM 테이블명
+WHERE 열 IN (서브쿼리);
+
+-- 예제: position_id가 1번(영업사원) 또는 2번(마케터)인 사람들만 조회
+SELECT name, position
+FROM employee
+WHERE position_id IN (
+  SELECT id
+  FROM position_table
+  WHERE name IN ('영업사원', '마케터')
+);
+
+-- 예제: 급여가 3000, 4000, 5000인 직원들만 출력
+SELECT name, salary
+FROM employee
+WHERE salary IN (3000, 4000, 5000);
+
+-- ✅ 참고: IN 서브쿼리는 여러 값을 반환할 수 있어야 함
+-- ❌ 단일 값일 경우엔 IN 대신 = 또는 JOIN을 고려해야 함
+
+
+
+-- =============================================
+-- ADD CONSTRAINT: 제약 조건 추가 (외래키, 유일값, 체크 등)
+
+-- 기본 문법 (외래키 추가용 예시)
+ALTER TABLE 자식테이블
+ADD CONSTRAINT 제약이름
+FOREIGN KEY (자식컬럼)
+REFERENCES 부모테이블(부모컬럼)
+ON DELETE 동작
+ON UPDATE 동작;
+
+-- =============================================
+-- FOREIGN KEY: 외래 키(다른 테이블의 PK를 참조) 설정
+
+-- 예제: employee 테이블의 position_id가 position 테이블의 position_id를 참조
+ALTER TABLE employee
+ADD CONSTRAINT fk_position
+FOREIGN KEY (position_id)
+REFERENCES position(position_id)
+ON DELETE RESTRICT
+ON UPDATE CASCADE;
+
+-- =============================================
+-- REFERENCES: 외래 키가 참조할 테이블과 컬럼 지정
+
+-- REFERENCES 부모테이블(부모컬럼)
+-- 반드시 부모 테이블의 해당 컬럼은 PRIMARY KEY 또는 UNIQUE 여야 함
+
+-- 예제:
+REFERENCES position(position_id)
+
+-- =============================================
+-- ON DELETE: 부모 테이블의 데이터가 삭제될 때 자식 테이블이 어떻게 반응할지 지정
+
+-- ON DELETE RESTRICT: 부모 행이 삭제되면 오류 발생 (참조 중이면 삭제 못함)
+-- ON DELETE CASCADE: 부모 행 삭제 시 자식 행도 자동 삭제
+-- ON DELETE SET NULL: 부모 삭제 시 자식 컬럼을 NULL로 설정
+-- ON DELETE NO ACTION: 삭제 금지 (RESTRICT와 비슷함, 거의 동일하게 작동)
+
+-- 예제:
+ON DELETE RESTRICT
+
+-- =============================================
+-- ON UPDATE: 부모 테이블의 기본키 값이 변경될 때 자식이 어떻게 반응할지 지정
+
+-- ON UPDATE CASCADE: 부모값 변경 시 자식값도 자동으로 따라 변경
+-- ON UPDATE SET NULL: 부모 변경 시 자식 값을 NULL로 설정
+-- ON UPDATE RESTRICT / NO ACTION: 부모 키 변경을 막음
+
+-- 예제:
+ON UPDATE CASCADE
+
+-- =============================================
+-- 전체 예제: 외래키 제약 추가
+
+ALTER TABLE employee
+ADD CONSTRAINT fk_position
+FOREIGN KEY (position_id)
+REFERENCES position(position_id)
+ON DELETE RESTRICT
+ON UPDATE CASCADE;
+
+
+
+-- =============================================
+-- 1. INNER JOIN: 양쪽 테이블에서 조건이 일치하는 행만 추출 (교집합)
+
+-- 기본 문법
+SELECT A.컬럼, B.컬럼
+FROM A
+INNER JOIN B ON A.기준컬럼 = B.기준컬럼;
+
+-- 예제: 직원의 이름과 직위 출력 (직위가 없는 직원은 제외)
+SELECT employee.name, position.position_name
+FROM employee
+INNER JOIN position ON employee.position_id = position.position_id;
+
+-- =============================================
+-- 2. LEFT JOIN: 왼쪽 테이블의 모든 행 + 일치하는 오른쪽 테이블의 행 (왼쪽 기준)
+
+-- 기본 문법
+SELECT A.컬럼, B.컬럼
+FROM A
+LEFT JOIN B ON A.기준컬럼 = B.기준컬럼;
+
+-- 예제: 모든 직원 + 해당 직위 (직위 정보 없는 직원도 포함)
+SELECT employee.name, position.position_name
+FROM employee
+LEFT JOIN position ON employee.position_id = position.position_id;
+
+-- =============================================
+-- 3. RIGHT JOIN: 오른쪽 테이블의 모든 행 + 일치하는 왼쪽 테이블의 행 (오른쪽 기준)
+
+-- 기본 문법
+SELECT A.컬럼, B.컬럼
+FROM A
+RIGHT JOIN B ON A.기준컬럼 = B.기준컬럼;
+
+-- 예제: 존재하는 모든 직위 + 해당 직위에 배정된 직원 (직원이 없는 직위도 포함)
+SELECT employee.name, position.position_name
+FROM position
+RIGHT JOIN employee ON employee.position_id = position.position_id;
+
+-- =============================================
+-- 4. FULL OUTER JOIN: 양쪽 테이블의 모든 행을 포함 (MySQL은 직접 지원하지 않음 → UNION 사용)
+
+-- 기본 문법 (MySQL에서 시뮬레이션)
+SELECT A.컬럼, B.컬럼
+FROM A
+LEFT JOIN B ON A.기준 = B.기준
+UNION
+SELECT A.컬럼, B.컬럼
+FROM A
+RIGHT JOIN B ON A.기준 = B.기준;
+
+-- 예제: 직원과 직위 전부 출력 (직위 없는 직원 + 직원 없는 직위 모두 포함)
+SELECT employee.name, position.position_name
+FROM employee
+LEFT JOIN position ON employee.position_id = position.position_id
+UNION
+SELECT employee.name, position.position_name
+FROM employee
+RIGHT JOIN position ON employee.position_id = position.position_id;
+
+-- =============================================
+-- 5. SELF JOIN: 같은 테이블을 자기 자신과 JOIN
+
+-- 기본 문법 (별칭 alias 필수)
+SELECT A.컬럼, B.컬럼
+FROM 테이블 A
+JOIN 테이블 B ON A.조건 = B.조건;
+
+-- 예제: 직원 중 동료를 나이 기준으로 매칭
+SELECT A.name AS 직원A, B.name AS 직원B
+FROM employee A
+JOIN employee B ON A.age = B.age AND A.id != B.id;
+
+-- =============================================
+-- 6. CROSS JOIN: 모든 행 조합 (카티션 곱, 조인 조건 없음)
+
+-- 기본 문법
+SELECT * FROM A CROSS JOIN B;
+
+-- 예제: 모든 직원 × 모든 직위 조합
+SELECT employee.name, position.position_name
+FROM employee
+CROSS JOIN position;
+
+-- =============================================
+-- 💡 보충 설명 요약
+
+| JOIN 종류         | 포함 범위 설명                                                  |
+|------------------|------------------------------------------------------------------|
+| INNER JOIN       | 양쪽에 모두 있는 데이터만 (교집합)                               |
+| LEFT JOIN        | 왼쪽 테이블 전체 + 일치하는 오른쪽 테이블                        |
+| RIGHT JOIN       | 오른쪽 테이블 전체 + 일치하는 왼쪽 테이블                        |
+| FULL OUTER JOIN  | 양쪽 테이블 전체 (없는 값은 NULL) - MySQL은 UNION으로 대체      |
+| SELF JOIN        | 같은 테이블 내부끼리 JOIN                                        |
+| CROSS JOIN       | 두 테이블의 모든 조합 (n × m)                                    |
+
+-- ✅ 참고: JOIN 조건이 없거나 누락되면 CROSS JOIN처럼 되므로 주의!
+
+-- ✅ 실제 쿼리에서 JOIN 시엔 ON 조건 필수 / WHERE로 추가 조건 걸기 가능
