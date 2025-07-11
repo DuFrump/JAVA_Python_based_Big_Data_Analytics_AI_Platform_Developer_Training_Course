@@ -1,0 +1,1648 @@
+Microsoft Windows [Version 10.0.19045.4780]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\admin>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 36
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE ITCompany;
+Database changed
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 | 영업사원 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 | 디자이너 |   3800 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 | 개발자   |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 | 디자이너 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 | 마케터   |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL | NULL     |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) FROM (SELECT position, AVG(salary) AS avg_sal FROM employee GROUP BY position) AS dept_avg WHERE avg_sal > (SELECT AVG(sal) FROM employee);
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> SELECT position, AVG(salary) FROM (SELECT position, AVG(salary) AS avg_sal FROM employee GROUP BY position) AS dept_avg WHERE avg_sal > (SELECT AVG(salary) FROM employee);
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> SELECT position, AVG(salary) FROM (SELECT position, AVG(salary) AS avg_sal FROM employee GROUP BY position) AS dept_avg WHERE dept_sal > (SELECT AVG(salary) FROM employee);
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> SELECT position, salary FROM (SELECT position, AVG(salary) AS avg_sal FROM employee GROUP BY position) AS dept_avg WHERE dept_sal > (SELECT AVG(salary) FROM employee);
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> SELECT position, salary FROM (SELECT position, AVG(salary) AS avg_sal FROM employee GROUP BY position) AS dept_avg WHERE avg_sal > (SELECT AVG(salary) FROM employee);
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> SELECT position, salary FROM (SELECT position, AVG(salary) AS avg_sal FROM employee GROUP BY position) AS dept_avg WHERE avg_sal > (SELECT AVG(salary) FROM employee);
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> SELECT position, salary FROM (SELECT position, AVG(salary) AS avg_sal FROM employee GROUP BY position) AS dept_avg WHERE avg_sal > (SELECT AVG(salary) FROM employee);
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> SELECT AVG(salary) FROM employee;
++-------------+
+| AVG(salary) |
++-------------+
+|   3469.2308 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) FROM employee GROUP BY position;
++----------+-------------+
+| position | AVG(salary) |
++----------+-------------+
+| 영업사원 |   3450.0000 |
+| 디자이너 |   3166.6667 |
+| 개발자   |   3766.6667 |
+| 마케터   |   3150.0000 |
+| NULL     |   4200.0000 |
++----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position, salary FROM (SELECT position, AVG(salary) AS avg_sal FROM employee GROUP BY position) AS dept_avg WHERE dept_sal > (SELECT AVG(salary) FROM employee);
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> SELECT position, avg_sal FROM (SELECT position, AVG(salary) AS avg_sal FROM employee GROUP BY position) AS dept_avg WHERE avg_sal > (SELECT AVG(salary) FROM employee);
++----------+-----------+
+| position | avg_sal   |
++----------+-----------+
+| 개발자   | 3766.6667 |
+| NULL     | 4200.0000 |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT position, avg_sal FROM (SELECT position, AVG(salary) AS avg_sal FROM employee GROUP BY position) AS dept_avg WHERE dept_avg > (SELECT AVG(salary) FROM employee);
+ERROR 1054 (42S22): Unknown column 'dept_avg' in 'where clause'
+mysql> SELECT name, position FROM employee WHERE position IN ((SELECT AVG(salary) FROM employee GROUP BY position) > 4000);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT name, position FROM employee WHERE position IN (SELECT name FROM employee WHERE salary > 4000);
+Empty set (0.00 sec)
+
+mysql> SELECT name, position FROM employee WHERE position IN (SELECT position FROM employee WHERE salary > 4000);
++--------+----------+
+| name   | position |
++--------+----------+
+| 홍길동 | 영업사원 |
+| 양코딩 | 개발자   |
+| 유재석 | 영업사원 |
+| 피비   | 영업사원 |
+| 조이   | 영업사원 |
+| 챈들러 | 개발자   |
+| 아이유 | 개발자   |
++--------+----------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT name, position FROM employee WHERE position IN (SELECT position FROM employee WHERE salary > 4000);
++--------+----------+
+| name   | position |
++--------+----------+
+| 홍길동 | 영업사원 |
+| 양코딩 | 개발자   |
+| 유재석 | 영업사원 |
+| 피비   | 영업사원 |
+| 조이   | 영업사원 |
+| 챈들러 | 개발자   |
+| 아이유 | 개발자   |
++--------+----------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) FROM employee WHERE salary > 3000;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'itcompany.employee.position'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT position, AVG(salary) FROM employee WHERE AVG(salary) > 3000;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT position, AVG(salary) FROM employee WHERE AVG(salary) > 3000 GROUP BY position;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT position FROM employee WHERE AVG(salary) > 3000;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT position FROM employee WHERE AVG(salary) > 3000 GROUP BY position;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT position FROM employee GROUP BY position HAVING AVG(salary) > 3000;
++----------+
+| position |
++----------+
+| 영업사원 |
+| 디자이너 |
+| 개발자   |
+| 마케터   |
+| NULL     |
++----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) FROM employee GROUP BY position HAVING AVG(salary) > 3000;
++----------+-------------+
+| position | AVG(salary) |
++----------+-------------+
+| 영업사원 |   3450.0000 |
+| 디자이너 |   3166.6667 |
+| 개발자   |   3766.6667 |
+| 마케터   |   3150.0000 |
+| NULL     |   4200.0000 |
++----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT name, position FROM employee WHERE position IN (SELECT position FROM employee WHERE AVG(salary) > 4000);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT name, position FROM employee WHERE position IN (SELECT position FROM employee GROUP BY position HAVING AVG(salary) > 4000);
+Empty set (0.00 sec)
+
+mysql> SELECT name, circle FROM employee WHERE circle IN (SELECT circle FROM employee WHERE salary > 4000);
++--------+---------+
+| name   | circle  |
++--------+---------+
+| 기안84 | Fishing |
+| 유재석 | Fishing |
++--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name FROM position p GROUP BY p.position_na,e HAVING AVG(e.salary) > 3000;
+ERROR 1054 (42S22): Unknown column 'p.position_na' in 'group statement'
+mysql> SELECT p.position_name FROM position p GROUP BY p.position_name HAVING AVG(e.salary) > 3000;
+ERROR 1054 (42S22): Unknown column 'e.salary' in 'having clause'
+mysql> SELECT p.position_name FROM position p JOIN employee e ON p.position_id = e.position_id GROUP BY p.position_name HAVING AVG(e.salary) > 3000;
++---------------+
+| position_name |
++---------------+
+| 영업사원      |
+| 디자이너      |
+| 개발자        |
+| 마케터        |
++---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT position, COUNT(id) FROM employee WHERE COUNT(id) IS (SELECT MAX(id) FROM employee GROUP BY position);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(SELECT MAX(id) FROM employee GROUP BY position)' at line 1
+mysql> SELECT position, COUNT(id) FROM employee WHERE COUNT(id) IS (SELECT MAX(COUNT(id)) FROM employee GROUP BY position);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(SELECT MAX(COUNT(id)) FROM employee GROUP BY position)' at line 1
+mysql> SELECT position, COUNT(id) FROM employee WHERE COUNT(id) IS (SELECT MAX(cnt) FROM (SELECT COUNT(id) AS cnt FROM employee) GROUP BY position);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(SELECT MAX(cnt) FROM (SELECT COUNT(id) AS cnt FROM employee) GROUP BY position)' at line 1
+mysql> SELECT position, MAX(cnt) FROM employee WHERE position IS (SELECT position FROM (S\ELECT COUNT(id) AS cnt FROM employee) GROUP BY position);
+ERROR:
+Unknown command '\E'.
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(SELECT position FROM (S\ELECT COUNT(id) AS cnt FROM employee) GROUP BY position' at line 1
+mysql> SELECT position, COUNT(id) AS `직원 수` FROM employee GROUP BY position HAVING COUNT(id) = (SELECT MAX(cnt) FROM (SELECT COUNT(*) AS CNT FROM employee GROUP BY position_id) AS sub);
++----------+---------+
+| position | 직원 수 |
++----------+---------+
+| 영업사원 |       4 |
++----------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT position, COUNT(id) AS `직원 수` FROM employee GROUP BY position HAVING COUNT(id) = (SELECT MAX(cnt) FROM (SELECT COUNT(*) AS CNT FROM employee GROUP BY position_id));
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT position, COUNT(id) AS `직원 수` FROM employee GROUP BY position HAVING COUNT(id) = (SELECT MAX(cnt) FROM (SELECT COUNT(*) AS CNT FROM employee GROUP BY position_id) AS sub);
++----------+---------+
+| position | 직원 수 |
++----------+---------+
+| 영업사원 |       4 |
++----------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT position, COUNT(id) AS `직원 수` FROM employee GROUP BY position HAVING '직원 수` = (SELECT MAX(cnt) FROM (SELECT COUNT(*) AS CNT FROM employee GROUP BY position_id) AS sub);
+    '>
+    '> ^C
+mysql> SELECT position, COUNT(id) AS `직원 수` FROM employee GROUP BY position HAVING `직원 수` = (SELECT MAX(cnt) FROM (SELECT COUNT(*) AS CNT FROM employee GROUP BY position_id) AS sub);
++----------+---------+
+| position | 직원 수 |
++----------+---------+
+| 영업사원 |       4 |
++----------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT COUNT(*) FROM employee e2 WHERE e2.salary > e1.salary) >= 3;
++--------+--------+
+| name   | salary |
++--------+--------+
+| 홍길동 |   2800 |
+| 기안84 |   3800 |
+| 양코딩 |   2700 |
+| 둘리   |   2500 |
+| 레이첼 |   3200 |
+| 모니카 |   2500 |
+| 피비   |   3300 |
+| 조이   |   3000 |
+| 챈들러 |   3600 |
+| 로스   |   3800 |
++--------+--------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(id) FROM employee GROUP BY position;
++-----------+
+| COUNT(id) |
++-----------+
+|         4 |
+|         3 |
+|         3 |
+|         2 |
+|         1 |
++-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT position, COUNT(id) FROM employee GROUP BY position;
++----------+-----------+
+| position | COUNT(id) |
++----------+-----------+
+| 영업사원 |         4 |
+| 디자이너 |         3 |
+| 개발자   |         3 |
+| 마케터   |         2 |
+| NULL     |         1 |
++----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT MAX(cnt) FROM (SELECT COUNT(id) AS cnt FROM employee GROUP BY position) AS cnt_position;
++----------+
+| MAX(cnt) |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT position, MAX(cnt) FROM (SELECT COUNT(id) AS cnt FROM employee GROUP BY position) AS cnt_position;
+ERROR 1054 (42S22): Unknown column 'position' in 'field list'
+mysql> SELECT MAX(cnt) AS `최다 직원 수` FROM (SELECT COUNT(id) AS cnt FROM employee GROUP BY position) AS cnt_position;
++--------------+
+| 최다 직원 수 |
++--------------+
+|            4 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT position, MAX(cnt) FROM (SELECT COUNT(id) AS cnt FROM employee GROUP BY position) AS cnt_position WHERE position IN (SELECT position FROM employee);
+ERROR 1054 (42S22): Unknown column 'position' in 'field list'
+mysql> SELECT position, COUNT(id) FROM employee GROUP BY position HAVING COUNT(id) = (SELECT MAX(cnt) AS `최다 직원 수` FROM (SELECT COUNT(id) AS cnt FROM employee GROUP BY position) AS cnt_position);
++----------+-----------+
+| position | COUNT(id) |
++----------+-----------+
+| 영업사원 |         4 |
++----------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(e.id) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY postion HAVING COUNT(id) = (SELECT MAX(cnt) AS `최다 직원 수` FROM (SELECT COUNT(id) AS cnt FROM employee GROUP BY position) AS cnt_position);
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.p.position_name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, COUNT(e.id) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name HAVING COUNT(e.id) = (SELECT MAX(cnt) AS `최다 직원 수` FROM (SELECT COUNT(id) AS cnt FROM employee GROUP BY position) AS cnt_position);
++---------------+-------------+
+| position_name | COUNT(e.id) |
++---------------+-------------+
+| 영업사원      |           4 |
++---------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT COUNT(*) FROM employee e2 WHERE e2.salary > e1.salary) >= 3;
++--------+--------+
+| name   | salary |
++--------+--------+
+| 홍길동 |   2800 |
+| 기안84 |   3800 |
+| 양코딩 |   2700 |
+| 둘리   |   2500 |
+| 레이첼 |   3200 |
+| 모니카 |   2500 |
+| 피비   |   3300 |
+| 조이   |   3000 |
+| 챈들러 |   3600 |
+| 로스   |   3800 |
++--------+--------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name HAVING e.salary < (SELECT AVG(salary) FROM employee GROUP BY position_id);
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.e.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id HAVING e.salary < (SELECT AVG(salary) FROM employee GROUP BY position_id);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.salary < (SELECT AVG(salary) FROM employee GROUP BY position_id);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.salary < (SELECT AVG(salary) FROM employee GROUP BY position_id);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.salary IN (SELECT AVG(salary) FROM employee GROUP BY position_id);
+Empty set (0.00 sec)
+
+mysql> SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.salary < (SELECT AVG(e2.salary) FROM employee e2 WHERE e2.position_id = e1.position_id);
+ERROR 1054 (42S22): Unknown column 'e1.position_id' in 'where clause'
+mysql> SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.salary < (SELECT AVG(e2.salary) FROM employee e2 WHERE e2.position_id = e.position_id);
++--------+--------+---------------+
+| name   | salary | position_name |
++--------+--------+---------------+
+| 홍길동 |   2800 | 영업사원      |
+| 피비   |   3300 | 영업사원      |
+| 조이   |   3000 | 영업사원      |
+| 둘리   |   2500 | 디자이너      |
+| 양코딩 |   2700 | 개발자        |
+| 챈들러 |   3600 | 개발자        |
+| 모니카 |   2500 | 마케터        |
++--------+--------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT name, salary FROM employee WHERE name LIKE '%김%' AND salary < (SELECT AVG(salary) FROM employee);
+Empty set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE (SELECT MIN(start_date) FROM employee GROUP BY position_id);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE (SELECT MIN(start_date) FROM employee GROUP BY position_id);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE (SELECT MIN(start_date) FROM employee GROUP BY position_id);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT MIN(start_date) FROM employee GROUP BY position_id;
++-----------------+
+| MIN(start_date) |
++-----------------+
+| 2025-07-09      |
+| 2021-03-01      |
+| 2025-07-09      |
+| 2023-12-15      |
+| 2025-07-09      |
++-----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.start_date IN (SELECT MIN(start_date) FROM employee GROUP BY position_id);
++--------+---------------+------------+
+| name   | position_name | start_date |
++--------+---------------+------------+
+| 유재석 | 영업사원      | 2021-03-01 |
+| 피비   | 영업사원      | 2025-07-09 |
+| 조이   | 영업사원      | 2025-07-09 |
+| 기안84 | 디자이너      | 2025-07-09 |
+| 둘리   | 디자이너      | 2025-07-09 |
+| 레이첼 | 디자이너      | 2025-07-09 |
+| 양코딩 | 개발자        | 2023-12-15 |
+| 챈들러 | 개발자        | 2025-07-09 |
+| 아이유 | 개발자        | 2025-07-09 |
+| 모니카 | 마케터        | 2025-07-09 |
+| 로스   | 마케터        | 2025-07-09 |
++--------+---------------+------------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, MIN(e.start_date) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.start_date IN (SELECT MIN(start_date) FROM employee GROUP BY position_id);
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'itcompany.e.name'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.start_date IN (SELECT MIN(start_date) FROM employee GROUP BY position_id);
++--------+---------------+------------+
+| name   | position_name | start_date |
++--------+---------------+------------+
+| 유재석 | 영업사원      | 2021-03-01 |
+| 피비   | 영업사원      | 2025-07-09 |
+| 조이   | 영업사원      | 2025-07-09 |
+| 기안84 | 디자이너      | 2025-07-09 |
+| 둘리   | 디자이너      | 2025-07-09 |
+| 레이첼 | 디자이너      | 2025-07-09 |
+| 양코딩 | 개발자        | 2023-12-15 |
+| 챈들러 | 개발자        | 2025-07-09 |
+| 아이유 | 개발자        | 2025-07-09 |
+| 모니카 | 마케터        | 2025-07-09 |
+| 로스   | 마케터        | 2025-07-09 |
++--------+---------------+------------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.start_date = (SELECT MIN(start_date) FROM employee GROUP BY position_id);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.start_date AS (SELECT MIN(start_date) FROM employee GROUP BY position_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS (SELECT MIN(start_date) FROM employee GROUP BY position_id)' at line 1
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.start_date < (SELECT MIN(start_date) FROM employee GROUP BY position_id);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.start_date > (SELECT MIN(start_date) FROM employee GROUP BY position_id);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.start_date = (SELECT MIN(start_date) FROM employee GROUP BY position_id);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.start_date IN (SELECT MIN(start_date) FROM employee GROUP BY position_id);
++--------+---------------+------------+
+| name   | position_name | start_date |
++--------+---------------+------------+
+| 유재석 | 영업사원      | 2021-03-01 |
+| 피비   | 영업사원      | 2025-07-09 |
+| 조이   | 영업사원      | 2025-07-09 |
+| 기안84 | 디자이너      | 2025-07-09 |
+| 둘리   | 디자이너      | 2025-07-09 |
+| 레이첼 | 디자이너      | 2025-07-09 |
+| 양코딩 | 개발자        | 2023-12-15 |
+| 챈들러 | 개발자        | 2025-07-09 |
+| 아이유 | 개발자        | 2025-07-09 |
+| 모니카 | 마케터        | 2025-07-09 |
+| 로스   | 마케터        | 2025-07-09 |
++--------+---------------+------------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT MIN(start_date) FROM employee GROUP BY position_id;
++-----------------+
+| MIN(start_date) |
++-----------------+
+| 2025-07-09      |
+| 2021-03-01      |
+| 2025-07-09      |
+| 2023-12-15      |
+| 2025-07-09      |
++-----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE (e.start_date, p.position_id) IN (SELECT MIN(start_date), position_id FROM employee GROUP BY position_id);
++--------+---------------+------------+
+| name   | position_name | start_date |
++--------+---------------+------------+
+| 유재석 | 영업사원      | 2021-03-01 |
+| 기안84 | 디자이너      | 2025-07-09 |
+| 둘리   | 디자이너      | 2025-07-09 |
+| 레이첼 | 디자이너      | 2025-07-09 |
+| 양코딩 | 개발자        | 2023-12-15 |
+| 모니카 | 마케터        | 2025-07-09 |
+| 로스   | 마케터        | 2025-07-09 |
++--------+---------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.salary IN (SELECT MIN(salary) FROM employee);
++--------+---------------+--------+
+| name   | position_name | salary |
++--------+---------------+--------+
+| 둘리   | 디자이너      |   2500 |
+| 모니카 | 마케터        |   2500 |
++--------+---------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | position | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 | 영업사원 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 | 디자이너 |   3800 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 | 개발자   |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 | 디자이너 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 | 영업사원 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 | 디자이너 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 | 마케터   |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 | 영업사원 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 | 영업사원 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 | 개발자   |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 | 마케터   |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL | NULL     |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 | 개발자   |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+----------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT e2.name, e2.salary FROM employee e2 WHERE e2.salary < e1.salary) >= 2;
+ERROR 1241 (21000): Operand should contain 2 column(s)
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT e2.salary FROM employee e2 WHERE e2.salary < e1.salary) >= 2;
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT e2.name FROM employee e2 WHERE e2.salary < e1.salary) >= 2;
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT e2.name FROM employee e2 WHERE e2.salary < e1.salary) >= 2;
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT COUNT(*) FROM employee e2 WHERE e2.salary > e1.salary) >= 2;
++--------+--------+
+| name   | salary |
++--------+--------+
+| 홍길동 |   2800 |
+| 기안84 |   3800 |
+| 양코딩 |   2700 |
+| 둘리   |   2500 |
+| 레이첼 |   3200 |
+| 모니카 |   2500 |
+| 피비   |   3300 |
+| 조이   |   3000 |
+| 챈들러 |   3600 |
+| 로스   |   3800 |
+| 김연아 |   4200 |
++--------+--------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT COUNT(*) FROM employee e2 WHERE e2.salary > e1.salary AND e2.age > e1.age) >= 2;
++--------+--------+
+| name   | salary |
++--------+--------+
+| 홍길동 |   2800 |
+| 양코딩 |   2700 |
+| 둘리   |   2500 |
+| 레이첼 |   3200 |
+| 모니카 |   2500 |
+| 피비   |   3300 |
+| 조이   |   3000 |
+| 챈들러 |   3600 |
+| 로스   |   3800 |
++--------+--------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT COUNT(*) FROM employee e2 WHERE e2.salary < e1.salary AND e2.age > e1.age) >= 2;
++--------+--------+
+| name   | salary |
++--------+--------+
+| 레이첼 |   3200 |
+| 아이유 |   5000 |
++--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT position, AVG(salary) FROM employee GROUP BY position;
++----------+-------------+
+| position | AVG(salary) |
++----------+-------------+
+| 영업사원 |   3450.0000 |
+| 디자이너 |   3166.6667 |
+| 개발자   |   3766.6667 |
+| 마케터   |   3150.0000 |
+| NULL     |   4200.0000 |
++----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_id;
++---------------+---------------+
+| position_name | AVG(e.salary) |
++---------------+---------------+
+| 영업사원      |     3450.0000 |
+| 디자이너      |     3166.6667 |
+| 개발자        |     3766.6667 |
+| 마케터        |     3150.0000 |
++---------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.grade, COUNT(e.id) FROM employee e GROUP BY e.grade;
++--------+-------------+
+| grade  | COUNT(e.id) |
++--------+-------------+
+| low    |           4 |
+| high   |           4 |
+| middle |           5 |
++--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT e.circle, MAX(e.salary) FROM employee e GROUP BY e.circle;
++---------+---------------+
+| circle  | MAX(e.salary) |
++---------+---------------+
+| Hiking  |          3800 |
+| Fishing |          4700 |
+| Movie   |          3200 |
+| NULL    |          5000 |
++---------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.gender, AVG(e.salary) FROM employee e GROUP BY e.gender;
++--------+---------------+
+| gender | AVG(e.salary) |
++--------+---------------+
+| M      |     3362.5000 |
+| F      |     3640.0000 |
++--------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT e.gender, AVG(e.salary) FROM employee e GROUP BY e.gender HAVING AVG(e.salary) >= 3500;
++--------+---------------+
+| gender | AVG(e.salary) |
++--------+---------------+
+| F      |     3640.0000 |
++--------+---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT e.name, e.salary FROM employee e WHERE e.salary > (SELECT AVG(salary) FROM employee);
++--------+--------+
+| name   | salary |
++--------+--------+
+| 기안84 |   3800 |
+| 유재석 |   4700 |
+| 챈들러 |   3600 |
+| 로스   |   3800 |
+| 김연아 |   4200 |
+| 아이유 |   5000 |
++--------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT e.name, e.salary FROM employee WHERE e.salary = (SELECT MAX(salary) FROM employee);
+ERROR 1054 (42S22): Unknown column 'e.name' in 'field list'
+mysql> SELECT e.name, e.salary FROM employee WHERE e.salary IN (SELECT MAX(salary) FROM employee);
+ERROR 1054 (42S22): Unknown column 'e.name' in 'field list'
+mysql> SELECT e.name, e.salary FROM employee e WHERE e.salary = (SELECT MAX(salary) FROM employee);
++--------+--------+
+| name   | salary |
++--------+--------+
+| 아이유 |   5000 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT e.name, e.age, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id;
++--------+------+---------------+
+| name   | age  | position_name |
++--------+------+---------------+
+| 홍길동 |   33 | 영업사원      |
+| 유재석 |   42 | 영업사원      |
+| 피비   |   33 | 영업사원      |
+| 조이   |   32 | 영업사원      |
+| 기안84 |   38 | 디자이너      |
+| 둘리   |   20 | 디자이너      |
+| 레이첼 |   31 | 디자이너      |
+| 양코딩 |   28 | 개발자        |
+| 챈들러 |   33 | 개발자        |
+| 아이유 |   34 | 개발자        |
+| 모니카 |   32 | 마케터        |
+| 로스   |   33 | 마케터        |
++--------+------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(e.id) FROM employee e JOIN position p ON e.position_id = p.position_id;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'itcompany.p.position_name'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, COUNT(e.id) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name;
++---------------+-------------+
+| position_name | COUNT(e.id) |
++---------------+-------------+
+| 영업사원      |           4 |
+| 디자이너      |           3 |
+| 개발자        |           3 |
+| 마케터        |           2 |
++---------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, e.name FROM employee e JOIN position p ON p.position_id = e.position_id WHERE p.position_name = '개발자';
++---------------+--------+
+| position_name | name   |
++---------------+--------+
+| 개발자        | 양코딩 |
+| 개발자        | 챈들러 |
+| 개발자        | 아이유 |
++---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> ㄴ띠띠떠ㅣ아ㅓ리;ㅏㅓㄴㅇ리:ㅓㅏㅁㄴㅇ;ㅣ라ㅓㄴ;ㅣㅏㅇㄹ
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ㄴ띠띠떠ㅣ아ㅓ리' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ㅏㅓㄴㅇ리:ㅓㅏㅁㄴㅇ' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ㅣ라ㅓㄴ' at line 1
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ㅣㅏㅇㄹ' at line 1
+mysql> 미;나어리;ㅁ나얼ㄴ미;ㅏㅓ리;ㅏ런ㅇ래ㅔㅑㅓㄴㅇㄹㄷ지;ㅓㅏㄼ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '미' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '나어리' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ㅁ나얼ㄴ미' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ㅏㅓ리' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ㅏ런ㅇ래ㅔㅑㅓㄴㅇㄹㄷ지' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ㅓㅏㄼ' at line 1
+mysql> 야러미ㅏㄴ어래ㅑㅓㅁㄴ이라ㅓㅐㅑㅓㄷㅂㄹ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '야러미ㅏㄴ어래ㅑㅓㅁㄴ이라ㅓㅐㅑㅓㄷㅂㄹ' at line 1
+mysql> SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.salary IN (SELECT salary FROM employee ORDER BY DESC LIMIT 3);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC LIMIT 3)' at line 1
+mysql> SELECT salary FROM employee ORDER BY DESC LIMIT 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC LIMIT 3' at line 1
+mysql> SELECT salary FROM employee ORDER BY DECS LIMIT 3;
+ERROR 1054 (42S22): Unknown column 'DECS' in 'order clause'
+mysql> SELECT salary FROM employee ORDER BY DESC LIMIT 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC LIMIT 3' at line 1
+mysql> SELECT salary FROM employee ORDER BY DESC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC' at line 1
+mysql> SELECT salary FROM employee ORDER BY salary DESC LIMIT 3;
++--------+
+| salary |
++--------+
+|   5000 |
+|   4700 |
+|   4200 |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.salary IN (SELECT salary FROM employee ORDER BY salary DESC LIMIT 3);
+ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'
+mysql> SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON p.position_id = e.position_id ORDER BY e.salary DESC LIMIT 3;
++--------+--------+---------------+
+| name   | salary | position_name |
++--------+--------+---------------+
+| 아이유 |   5000 | 개발자        |
+| 유재석 |   4700 | 영업사원      |
+| 기안84 |   3800 | 디자이너      |
++--------+--------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, SUM(CASE WHEN gender = 'M' THEN 1 ELSE 0 END) AS male_count, SUM(CASE WHEN GENDER = 'F' THEN 1 ELSE 0 END) AS female_count FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_name;
++---------------+------------+--------------+
+| position_name | male_count | female_count |
++---------------+------------+--------------+
+| 영업사원      |          3 |            1 |
+| 디자이너      |          2 |            1 |
+| 개발자        |          2 |            1 |
+| 마케터        |          1 |            1 |
++---------------+------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary, p.position_name FROM employee e1 JOIN position p ON p.position_id = e.position_id WHERE e1.name IN (SELECT e2.name FROM employee e2 WHERE e1.salary < e2.salary) >= 3;
+ERROR 1054 (42S22): Unknown column 'e.position_id' in 'on clause'
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE e1.name IN (SELECT e2.name FROM employee e2 WHERE e1.salary < e2.salary) >= 3;
+Empty set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE e1.name IN (SELECT e2.name FROM employee e2 WHERE e1.salary > e2.salary) >= 3;
+Empty set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE e1.name IN (SELECT e2.name FROM employee e2 WHERE e1.salary > e2.salary) <= 3;
++--------+--------+
+| name   | salary |
++--------+--------+
+| 홍길동 |   2800 |
+| 기안84 |   3800 |
+| 양코딩 |   2700 |
+| 둘리   |   2500 |
+| 유재석 |   4700 |
+| 레이첼 |   3200 |
+| 모니카 |   2500 |
+| 피비   |   3300 |
+| 조이   |   3000 |
+| 챈들러 |   3600 |
+| 로스   |   3800 |
+| 김연아 |   4200 |
+| 아이유 |   5000 |
++--------+--------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE e1.name IN (SELECT COUNT(*) FROM employee e2 WHERE e1.salary < e2.salary) >= 3;
+Empty set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT COUNT(*) FROM employee e2 WHERE e1.salary < e2.salary) >= 3;
++--------+--------+
+| name   | salary |
++--------+--------+
+| 홍길동 |   2800 |
+| 기안84 |   3800 |
+| 양코딩 |   2700 |
+| 둘리   |   2500 |
+| 레이첼 |   3200 |
+| 모니카 |   2500 |
+| 피비   |   3300 |
+| 조이   |   3000 |
+| 챈들러 |   3600 |
+| 로스   |   3800 |
++--------+--------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.start_date IN (SELECT MIN(start_date) FROM employee GROUP BY position_id);
++--------+---------------+------------+
+| name   | position_name | start_date |
++--------+---------------+------------+
+| 유재석 | 영업사원      | 2021-03-01 |
+| 피비   | 영업사원      | 2025-07-09 |
+| 조이   | 영업사원      | 2025-07-09 |
+| 기안84 | 디자이너      | 2025-07-09 |
+| 둘리   | 디자이너      | 2025-07-09 |
+| 레이첼 | 디자이너      | 2025-07-09 |
+| 양코딩 | 개발자        | 2023-12-15 |
+| 챈들러 | 개발자        | 2025-07-09 |
+| 아이유 | 개발자        | 2025-07-09 |
+| 모니카 | 마케터        | 2025-07-09 |
+| 로스   | 마케터        | 2025-07-09 |
++--------+---------------+------------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE (e.start_date, e.name) IN (SELECT MIN(start_date), name FROM employee GROUP BY position_id);
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.employee.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE (p.position_id, e.start_date) IN (SELECT position_id, MIN(start_date) FROM employee GROUP BY position_id);
++--------+---------------+------------+
+| name   | position_name | start_date |
++--------+---------------+------------+
+| 유재석 | 영업사원      | 2021-03-01 |
+| 기안84 | 디자이너      | 2025-07-09 |
+| 둘리   | 디자이너      | 2025-07-09 |
+| 레이첼 | 디자이너      | 2025-07-09 |
+| 양코딩 | 개발자        | 2023-12-15 |
+| 모니카 | 마케터        | 2025-07-09 |
+| 로스   | 마케터        | 2025-07-09 |
++--------+---------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.salary > (SELECT AVG(salary) FROM employee) AND p.position_name = '개발자';
++--------+--------+---------------+
+| name   | salary | position_name |
++--------+--------+---------------+
+| 챈들러 |   3600 | 개발자        |
+| 아이유 |   5000 | 개발자        |
++--------+--------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(salary) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE AVG(salary) IN (SELECT MAX(avg_cnt) FROM employee WHERE (SELECT AVG(salary) AS avg_cnt FROM employee GROUP BY position_id));
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT p.position_name, AVG(e.salary) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE AVG(e.salary) IN (SELECT MAX(avg_cnt) FROM employee WHERE (SELECT AVG(salary) AS avg_cnt FROM employee GROUP BY position_id));
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT p.position_name, e.salary FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.salary IN (SELECT MAX(avg_cnt) FROM employee WHERE (SELECT AVG(salary) AS avg_cnt FROM employee GROUP BY position_id));
+ERROR 1054 (42S22): Unknown column 'avg_cnt' in 'field list'
+mysql> SELECT p.position_name, e.salary FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.salary IN (SELECT MAX(avg_cnt) FROM (SELECT AVG(salary) AS avg_cnt FROM employee GROUP BY position_id) AS average_salary;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SELECT p.position_name, e.salary FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.salary IN (SELECT MAX(avg_cnt) FROM (SELECT AVG(salary) AS avg_cnt FROM employee GROUP BY position_id) AS average_salary);
+Empty set (0.00 sec)
+
+mysql> SELECT eposition_id, MAX(avg_sal) FROM (SELECT AVG(salary) AS avg_cnt FROM employee GROUP BY position_id);
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT e.position_id, MAX(avg_sal) FROM (SELECT AVG(salary) AS avg_cnt FROM employee GROUP BY position_id);
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT p.position_name, MAX(avg_sal) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE avg_sal = (SELECT AVG(salary) AS avg_cnt FROM employee GROUP BY position_id);
+ERROR 1054 (42S22): Unknown column 'avg_sal' in 'field list'
+mysql> SELECT p.position_name, MAX(avg_sal) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE avg_sal = (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id);
+ERROR 1054 (42S22): Unknown column 'avg_sal' in 'field list'
+mysql> SELECT p.position_name, MAX(avg_sal) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE MAX(avg_sal) IN (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id);
+ERROR 1054 (42S22): Unknown column 'avg_sal' in 'field list'
+mysql> SELECT p.position_name, MAX(avg_sal) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE MAX(avg_sal) IN (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id);
+ERROR 1054 (42S22): Unknown column 'avg_sal' in 'field list'
+mysql> SELECT MAX(avg_sal) FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id);
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT MAX(avg_sal) FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS salad1;
++--------------+
+| MAX(avg_sal) |
++--------------+
+|    4200.0000 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(avg_sal) AS `최고점` FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS salad1;
++-----------+
+| 최고점    |
++-----------+
+| 4200.0000 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT p.position_name, e.salary FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.salary = (SELECT MAX(avg_sal) AS `최고점` FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS salad1);
+Empty set (0.00 sec)
+
+mysql> SELECT p.position_name, e.salary FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.salary IN (SELECT MAX(avg_sal) AS `최고점` FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS salad1);
+Empty set (0.00 sec)
+
+mysql> SELECT p.position_name, e.salary FROM employee e JOIN position p ON p.position_id = e.position_id WHERE (e.salary, p.position_id) IN (SELECT MAX(avg_sal) AS `최고점`, position_id FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS salad1);
+ERROR 1052 (23000): Column 'position_id' in field list is ambiguous
+mysql> SELECT position_id, AVG(salary) FROM employee GROUP BY position_id;
++-------------+-------------+
+| position_id | AVG(salary) |
++-------------+-------------+
+|        NULL |   4200.0000 |
+|           1 |   3450.0000 |
+|           2 |   3166.6667 |
+|           3 |   3766.6667 |
+|           4 |   3150.0000 |
++-------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_name HAVING AVG(e.salary) = (SELECT MAX(avg_sal) FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS sub);
+Empty set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_name HAVING AVG(e.salary) = (SELECT MAX(avg_sal) FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY p.position_id) AS sub);
+ERROR 1054 (42S22): Unknown column 'itcompany.p.position_id' in 'group statement'
+mysql> SELECT p.position_name, AVG(e.salary) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_name HAVING AVG(e.salary) = (SELECT MAX(avg_sal) FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY p.position_name) AS sub);
+Empty set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_id HAVING AVG(e.salary) = (SELECT MAX(avg_sal) FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS sub);
+Empty set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_id HAVING avg_sal = (SELECT MAX(avg_sal) FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS sub);
+ERROR 1054 (42S22): Unknown column 'avg_sal' in 'having clause'
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_id HAVING avg_sal = (SELECT MAX(avg_sal) FROM (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS sub);
+Empty set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal
+    -> FROM employee e
+    -> JOIN position p ON p.position_id = e.position_id
+    -> GROUP BY p.position_id, p.position_name
+    -> HAVING avg_sal = (
+    ->   SELECT MAX(avg_sal)
+    ->   FROM (
+    ->     SELECT AVG(salary) AS avg_sal
+    ->     FROM employee
+    ->     GROUP BY position_id
+    ->   ) AS sub
+    -> );
+Empty set (0.00 sec)
+
+mysql>
+mysql>
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal
+    -> FROM employee e
+    -> JOIN position p ON p.position_id = e.position_id
+    -> GROUP BY p.position_id, p.position_name
+    -> HAVING avg_sal = (
+    ->   SELECT MAX(avg_sal)
+    ->   FROM (
+    ->     SELECT AVG(salary) AS avg_sal
+    ->     FROM employee
+    ->     GROUP BY position_id
+    ->   ) AS sub
+    -> );
+Empty set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY e.position.id HAVING avg_sal = (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS sub);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS sub)' at line 1
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY e.position.id HAVING avg_sal = (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> SELECT REND() AS a1 WHERE a1 BETWEEN (1, 10, INT);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INT)' at line 1
+mysql> SELECT REND() AS a1 WHERE a1 BETWEEN (1, 10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SELECT REND() AS a1 WHERE a1 BETWEEN IN (1, 10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IN (1, 10)' at line 1
+mysql> SELECT REND() AS a1 WHERE a1 BETWEEN = (1, 10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= (1, 10)' at line 1
+mysql> SELECT REND() AS a1 WHERE a1 BETWEEN (1, 10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SELECT REND() AS rend WHERE rend * 10;
+ERROR 1305 (42000): FUNCTION itcompany.REND does not exist
+mysql> SELECT RAND() AS rand WHERE rand * 10;
+ERROR 1054 (42S22): Unknown column 'rand' in 'where clause'
+mysql> SELECT RAND() AS rand;
++-------------------+
+| rand              |
++-------------------+
+| 0.661839053651168 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT RAND()*10 AS rand;
++--------------------+
+| rand               |
++--------------------+
+| 1.5376673466876776 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT RAND()*(10+1) AS rand;
++-------------------+
+| rand              |
++-------------------+
+| 8.616481974363776 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT RAND()* (10 + 1) AS rand;
++-------------------+
+| rand              |
++-------------------+
+| 5.008107965819638 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ROUND(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|   10 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ROUND(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    3 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ROUND(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    6 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ROUND(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|   11 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ROUND(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    2 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|   10 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    2 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    2 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    5 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    0 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    4 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    0 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    9 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    2 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    7 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    6 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    9 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* (10 + 1)) AS rand;
++------+
+| rand |
++------+
+|    7 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    8 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    7 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    2 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    9 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    9 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    7 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    7 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    5 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    2 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    6 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    3 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    6 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|   10 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    1 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    3 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    4 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    1 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    4 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(RAND()* 10 + 1) AS rand;
++------+
+| rand |
++------+
+|    4 |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal
+    -> FROM employee e
+    -> JOIN position p ON p.position_id = e.position_id
+    -> GROUP BY p.position_id, p.position_name
+    -> HAVING avg_sal = (
+    ->   SELECT MAX(avg_sal)
+    ->   FROM (
+    ->     SELECT AVG(salary) AS avg_sal
+    ->     FROM employee
+    ->     GROUP BY position_id
+    ->   ) AS sub
+    -> );
+Empty set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY e.position.id HAVING avg_sal = (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS sub);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS sub)' at line 1
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e RIGHT JOIN position p ON p.position_id = e.position_id GROUP BY e.position.id HAVING avg_sal = (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS sub);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS sub)' at line 1
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e LEFT JOIN position p ON p.position_id = e.position_id GROUP BY e.position.id HAVING avg_sal = (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id) AS sub);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS sub)' at line 1
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e LEFT JOIN position p ON p.position_id = e.position_id GROUP BY e.position.id HAVING avg_sal = (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e LEFT JOIN position p ON p.position_id = e.position_id GROUP BY e.position.id HAVING avg_sal = (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id);
+ERROR 1054 (42S22): Unknown column 'e.position.id' in 'group statement'
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e LEFT JOIN position p ON p.position_id = e.position_id GROUP BY p.position.id HAVING avg_sal = (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id);
+ERROR 1054 (42S22): Unknown column 'p.position.id' in 'group statement'
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e LEFT JOIN position p ON p.position_id = e.position_id GROUP BY p.position_id HAVING avg_sal = (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e LEFT JOIN position p ON p.position_id = e.position_id GROUP BY p.position_id HAVING avg_sal IN (SELECT AVG(salary) AS avg_sal FROM employee GROUP BY position_id);
++---------------+-----------+
+| position_name | avg_sal   |
++---------------+-----------+
+| 영업사원      | 3450.0000 |
+| 마케터        | 3150.0000 |
+| NULL          | 4200.0000 |
++---------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e LEFT JOIN position p ON p.position_id = e.position_id GROUP BY p.position_id HAVING (avg_sal, p.position_id) IN (SELECT AVG(salary), position_id AS avg_sal FROM employee GROUP BY position_id);
++---------------+-----------+
+| position_name | avg_sal   |
++---------------+-----------+
+| 영업사원      | 3450.0000 |
+| 마케터        | 3150.0000 |
++---------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE employee DROP COLUMN position;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT MAX(salary) FROM employee GROUP BY position_id;
++-------------+
+| MAX(salary) |
++-------------+
+|        4200 |
+|        4700 |
+|        3800 |
+|        5000 |
+|        3800 |
++-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, COUNT(e.id) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> SELECT p.position_name, AVG(salary) FROM employee WHERE p.position_name = (SELECT MAX(salary) FROM employee GROUP BY position_id);
+ERROR 1054 (42S22): Unknown column 'p.position_name' in 'field list'
+mysql> SELECT p.position_name, AVG(salary) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE p.position_name = (SELECT MAX(salary) FROM employee GROUP BY position_id);
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'itcompany.p.position_name'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, AVG(salary) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE p.position_id = (SELECT MAX(avg_sal) FROM (SELECT AVG(salary) as avg_sal FROM employee GROUP BY position_id) AS sub);
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'itcompany.p.position_name'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, AVG(salary) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE AVG(salary) = (SELECT MAX(avg_sal) FROM (SELECT AVG(salary) as avg_sal FROM employee GROUP BY position_id) AS sub);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT p.position_name, salary FROM employee e JOIN position p ON p.position_id = e.position_id WHERE salary = (SELECT MAX(avg_sal) FROM (SELECT AVG(salary) as avg_sal FROM employee GROUP BY position_id) AS sub);
+Empty set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_id, p.position_name HAVING avg_sal = (SELECT MAX(avg_sal) FROM (SELECT AVG(salary) as avg_sal FROM employee GROUP BY position_id) AS sub);
+Empty set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_id, p.position_name ORDER BY avg_sal DESC LIMIT 1;
++---------------+-----------+
+| position_name | avg_sal   |
++---------------+-----------+
+| 개발자        | 3766.6667 |
++---------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_id ORDER BY avg_sal DESC LIMIT 1;
++---------------+-----------+
+| position_name | avg_sal   |
++---------------+-----------+
+| 개발자        | 3766.6667 |
++---------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select p.position_name, count(case when e.gender ='M' then 1 end) as male_count, count(case when e.gender ='F' THEN 1 END) AS female_count from employee e join position_id p on e.position_id = p.position_id
+    ->     -> group by p.position_name
+    ->     -> group by p.position_name
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group by p.position_name
+    -> group by p.position_name' at line 2
+mysql> SELECT p.position_name, COUNT(CASE WHEN e.gender ='M' THEN 1 END) AS male_count, COUNT(CASE WHEN e.gender ='F' THEN 1 END) AS female_count FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name ORDER BY p.position_name;
++---------------+------------+--------------+
+| position_name | male_count | female_count |
++---------------+------------+--------------+
+| 개발자        |          2 |            1 |
+| 디자이너      |          2 |            1 |
+| 마케터        |          1 |            1 |
+| 영업사원      |          3 |            1 |
++---------------+------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT p.position_name, COUNT(CASE WHEN e.gender ='M' THEN 1 END) AS male_count, COUNT(CASE WHEN e.gender ='F' THEN 1 END) AS female_count FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name ORDER BY p.position_name;
++---------------+------------+--------------+
+| position_name | male_count | female_count |
++---------------+------------+--------------+
+| 개발자        |          2 |            1 |
+| 디자이너      |          2 |            1 |
+| 마케터        |          1 |            1 |
+| 영업사원      |          3 |            1 |
++---------------+------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE e1.name IN (SELECT e2.name FROM employee e2 WHERE e1.salary > e2.salary) >= 3;
+Empty set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE e1.name IN (SELECT e2.name FROM employee e2 WHERE e1.salary > e2.salary) >= 3 AND e1.name LIKE '%김%';
+Empty set (0.00 sec)
+
+mysql> SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT COUNT(*) FROM employee e2 WHERE e1.salary > e2.salary) >= 3 AND e1.name LIKE '%김%';
++--------+--------+
+| name   | salary |
++--------+--------+
+| 김연아 |   4200 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT e.circle, p.position_name, COUNT(*) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE (e.circle, p.position_id) IN (SELECT circle, position_id FROM employee);
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'itcompany.e.circle'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, MIN(e.age), MAX(e.age) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_name;
++---------------+------------+------------+
+| position_name | MIN(e.age) | MAX(e.age) |
++---------------+------------+------------+
+| 영업사원      |         32 |         42 |
+| 디자이너      |         20 |         38 |
+| 개발자        |         28 |         34 |
+| 마케터        |         32 |         33 |
++---------------+------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, MIN(e.age) AS `최소 나이`, MAX(e.age) AS `최대 나이` FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_name;
++---------------+-----------+-----------+
+| position_name | 최소 나이 | 최대 나이 |
++---------------+-----------+-----------+
+| 영업사원      |        32 |        42 |
+| 디자이너      |        20 |        38 |
+| 개발자        |        28 |        34 |
+| 마케터        |        32 |        33 |
++---------------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.circle, p.position_name, COUNT(*) FROM employee e JOIN position p ON p.position_id = e.position_id;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'itcompany.e.circle'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT e.circle, p.position_name, COUNT(*) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> SELECT e.circle, p.position_name, COUNT(*) FROM employee e JOIN position p ON p.position_id = e.position_id WHERE (SELECT circle, position_id FROM employee GROUP BY circle);
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> SELECT circle, position_id FROM employee GROUP BY circle
+    -> ;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'itcompany.employee.position_id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT p.position_name, MIN(e.age) AS `최소 나이`, MAX(e.age) AS `최대 나이` FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_name;
++---------------+-----------+-----------+
+| position_name | 최소 나이 | 최대 나이 |
++---------------+-----------+-----------+
+| 영업사원      |        32 |        42 |
+| 디자이너      |        20 |        38 |
+| 개발자        |        28 |        34 |
+| 마케터        |        32 |        33 |
++---------------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.circle, p.position_name, COUNT(*) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY e.circle, p.position_id
+    -> ;
++---------+---------------+----------+
+| circle  | position_name | COUNT(*) |
++---------+---------------+----------+
+| Hiking  | 영업사원      |        2 |
+| Fishing | 영업사원      |        1 |
+| Movie   | 영업사원      |        1 |
+| Fishing | 디자이너      |        1 |
+| Movie   | 디자이너      |        2 |
+| Movie   | 개발자        |        1 |
+| Hiking  | 개발자        |        1 |
+| NULL    | 개발자        |        1 |
+| Movie   | 마케터        |        1 |
+| Hiking  | 마케터        |        1 |
++---------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT e.circle, p.position_name, COUNT(*) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY e.circle, p.position_id ORDER BY circle DESC;
++---------+---------------+----------+
+| circle  | position_name | COUNT(*) |
++---------+---------------+----------+
+| Movie   | 영업사원      |        1 |
+| Movie   | 디자이너      |        2 |
+| Movie   | 개발자        |        1 |
+| Movie   | 마케터        |        1 |
+| Hiking  | 영업사원      |        2 |
+| Hiking  | 개발자        |        1 |
+| Hiking  | 마케터        |        1 |
+| Fishing | 영업사원      |        1 |
+| Fishing | 디자이너      |        1 |
+| NULL    | 개발자        |        1 |
++---------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT e.circle, p.position_name, COUNT(*) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY e.circle, p.position_id ORDER BY circle, COUNT(*) DESC;
++---------+---------------+----------+
+| circle  | position_name | COUNT(*) |
++---------+---------------+----------+
+| NULL    | 개발자        |        1 |
+| Fishing | 영업사원      |        1 |
+| Fishing | 디자이너      |        1 |
+| Hiking  | 영업사원      |        2 |
+| Hiking  | 개발자        |        1 |
+| Hiking  | 마케터        |        1 |
+| Movie   | 디자이너      |        2 |
+| Movie   | 영업사원      |        1 |
+| Movie   | 개발자        |        1 |
+| Movie   | 마케터        |        1 |
++---------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT e.circle, p.position_name, COUNT(*) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY e.circle, p.position_id ORDER BY circle, COUNT(*);
++---------+---------------+----------+
+| circle  | position_name | COUNT(*) |
++---------+---------------+----------+
+| NULL    | 개발자        |        1 |
+| Fishing | 영업사원      |        1 |
+| Fishing | 디자이너      |        1 |
+| Hiking  | 개발자        |        1 |
+| Hiking  | 마케터        |        1 |
+| Hiking  | 영업사원      |        2 |
+| Movie   | 영업사원      |        1 |
+| Movie   | 개발자        |        1 |
+| Movie   | 마케터        |        1 |
+| Movie   | 디자이너      |        2 |
++---------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT e.circle, p.position_name, COUNT(*) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY e.circle, p.position_id ORDER BY circle, COUNT(*) DESC;
++---------+---------------+----------+
+| circle  | position_name | COUNT(*) |
++---------+---------------+----------+
+| NULL    | 개발자        |        1 |
+| Fishing | 영업사원      |        1 |
+| Fishing | 디자이너      |        1 |
+| Hiking  | 영업사원      |        2 |
+| Hiking  | 개발자        |        1 |
+| Hiking  | 마케터        |        1 |
+| Movie   | 디자이너      |        2 |
+| Movie   | 영업사원      |        1 |
+| Movie   | 개발자        |        1 |
+| Movie   | 마케터        |        1 |
++---------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT e.circle, p.position_name, COUNT(*) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY e.circle, p.position_id ORDER BY circle DESC, COUNT(*) DESC;
++---------+---------------+----------+
+| circle  | position_name | COUNT(*) |
++---------+---------------+----------+
+| Movie   | 디자이너      |        2 |
+| Movie   | 영업사원      |        1 |
+| Movie   | 개발자        |        1 |
+| Movie   | 마케터        |        1 |
+| Hiking  | 영업사원      |        2 |
+| Hiking  | 개발자        |        1 |
+| Hiking  | 마케터        |        1 |
+| Fishing | 영업사원      |        1 |
+| Fishing | 디자이너      |        1 |
+| NULL    | 개발자        |        1 |
++---------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, MIN(e.age) AS `최소 나이`, MAX(e.age) AS `최대 나이` FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_name;
++---------------+-----------+-----------+
+| position_name | 최소 나이 | 최대 나이 |
++---------------+-----------+-----------+
+| 영업사원      |        32 |        42 |
+| 디자이너      |        20 |        38 |
+| 개발자        |        28 |        34 |
+| 마케터        |        32 |        33 |
++---------------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.circle, MIN(e.age) AS `최소 나이`, MAX(e.age) AS `최대 나이` FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY e.circle;
++---------+-----------+-----------+
+| circle  | 최소 나이 | 최대 나이 |
++---------+-----------+-----------+
+| Hiking  |        33 |        33 |
+| Fishing |        38 |        42 |
+| Movie   |        20 |        32 |
+| NULL    |        34 |        34 |
++---------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.circle, p.position_name, COUNT(*) FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY e.circle, p.position_id ORDER BY circle DESC, COUNT(*) DESC;
++---------+---------------+----------+
+| circle  | position_name | COUNT(*) |
++---------+---------------+----------+
+| Movie   | 디자이너      |        2 |
+| Movie   | 영업사원      |        1 |
+| Movie   | 개발자        |        1 |
+| Movie   | 마케터        |        1 |
+| Hiking  | 영업사원      |        2 |
+| Hiking  | 개발자        |        1 |
+| Hiking  | 마케터        |        1 |
+| Fishing | 영업사원      |        1 |
+| Fishing | 디자이너      |        1 |
+| NULL    | 개발자        |        1 |
++---------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT p.position_name, MIN(e.age) AS `최소 나이`, MAX(e.age) AS `최대 나이` FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_name;
++---------------+-----------+-----------+
+| position_name | 최소 나이 | 최대 나이 |
++---------------+-----------+-----------+
+| 영업사원      |        32 |        42 |
+| 디자이너      |        20 |        38 |
+| 개발자        |        28 |        34 |
+| 마케터        |        32 |        33 |
++---------------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql>

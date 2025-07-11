@@ -49,6 +49,54 @@ SELECT e.name, p.position_name, e.salary FROM employee e JOIN position p ON e.po
 5️. 자신보다 나이가 많은 직원 중 급여가 더 낮은 사람의 수가 2명 이상인 직원의 이름과 급여를 출력하시오.
 SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT COUNT(*) FROM employee e2 WHERE e2.salary < e1.salary AND e2.age > e1.age) >= 2;
 
+6. 각각 포지션 별 남자의 숫자와 여자의 숫자를 출력하시오.
+SELECT p.position_name, SUM(CASE WHEN gender = 'M' THEN 1 ELSE 0 END) AS male_count, SUM(CASE WHEN GENDER = 'F' THEN 1 ELSE 0 END) AS female_count FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_name;
 
+
+✅ 랜덤 SQL 문제 5선 (실무형)
+1️. 각 포지션별로 가장 늦게 입사한 직원의 이름, 포지션명, 입사일을 출력하시오.
+SELECT e.name, p.position_name, e.start_date FROM employee e JOIN position p ON p.position_id = e.position_id WHERE (p.position_id, e.start_date) IN (SELECT position_id, MAX(start_date) FROM employee GROUP BY position_id);
+
+2️. 급여가 전체 평균보다 높고, 포지션명에 ‘디자이너’가 포함된 직원의 이름과 급여, 포지션명을 출력하시오.
+SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON p.position_id = e.position_id WHERE e.salary > (SELECT AVG(salary) FROM employee) AND p.position_name = '디자이너';
+
+3️. 평균 급여가 가장 높은 포지션의 이름과 평균 급여를 출력하시오.
+SELECT p.position_name, AVG(e.salary) AS avg_sal FROM employee e JOIN position p ON p.position_id = e.position_id GROUP BY p.position_id ORDER BY avg_sal DESC LIMIT 1; (GPT 도움 받음)
+
+4️. 포지션별로 급여가 가장 높은 직원이 2명 이상 있는 포지션만 포지션명과 해당 직원 수를 출력하시오.
+
+
+5️. 이름에 ‘김’이 들어가며, 자신보다 급여가 낮은 사람이 3명 이상인 직원의 이름과 급여를 출력하시오.
+SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT COUNT(*) FROM employee e2 WHERE e1.salary > e2.salary) >= 3 AND e1.name LIKE '%김%';
+
+6. 각 서클 별로 부서 사람들이 몇 명씩 있는가?
+
+
+✅ SQL 복습 집중 문제 세트 (6문제 / 약 20분 분량)
+1️. 포지션별 평균 급여보다 높은 급여를 받는 직원의 이름, 급여, 포지션명을 출력하시오.
+🔹 복습 포인트: 상관 서브쿼리, GROUP BY + AVG() + WHERE
+
+2️. 각 포지션별 평균 급여를 구하고, 그 중 평균 급여가 전체 평균 급여보다 높은 포지션의 이름과 평균 급여를 출력하시오.
+🔹 복습 포인트: 서브쿼리에서 집계 비교, HAVING, MAX vs AVG
+
+3️. 포지션별로 급여가 가장 높은 직원이 2명 이상인 포지션의 이름과 그 인원 수를 출력하시오.
+🔹 복습 포인트: 튜플 비교 (IN) + GROUP BY + HAVING COUNT
+
+4️. 직원들 중 자신보다 급여가 높은 직원이 3명 이상인 직원의 이름과 급여를 출력하시오.
+🔹 복습 포인트: 상관 서브쿼리에서 COUNT 비교
+
+5️. employee 테이블에서 포지션별 평균 급여 중 가장 높은 포지션 하나만 출력하시오 (포지션명, 평균 급여).
+🔹 복습 포인트: 서브쿼리 + MAX + AVG, 또는 ORDER BY ... LIMIT 1
+
+6️. employee 테이블에서 circle이 NULL인 직원은 제외하고, circle별, position별 인원 수를 세어,
+같은 circle 내에서 인원 수가 많은 순으로 정렬해서 출력하시오.
+🔹 복습 포인트: GROUP BY 2개 기준 + ORDER BY 복합 기준
 ======================================================================
 필요 저장 공간 구하는 공식 : 한 줄 용량 * 데이터 건 수 * 여유공간 * 예상 성장률
+계정 생성 - localhost로 생성 (비번 1234)
+권한 부여 - ITCompany DB의 employee 테이블에 SELECT, INSERT 권한 부여
+권환 회수 - ITCompany DB의 employee 테이블에 INSERT 권한 회수
+
+- 데이터 용량 산정하는 방법
+- 계정 생성 / 권한 부여 및 회수
+- 정규화란?
