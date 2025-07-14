@@ -52,6 +52,12 @@ GRANT 권한 ON 데이터베이스.테이블 TO '계정명'@'호스트';
 -- 예시: 'employee' 테이블에서 'SELECT' 권한 부여
 GRANT SELECT ON ITCompany.employee TO 'admin_user'@'localhost';
 
+-- 10-1. 권한 제거  (특정 DB/테이블에 권한 부여)
+REVOKE 권한 ON 데이터베이스.테이블 FROM '계정명'@'호스트';
+
+-- 예시: 'employee' 테이블에서 'SELECT' 권한 제거
+REVOKE SELECT ON ITCompany.employee FROM 'admin_user'@'localhost';
+
 -- 11. 모든 권한 부여 (root와 비슷한 권한을 가진 계정 생성)
 GRANT ALL PRIVILEGES ON *.* TO '계정명'@'호스트' WITH GRANT OPTION;
 

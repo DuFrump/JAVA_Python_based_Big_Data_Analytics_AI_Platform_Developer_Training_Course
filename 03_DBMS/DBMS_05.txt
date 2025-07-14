@@ -9,7 +9,7 @@ SELECT e.name, p.position_name, e.salary FROM employee e JOIN position p ON e.po
 SELECT name, start_date FROM employee WHERE start_date = (SELECT MAX(start_date) FROM employee);
 
 4️. 직원 수가 가장 많은 포지션의 이름과 해당 직원 수를 출력하시오.
-SELECT p.position_name, COUNT(e.id) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name HAVING COUNT(e.id) = (SELECT MAX(cnt) AS `최다 직원 수` FROM (SELECT COUNT(id) AS cnt FROM employee GROUP BY position) AS cnt_position);
+SELECT p.position_name, COUNT(e.id) FROM employee e JOIN position p ON e.position_id = p.position_id GROUP BY p.position_name HAVING COUNT(e.id) = (SELECT MAX(cnt) AS `최다 직원 수` FROM (SELECT COUNT(id) AS cnt FROM employee GROUP BY position_id) AS cnt_position);
 
 5️. 직위별 최소 급여를 받는 직원의 이름, 포지션명, 급여를 출력하시오.
 SELECT e.name, p.position_name, e.salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE (p.position_id, e.salary) IN (SELECT position_id, MIN(salary) FROM employee GROUP BY position_id);
@@ -21,7 +21,7 @@ SELECT e.name, p.position_name, e.salary FROM employee e JOIN position p ON e.po
 SELECT p.position_name FROM position p LEFT JOIN employee e ON p.position_id = e.position_id WHERE e.id IS NULL;
 
 8️. 포지션별 평균 급여를 출력하되, 평균이 3000 이상인 포지션만 출력하시오.
-SELECT p.position_name FROM position p JOIN employee e ON p.position_id = e.position_id GROUP BY p.position_name HAVING AVG(e.salary) > 3000;
+SELECT p.position_name FROM position p JOIN employee e ON p.position_id = e.position_id GROUP BY p.position_name HAVING AVG(e.salary) >= 3000;
 
 9️. 모든 직원의 평균 급여보다 높은 급여를 받는 직원의 이름, 포지션명, 급여를 출력하시오.
 SELECT e.name, p.position_name, e.salary FROM employee e JOIN position p ON e.position_id = p.position_id WHERE salary > (SELECT AVG(salary) FROM employee);
@@ -36,7 +36,7 @@ SELECT e.name, p.position_name, e.salary FROM employee e JOIN position p ON e.po
 SELECT e.name, e.salary, p.position_name FROM employee e JOIN position p ON e.position_id = p.position_id WHERE e.salary < (SELECT AVG(e2.salary) FROM employee e2 WHERE e2.position_id = e.position_id);
 
 2️. 전체 평균 급여보다 급여가 낮으면서 이름이 '김'으로 시작하는 직원의 이름, 급여를 출력하시오.
-SELECT name, salary FROM employee WHERE name LIKE '%김%' AND salary < (SELECT AVG(salary) FROM employee);
+SELECT name, salary FROM employee WHERE name LIKE '김%' AND salary < (SELECT AVG(salary) FROM employee);
 
 3️. 입사일이 직급별(포지션별) 최솟값인 직원의 이름, 포지션명, 입사일을 출력하시오.
 (즉, 포지션별로 가장 먼저 입사한 사람)
@@ -92,6 +92,7 @@ SELECT e1.name, e1.salary FROM employee e1 WHERE (SELECT COUNT(*) FROM employee 
 같은 circle 내에서 인원 수가 많은 순으로 정렬해서 출력하시오.
 🔹 복습 포인트: GROUP BY 2개 기준 + ORDER BY 복합 기준
 ======================================================================
+
 필요 저장 공간 구하는 공식 : 한 줄 용량 * 데이터 건 수 * 여유공간 * 예상 성장률
 계정 생성 - localhost로 생성 (비번 1234)
 권한 부여 - ITCompany DB의 employee 테이블에 SELECT, INSERT 권한 부여
