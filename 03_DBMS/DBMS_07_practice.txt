@@ -1,0 +1,647 @@
+Microsoft Windows [Version 10.0.19045.4780]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\admin>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE ITCompany;
+Database changed
+mysql> CREATE VIEW circle_null AS SELECT circle, name FROM employee WHERE circle IS NULL;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM circle_null;
++--------+--------+
+| circle | name   |
++--------+--------+
+| NULL   | 김연아 |
+| NULL   | 아이유 |
+| NULL   | 강호동 |
++--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> DROP VIEW circle_null;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE VIEW circle_null AS SELECT * FROM employee WHERE circle IS NULL;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM circle_null;
++----+--------+------+--------+-------------+--------+-------+--------+------------+
+| id | name   | age  | gender | position_id | salary | grade | circle | start_date |
++----+--------+------+--------+-------------+--------+-------+--------+------------+
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high  | NULL   | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high  | NULL   | 2025-07-09 |
+| 16 | 강호동 |   50 | NULL   |        NULL |   NULL | NULL  | NULL   | NULL       |
++----+--------+------+--------+-------------+--------+-------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> DELECT FROM employee WHERE id = 16;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELECT FROM employee WHERE id = 16' at line 1
+mysql> DELECT ROW FROM employee WHERE id = 16;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELECT ROW FROM employee WHERE id = 16' at line 1
+mysql> DELETE FROM employee WHERE id = 16;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT * FROM circle_null;
++----+--------+------+--------+-------------+--------+-------+--------+------------+
+| id | name   | age  | gender | position_id | salary | grade | circle | start_date |
++----+--------+------+--------+-------------+--------+-------+--------+------------+
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high  | NULL   | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high  | NULL   | 2025-07-09 |
++----+--------+------+--------+-------------+--------+-------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO employee (name, age) VALUES ('강호동', 50);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM circle_null;
++----+--------+------+--------+-------------+--------+-------+--------+------------+
+| id | name   | age  | gender | position_id | salary | grade | circle | start_date |
++----+--------+------+--------+-------------+--------+-------+--------+------------+
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high  | NULL   | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high  | NULL   | 2025-07-09 |
+| 17 | 강호동 |   50 | NULL   |        NULL |   NULL | NULL  | NULL   | NULL       |
++----+--------+------+--------+-------------+--------+-------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
+| 17 | 강호동 |   50 | NULL   |        NULL |   NULL | NULL   | NULL    | NULL       |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT UPPER(circle) FROM employee;
++---------------+
+| UPPER(circle) |
++---------------+
+| HIKING        |
+| FISHING       |
+| MOVIE         |
+| MOVIE         |
+| FISHING       |
+| MOVIE         |
+| MOVIE         |
+| HIKING        |
+| MOVIE         |
+| HIKING        |
+| HIKING        |
+| NULL          |
+| NULL          |
+| NULL          |
++---------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT circle, UPPER(circle) AS 대문자, LOWER(circle) AS 소문자 FROM employee;
++---------+---------+---------+
+| circle  | 대문자  | 소문자  |
++---------+---------+---------+
+| Hiking  | HIKING  | hiking  |
+| Fishing | FISHING | fishing |
+| Movie   | MOVIE   | movie   |
+| Movie   | MOVIE   | movie   |
+| Fishing | FISHING | fishing |
+| Movie   | MOVIE   | movie   |
+| Movie   | MOVIE   | movie   |
+| Hiking  | HIKING  | hiking  |
+| Movie   | MOVIE   | movie   |
+| Hiking  | HIKING  | hiking  |
+| Hiking  | HIKING  | hiking  |
+| NULL    | NULL    | NULL    |
+| NULL    | NULL    | NULL    |
+| NULL    | NULL    | NULL    |
++---------+---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT('PEN', 'PINEAPPLE', 'APPLE', 'PEN')
+    -> ;
++--------------------------------------------+
+| CONCAT('PEN', 'PINEAPPLE', 'APPLE', 'PEN') |
++--------------------------------------------+
+| PENPINEAPPLEAPPLEPEN                       |
++--------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT CONCAT('이름 : ', name);
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> SELECT CONCAT('이름 : ', name) FROM employee;
++-------------------------+
+| CONCAT('이름 : ', name) |
++-------------------------+
+| 이름 : 강호동           |
+| 이름 : 기안84           |
+| 이름 : 김연아           |
+| 이름 : 둘리             |
+| 이름 : 레이첼           |
+| 이름 : 로스             |
+| 이름 : 모니카           |
+| 이름 : 아이유           |
+| 이름 : 양코딩           |
+| 이름 : 유재석           |
+| 이름 : 조이             |
+| 이름 : 챈들러           |
+| 이름 : 피비             |
+| 이름 : 홍길동           |
++-------------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT('이름 : ', LEFT(name, 1), '**') FROM employee;
++----------------------------------------+
+| CONCAT('이름 : ', LEFT(name, 1), '**') |
++----------------------------------------+
+| 이름 : 강**                            |
+| 이름 : 기**                            |
+| 이름 : 김**                            |
+| 이름 : 둘**                            |
+| 이름 : 레**                            |
+| 이름 : 로**                            |
+| 이름 : 모**                            |
+| 이름 : 아**                            |
+| 이름 : 양**                            |
+| 이름 : 유**                            |
+| 이름 : 조**                            |
+| 이름 : 챈**                            |
+| 이름 : 피**                            |
+| 이름 : 홍**                            |
++----------------------------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT SUBSTR(name, 2), SUBSTR(name, 2, 1) from employee;
++-----------------+--------------------+
+| SUBSTR(name, 2) | SUBSTR(name, 2, 1) |
++-----------------+--------------------+
+| 호동            | 호                 |
+| 안84            | 안                 |
+| 연아            | 연                 |
+| 리              | 리                 |
+| 이첼            | 이                 |
+| 스              | 스                 |
+| 니카            | 니                 |
+| 이유            | 이                 |
+| 코딩            | 코                 |
+| 재석            | 재                 |
+| 이              | 이                 |
+| 들러            | 들                 |
+| 비              | 비                 |
+| 길동            | 길                 |
++-----------------+--------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT('이름 : ', LEFT(name, 1), '**') FROM employee;
++----------------------------------------+
+| CONCAT('이름 : ', LEFT(name, 1), '**') |
++----------------------------------------+
+| 이름 : 강**                            |
+| 이름 : 기**                            |
+| 이름 : 김**                            |
+| 이름 : 둘**                            |
+| 이름 : 레**                            |
+| 이름 : 로**                            |
+| 이름 : 모**                            |
+| 이름 : 아**                            |
+| 이름 : 양**                            |
+| 이름 : 유**                            |
+| 이름 : 조**                            |
+| 이름 : 챈**                            |
+| 이름 : 피**                            |
+| 이름 : 홍**                            |
++----------------------------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT('이름 : ', LEFT(name, 1, 1), '*', RIGHT(name, 1) FROM employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', 1), '*', RIGHT(name, 1) FROM employee' at line 1
+mysql> SELECT CONCAT('이름 : ', LEFT(name, 1, 1), '*', RIGHT(name, 1)) FROM employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', 1), '*', RIGHT(name, 1)) FROM employee' at line 1
+mysql> SELECT CONCAT(LEFT(name, 1, 1), '*', RIGHT(name, 1, 1)) FROM employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', 1), '*', RIGHT(name, 1, 1)) FROM employee' at line 1
+mysql> SELECT CONCAT(LEFT(name, 1, 1), '*') FROM employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', 1), '*') FROM employee' at line 1
+mysql> SELECT CONCAT(LEFT(name, 1), '*') FROM employee;
++----------------------------+
+| CONCAT(LEFT(name, 1), '*') |
++----------------------------+
+| 강*                        |
+| 기*                        |
+| 김*                        |
+| 둘*                        |
+| 레*                        |
+| 로*                        |
+| 모*                        |
+| 아*                        |
+| 양*                        |
+| 유*                        |
+| 조*                        |
+| 챈*                        |
+| 피*                        |
+| 홍*                        |
++----------------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(LEFT(name, 1), '*', RIGHT(name, 1) FROM employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM employee' at line 1
+mysql> SELECT CONCAT(LEFT(name, 1), '*', RIGHT(name, 1)) FROM employee;
++--------------------------------------------+
+| CONCAT(LEFT(name, 1), '*', RIGHT(name, 1)) |
++--------------------------------------------+
+| 강*동                                      |
+| 기*4                                       |
+| 김*아                                      |
+| 둘*리                                      |
+| 레*첼                                      |
+| 로*스                                      |
+| 모*카                                      |
+| 아*유                                      |
+| 양*딩                                      |
+| 유*석                                      |
+| 조*이                                      |
+| 챈*러                                      |
+| 피*비                                      |
+| 홍*동                                      |
++--------------------------------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(LEFT(name, 1), '*', RIGHT(name, 1)) AS 암호화_이름 FROM employee;
++-------------+
+| 암호화_이름 |
++-------------+
+| 강*동       |
+| 기*4        |
+| 김*아       |
+| 둘*리       |
+| 레*첼       |
+| 로*스       |
+| 모*카       |
+| 아*유       |
+| 양*딩       |
+| 유*석       |
+| 조*이       |
+| 챈*러       |
+| 피*비       |
+| 홍*동       |
++-------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(LEFT(name, 1), '*', SUBSTR(name, 3)) AS 암호화_이름 FROM employee;
++-------------+
+| 암호화_이름 |
++-------------+
+| 강*동       |
+| 기*84       |
+| 김*아       |
+| 둘*         |
+| 레*첼       |
+| 로*         |
+| 모*카       |
+| 아*유       |
+| 양*딩       |
+| 유*석       |
+| 조*         |
+| 챈*러       |
+| 피*         |
+| 홍*동       |
++-------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(LEFT(name, 1), '**', SUBSTR(name, 4)) AS 암호화_이름 FROM employee;
++-------------+
+| 암호화_이름 |
++-------------+
+| 강**        |
+| 기**4       |
+| 김**        |
+| 둘**        |
+| 레**        |
+| 로**        |
+| 모**        |
+| 아**        |
+| 양**        |
+| 유**        |
+| 조**        |
+| 챈**        |
+| 피**        |
+| 홍**        |
++-------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT CONCAT(LEFT(name, 1), '*', SUBSTR(name, 3)) AS 암호화_이름 FROM employee;
++-------------+
+| 암호화_이름 |
++-------------+
+| 강*동       |
+| 기*84       |
+| 김*아       |
+| 둘*         |
+| 레*첼       |
+| 로*         |
+| 모*카       |
+| 아*유       |
+| 양*딩       |
+| 유*석       |
+| 조*         |
+| 챈*러       |
+| 피*         |
+| 홍*동       |
++-------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT LENGTH(name) FROM employee;
++--------------+
+| LENGTH(name) |
++--------------+
+|            9 |
+|            8 |
+|            9 |
+|            6 |
+|            9 |
+|            6 |
+|            9 |
+|            9 |
+|            9 |
+|            9 |
+|            6 |
+|            9 |
+|            6 |
+|            9 |
++--------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT CHARLENGTH(name) FROM employee;
+ERROR 1305 (42000): FUNCTION itcompany.CHARLENGTH does not exist
+mysql> SELECT CHAR_LENGTH(name) FROM employee;
++-------------------+
+| CHAR_LENGTH(name) |
++-------------------+
+|                 3 |
+|                 4 |
+|                 3 |
+|                 2 |
+|                 3 |
+|                 2 |
+|                 3 |
+|                 3 |
+|                 3 |
+|                 3 |
+|                 2 |
+|                 3 |
+|                 2 |
+|                 3 |
++-------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT name, LENGTH(name), CHAR_LENGTH(name) FROM employee;
++--------+--------------+-------------------+
+| name   | LENGTH(name) | CHAR_LENGTH(name) |
++--------+--------------+-------------------+
+| 강호동 |            9 |                 3 |
+| 기안84 |            8 |                 4 |
+| 김연아 |            9 |                 3 |
+| 둘리   |            6 |                 2 |
+| 레이첼 |            9 |                 3 |
+| 로스   |            6 |                 2 |
+| 모니카 |            9 |                 3 |
+| 아이유 |            9 |                 3 |
+| 양코딩 |            9 |                 3 |
+| 유재석 |            9 |                 3 |
+| 조이   |            6 |                 2 |
+| 챈들러 |            9 |                 3 |
+| 피비   |            6 |                 2 |
+| 홍길동 |            9 |                 3 |
++--------+--------------+-------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT name FROM employee WHERE CHAR_LENGTH(name) = 2;
++------+
+| name |
++------+
+| 둘리 |
+| 로스 |
+| 조이 |
+| 피비 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_itcompany |
++---------------------+
+| circle_null         |
+| date_time           |
+| employee            |
+| employee2           |
+| high_salary         |
+| info_masking        |
+| marketer_high       |
+| name_position       |
+| no_position         |
+| null_table          |
+| position            |
++---------------------+
+11 rows in set (0.00 sec)
+
+mysql> DELETE TABLE date_time;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABLE date_time' at line 1
+mysql> DROP TABLE date_time;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE date_time (id INT, date1 DATE, time1 TIME, datetime1 DATETIME);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO date_time (id, date1, time1, datetime1) VALUES (1, NOW(), NOW(), NOW());
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> SELECT * FROM date_time;
++------+------------+----------+---------------------+
+| id   | date1      | time1    | datetime1           |
++------+------------+----------+---------------------+
+|    1 | 2025-07-15 | 12:53:18 | 2025-07-15 12:53:18 |
++------+------------+----------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT YEAR(datetime1) AS year, MONTH(datetime1) AS month, day(datetime1) AS day FROM datetime1;
+ERROR 1146 (42S02): Table 'itcompany.datetime1' doesn't exist
+mysql> SELECT YEAR(datetime1) AS year, MONTH(datetime1) AS month, day(datetime1) AS day FROM date_time;
++------+-------+------+
+| year | month | day  |
++------+-------+------+
+| 2025 |     7 |   15 |
++------+-------+------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE date_time ADD COLUMN (date2 DATE DEFAULT (CURDATE()), time2 TIME DEFAULT (CURTIME()), datetime2 DATETIME (CURRENT_DATETIME())
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CURRENT_DATETIME())' at line 1
+mysql> ALTER TABLE date_time ADD COLUMN (date2 DATE DEFAULT (CURDATE()), time2 TIME DEFAULT (CURTIME()), datetime2 DATETIME DEFAULT CURRENT_TIMESTAMP);
+Query OK, 1 row affected (0.04 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM date_time;
++------+------------+----------+---------------------+------------+----------+---------------------+
+| id   | date1      | time1    | datetime1           | date2      | time2    | datetime2           |
++------+------------+----------+---------------------+------------+----------+---------------------+
+|    1 | 2025-07-15 | 12:53:18 | 2025-07-15 12:53:18 | 2025-07-15 | 12:56:44 | 2025-07-15 12:56:44 |
++------+------------+----------+---------------------+------------+----------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO date_time (id) VALUES (2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM date_time;
++------+------------+----------+---------------------+------------+----------+---------------------+
+| id   | date1      | time1    | datetime1           | date2      | time2    | datetime2           |
++------+------------+----------+---------------------+------------+----------+---------------------+
+|    1 | 2025-07-15 | 12:53:18 | 2025-07-15 12:53:18 | 2025-07-15 | 12:56:44 | 2025-07-15 12:56:44 |
+|    2 | NULL       | NULL     | NULL                | 2025-07-15 | 12:58:53 | 2025-07-15 12:58:53 |
++------+------------+----------+---------------------+------------+----------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE date_time MODIFY COLUMN date1 DATE NOT NULL, COLUMN time1 TIME NOT NULL, COLUMN datetime1 DATETIME NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COLUMN time1 TIME NOT NULL, COLUMN datetime1 DATETIME NOT NULL' at line 1
+mysql> ALTER TABLE date_time MODIFY COLUMN date1 DATE NOT NULL COLUMN time1 TIME NOT NULL COLUMN datetime1 DATETIME NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COLUMN time1 TIME NOT NULL COLUMN datetime1 DATETIME NOT NULL' at line 1
+mysql> ALTER TABLE date_time MODIFY COLUMN (date1 DATE NOT NULL, time1 TIME NOT NULL, datetime1 DATETIME NOT NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(date1 DATE NOT NULL, time1 TIME NOT NULL, datetime1 DATETIME NOT NULL)' at line 1
+mysql> ALTER TABLE date_time MODIFY COLUMN (date1 DATE NOT NULL, time1 TIME NOT NULL, datetime1 DATETIME NOT NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(date1 DATE NOT NULL, time1 TIME NOT NULL, datetime1 DATETIME NOT NULL)' at line 1
+mysql> DESC date_time;
++-----------+----------+------+-----+-------------------+-------------------+
+| Field     | Type     | Null | Key | Default           | Extra             |
++-----------+----------+------+-----+-------------------+-------------------+
+| id        | int      | YES  |     | NULL              |                   |
+| date1     | date     | YES  |     | NULL              |                   |
+| time1     | time     | YES  |     | NULL              |                   |
+| datetime1 | datetime | YES  |     | NULL              |                   |
+| date2     | date     | YES  |     | curdate()         | DEFAULT_GENERATED |
+| time2     | time     | YES  |     | curtime()         | DEFAULT_GENERATED |
+| datetime2 | datetime | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-----------+----------+------+-----+-------------------+-------------------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE date_time MODIFY COLUMN date1 DATE NOT NULL MODIFY COLUMN time1 TIME NOT NULL MODIFY COLUMN datetime1 DATETIME NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MODIFY COLUMN time1 TIME NOT NULL MODIFY COLUMN datetime1 DATETIME NOT NULL' at line 1
+mysql> ALTER TABLE date_time MODIFY COLUMN date1 DATE NOT NULL, MODIFY COLUMN time1 TIME NOT NULL, MODIFY COLUMN datetime1 DATETIME NOT NULL;
+ERROR 1138 (22004): Invalid use of NULL value
+mysql> ALTER TABLE date_time MODIFY COLUMN date1 DATE NOT NULL;
+ERROR 1138 (22004): Invalid use of NULL value
+mysql> ALTER TABLE date_time MODIFY COLUMN date1 DATE NOT NULL DEFAULT(CURDATE()), MODIFY COLUMN time1 TIME NOT NULL DEFAULT(CURTIME()), MODIFY COLUMN datetime1 DATETIME NOT NULL DEFAULT(CURRENT_TIMESTAMP);
+ERROR 1138 (22004): Invalid use of NULL value
+mysql> ALTER TABLE date_time MODIFY COLUMN date1 DATE NOT NULL DEFAULT(CURDATE()), MODIFY COLUMN time1 TIME NOT NULL DEFAULT(CURTIME()), MODIFY COLUMN datetime1 DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ERROR 1138 (22004): Invalid use of NULL value
+mysql> UPDATE date_time SET date1 = '2024-07-25', time1 = '11:21:01', datetime1 = '2024-07-25 11:21:01' WHERE id = 2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM date_time;
++------+------------+----------+---------------------+------------+----------+---------------------+
+| id   | date1      | time1    | datetime1           | date2      | time2    | datetime2           |
++------+------------+----------+---------------------+------------+----------+---------------------+
+|    1 | 2025-07-15 | 12:53:18 | 2025-07-15 12:53:18 | 2025-07-15 | 12:56:44 | 2025-07-15 12:56:44 |
+|    2 | 2024-07-25 | 11:21:01 | 2024-07-25 11:21:01 | 2025-07-15 | 12:58:53 | 2025-07-15 12:58:53 |
++------+------------+----------+---------------------+------------+----------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE date_time MODIFY COLUMN date1 DATE NOT NULL DEFAULT(CURDATE()), MODIFY COLUMN time1 TIME NOT NULL DEFAULT(CURTIME()), MODIFY COLUMN datetime1 DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM date_time;
++------+------------+----------+---------------------+------------+----------+---------------------+
+| id   | date1      | time1    | datetime1           | date2      | time2    | datetime2           |
++------+------------+----------+---------------------+------------+----------+---------------------+
+|    1 | 2025-07-15 | 12:53:18 | 2025-07-15 12:53:18 | 2025-07-15 | 12:56:44 | 2025-07-15 12:56:44 |
+|    2 | 2024-07-25 | 11:21:01 | 2024-07-25 11:21:01 | 2025-07-15 | 12:58:53 | 2025-07-15 12:58:53 |
++------+------------+----------+---------------------+------------+----------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> DESC date_time;
++-----------+----------+------+-----+-------------------+-------------------+
+| Field     | Type     | Null | Key | Default           | Extra             |
++-----------+----------+------+-----+-------------------+-------------------+
+| id        | int      | YES  |     | NULL              |                   |
+| date1     | date     | NO   |     | curdate()         | DEFAULT_GENERATED |
+| time1     | time     | NO   |     | curtime()         | DEFAULT_GENERATED |
+| datetime1 | datetime | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| date2     | date     | YES  |     | curdate()         | DEFAULT_GENERATED |
+| time2     | time     | YES  |     | curtime()         | DEFAULT_GENERATED |
+| datetime2 | datetime | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-----------+----------+------+-----+-------------------+-------------------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO date_time (id) VALUES (3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM date_time;
++------+------------+----------+---------------------+------------+----------+---------------------+
+| id   | date1      | time1    | datetime1           | date2      | time2    | datetime2           |
++------+------------+----------+---------------------+------------+----------+---------------------+
+|    1 | 2025-07-15 | 12:53:18 | 2025-07-15 12:53:18 | 2025-07-15 | 12:56:44 | 2025-07-15 12:56:44 |
+|    2 | 2024-07-25 | 11:21:01 | 2024-07-25 11:21:01 | 2025-07-15 | 12:58:53 | 2025-07-15 12:58:53 |
+|    3 | 2025-07-15 | 13:11:39 | 2025-07-15 13:11:39 | 2025-07-15 | 13:11:39 | 2025-07-15 13:11:39 |
++------+------------+----------+---------------------+------------+----------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE date_time MODIFY COLUMN date1 DATE NOT NULL, MODIFY COLUMN time1 TIME NOT NULL, MODIFY COLUMN datetime1 DATETIME NOT NULL;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DROP FROM date_time WHERE id = 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM date_time WHERE id = 3' at line 1
+mysql> DELETE FROM date_time WHERE id = 3;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM date_time;
++------+------------+----------+---------------------+------------+----------+---------------------+
+| id   | date1      | time1    | datetime1           | date2      | time2    | datetime2           |
++------+------------+----------+---------------------+------------+----------+---------------------+
+|    1 | 2025-07-15 | 12:53:18 | 2025-07-15 12:53:18 | 2025-07-15 | 12:56:44 | 2025-07-15 12:56:44 |
+|    2 | 2024-07-25 | 11:21:01 | 2024-07-25 11:21:01 | 2025-07-15 | 12:58:53 | 2025-07-15 12:58:53 |
++------+------------+----------+---------------------+------------+----------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO date_time (id) VALUES (3);
+ERROR 1364 (HY000): Field 'date1' doesn't have a default value
+mysql>
