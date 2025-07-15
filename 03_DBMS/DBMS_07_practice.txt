@@ -644,4 +644,1349 @@ mysql> SELECT * FROM date_time;
 
 mysql> INSERT INTO date_time (id) VALUES (3);
 ERROR 1364 (HY000): Field 'date1' doesn't have a default value
+
+Microsoft Windows [Version 10.0.19045.4780]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\admin>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE ITCompany;
+Database changed
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
+| 17 | 강호동 |   50 | NULL   |        NULL |   NULL | NULL   | NULL    | NULL       |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+14 rows in set (0.01 sec)
+
+mysql> SELECT * FROM employee WHERE grade = 'high';
++----+--------+------+--------+-------------+--------+-------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade | circle  | start_date |
++----+--------+------+--------+-------------+--------+-------+---------+------------+
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high  | Fishing | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high  | Fishing | 2021-03-01 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high  | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high  | NULL    | 2025-07-09 |
++----+--------+------+--------+-------------+--------+-------+---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE ITBank (bank_id INT PRIMARY KEY, deposit INT UNSIGNED NOT NULL DEFAULT 0,FOREIGN KEY (bank_id) REFERENCES employee(id));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT * FROM ITBank;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO ITBank (bank_id, deposit) SELECT id, 5000 FROM employee;
+Query OK, 14 rows affected (0.01 sec)
+Records: 14  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM ITBank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    5000 |
+|       2 |    5000 |
+|       3 |    5000 |
+|       5 |    5000 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    5000 |
+|      13 |    5000 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT * FROM ITBank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    5000 |
+|       2 |    5000 |
+|       3 |    5000 |
+|       5 |    5000 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    5000 |
+|      13 |    5000 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> RENAME TABLE ITBank TO itbank;
+ERROR 1050 (42S01): Table 'itbank' already exists
+mysql> RENAME TABLE ITBank TO it_bank;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> RENAME TABLE it_bank TO itbank;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT * FROM itbank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    5000 |
+|       2 |    5000 |
+|       3 |    5000 |
+|       5 |    5000 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    5000 |
+|      13 |    5000 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = deposit - 500 WHERE bank_id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM itbank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    4500 |
+|       2 |    5000 |
+|       3 |    5000 |
+|       5 |    5000 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    5000 |
+|      13 |    5000 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = deposit + 500 WHERE bank_id = 2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM itbank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    4500 |
+|       2 |    5500 |
+|       3 |    5000 |
+|       5 |    5000 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    5000 |
+|      13 |    5000 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = deposit - 500 WHERE bank_id = 3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE itbank SET deposit = deposit + 5000 WHERE bank_id = 5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM itbank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    4500 |
+|       2 |    5500 |
+|       3 |    4500 |
+|       5 |   10000 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    5000 |
+|      13 |    5000 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> ROLLBACK;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM itbank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    4500 |
+|       2 |    5500 |
+|       3 |    5000 |
+|       5 |    5000 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    5000 |
+|      13 |    5000 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = deposit - 500 WHERE bank_id = 3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE itbank SET deposit = deposit + 500 WHERE bank_id = 5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM itbank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    4500 |
+|       2 |    5500 |
+|       3 |    4500 |
+|       5 |    5500 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    5000 |
+|      13 |    5000 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM itbank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    4500 |
+|       2 |    5500 |
+|       3 |    4500 |
+|       5 |    5500 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    5000 |
+|      13 |    5000 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = deposit - 500 WHERE bank_id = 3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE itbank SET deposit = deposit + 500 WHERE bank_id = 5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SAVEPOINT after_first;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = deposit - 500 WHERE bank_id = 12;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE itbank SET deposit = deposit + 1500 WHERE bank_id = 13;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM itbank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    4500 |
+|       2 |    5500 |
+|       3 |    4000 |
+|       5 |    6000 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    4500 |
+|      13 |    6500 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> ROLLBACK TO after_first;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM itbank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    4500 |
+|       2 |    5500 |
+|       3 |    4000 |
+|       5 |    6000 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    5000 |
+|      13 |    5000 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM itbank;
++---------+---------+
+| bank_id | deposit |
++---------+---------+
+|       1 |    4500 |
+|       2 |    5500 |
+|       3 |    4000 |
+|       5 |    6000 |
+|       6 |    5000 |
+|       7 |    5000 |
+|       8 |    5000 |
+|       9 |    5000 |
+|      10 |    5000 |
+|      11 |    5000 |
+|      12 |    5000 |
+|      13 |    5000 |
+|      14 |    5000 |
+|      17 |    5000 |
++---------+---------+
+14 rows in set (0.00 sec)
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = deposit + 1500 WHERE bank_id = 13;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> ROLLBACK;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> ALTER TABLE itbank ADD COLUMN last_updated DATETIME DEFAULT CURRENT_TIMESTAMP;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM itbank;
++---------+---------+---------------------+
+| bank_id | deposit | last_updated        |
++---------+---------+---------------------+
+|       1 |    4500 | 2025-07-15 15:35:33 |
+|       2 |    5500 | 2025-07-15 15:35:33 |
+|       3 |    4000 | 2025-07-15 15:35:33 |
+|       5 |    6000 | 2025-07-15 15:35:33 |
+|       6 |    5000 | 2025-07-15 15:35:33 |
+|       7 |    5000 | 2025-07-15 15:35:33 |
+|       8 |    5000 | 2025-07-15 15:35:33 |
+|       9 |    5000 | 2025-07-15 15:35:33 |
+|      10 |    5000 | 2025-07-15 15:35:33 |
+|      11 |    5000 | 2025-07-15 15:35:33 |
+|      12 |    5000 | 2025-07-15 15:35:33 |
+|      13 |    5000 | 2025-07-15 15:35:33 |
+|      14 |    5000 | 2025-07-15 15:35:33 |
+|      17 |    5000 | 2025-07-15 15:35:33 |
++---------+---------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> DELIMITER //
+mysql> CREATE TRIGGER update_last BEFORE UPDATE ON itbank FROM EACH ROW BEGIN SET NEW.last_updated = CURRENT_TIMESTAMP; END;//
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM EACH ROW BEGIN SET NEW.last_updated = CURRENT_TIMESTAMP; END' at line 1
+mysql> CREATE TRIGGER update_last BEFORE UPDATE ON itbank FROM EACH ROW BEGIN SET NEW.last_updated = CURRENT_TIMESTAMP;
+    -> END;
+    -> //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM EACH ROW BEGIN SET NEW.last_updated = CURRENT_TIMESTAMP;
+END' at line 1
+mysql> CREATE TRIGGER update_last BEFORE UPDATE ON itbank FOR EACH ROW BEGIN SET NEW.last_updated = CURRENT_TIMESTAMP; END; //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT * FROM itbank;
++---------+---------+---------------------+
+| bank_id | deposit | last_updated        |
++---------+---------+---------------------+
+|       1 |    4500 | 2025-07-15 15:35:33 |
+|       2 |    5500 | 2025-07-15 15:35:33 |
+|       3 |    4000 | 2025-07-15 15:35:33 |
+|       5 |    6000 | 2025-07-15 15:35:33 |
+|       6 |    5000 | 2025-07-15 15:35:33 |
+|       7 |    5000 | 2025-07-15 15:35:33 |
+|       8 |    5000 | 2025-07-15 15:35:33 |
+|       9 |    5000 | 2025-07-15 15:35:33 |
+|      10 |    5000 | 2025-07-15 15:35:33 |
+|      11 |    5000 | 2025-07-15 15:35:33 |
+|      12 |    5000 | 2025-07-15 15:35:33 |
+|      13 |    5000 | 2025-07-15 15:35:33 |
+|      14 |    5000 | 2025-07-15 15:35:33 |
+|      17 |    5000 | 2025-07-15 15:35:33 |
++---------+---------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = deposit + 500 WHERE bank_id = 10;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM itbank;
++---------+---------+---------------------+
+| bank_id | deposit | last_updated        |
++---------+---------+---------------------+
+|       1 |    4500 | 2025-07-15 15:35:33 |
+|       2 |    5500 | 2025-07-15 15:35:33 |
+|       3 |    4000 | 2025-07-15 15:35:33 |
+|       5 |    6000 | 2025-07-15 15:35:33 |
+|       6 |    5000 | 2025-07-15 15:35:33 |
+|       7 |    5000 | 2025-07-15 15:35:33 |
+|       8 |    5000 | 2025-07-15 15:35:33 |
+|       9 |    5000 | 2025-07-15 15:35:33 |
+|      10 |    5500 | 2025-07-15 15:40:31 |
+|      11 |    5000 | 2025-07-15 15:35:33 |
+|      12 |    5000 | 2025-07-15 15:35:33 |
+|      13 |    5000 | 2025-07-15 15:35:33 |
+|      14 |    5000 | 2025-07-15 15:35:33 |
+|      17 |    5000 | 2025-07-15 15:35:33 |
++---------+---------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> DELIMITER //
+mysql> SELECT * FROM itbank;
+    -> //
++---------+---------+---------------------+
+| bank_id | deposit | last_updated        |
++---------+---------+---------------------+
+|       1 |    4500 | 2025-07-15 15:35:33 |
+|       2 |    5500 | 2025-07-15 15:35:33 |
+|       3 |    4000 | 2025-07-15 15:35:33 |
+|       5 |    6000 | 2025-07-15 15:35:33 |
+|       6 |    5000 | 2025-07-15 15:35:33 |
+|       7 |    5000 | 2025-07-15 15:35:33 |
+|       8 |    5000 | 2025-07-15 15:35:33 |
+|       9 |    5000 | 2025-07-15 15:35:33 |
+|      10 |    5500 | 2025-07-15 15:40:31 |
+|      11 |    5000 | 2025-07-15 15:35:33 |
+|      12 |    5000 | 2025-07-15 15:35:33 |
+|      13 |    5000 | 2025-07-15 15:35:33 |
+|      14 |    5000 | 2025-07-15 15:35:33 |
+|      17 |    5000 | 2025-07-15 15:35:33 |
++---------+---------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT * FROM itbank//
++---------+---------+---------------------+
+| bank_id | deposit | last_updated        |
++---------+---------+---------------------+
+|       1 |    4500 | 2025-07-15 15:35:33 |
+|       2 |    5500 | 2025-07-15 15:35:33 |
+|       3 |    4000 | 2025-07-15 15:35:33 |
+|       5 |    6000 | 2025-07-15 15:35:33 |
+|       6 |    5000 | 2025-07-15 15:35:33 |
+|       7 |    5000 | 2025-07-15 15:35:33 |
+|       8 |    5000 | 2025-07-15 15:35:33 |
+|       9 |    5000 | 2025-07-15 15:35:33 |
+|      10 |    5500 | 2025-07-15 15:40:31 |
+|      11 |    5000 | 2025-07-15 15:35:33 |
+|      12 |    5000 | 2025-07-15 15:35:33 |
+|      13 |    5000 | 2025-07-15 15:35:33 |
+|      14 |    5000 | 2025-07-15 15:35:33 |
+|      17 |    5000 | 2025-07-15 15:35:33 |
++---------+---------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT * FROM itbank//
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '//' at line 1
+mysql> CREATE TABLE itbank_update_log (log_id INT AUTO_INCREMENT PRIMARY KEY, bank_id INT, old_deposit INT, new_deposit INT, updated_at DATETIME);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DELIMITED //
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELIMITED //' at line 1
+mysql> DELIMITER //
+mysql> CREATE TRIGGER log_itbank_update AFTER UPDATE ON itbank FOR EACH ROW BEGIN INSERT INTO itbank_update_log (bank_id, old_deposit, new_deposit, updated_at) VALUES (OLD.bank_id, OLD.deposit, NEW.deposit, NOW()); END;//
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT * FROM itbank
+    -> ;
++---------+---------+---------------------+
+| bank_id | deposit | last_updated        |
++---------+---------+---------------------+
+|       1 |    4500 | 2025-07-15 15:35:33 |
+|       2 |    5500 | 2025-07-15 15:35:33 |
+|       3 |    4000 | 2025-07-15 15:35:33 |
+|       5 |    6000 | 2025-07-15 15:35:33 |
+|       6 |    5000 | 2025-07-15 15:35:33 |
+|       7 |    5000 | 2025-07-15 15:35:33 |
+|       8 |    5000 | 2025-07-15 15:35:33 |
+|       9 |    5000 | 2025-07-15 15:35:33 |
+|      10 |    5500 | 2025-07-15 15:40:31 |
+|      11 |    5000 | 2025-07-15 15:35:33 |
+|      12 |    5000 | 2025-07-15 15:35:33 |
+|      13 |    5000 | 2025-07-15 15:35:33 |
+|      14 |    5000 | 2025-07-15 15:35:33 |
+|      17 |    5000 | 2025-07-15 15:35:33 |
++---------+---------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = deposit + 500 WHERE bank_id = 10;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM itbank_update_log;
++--------+---------+-------------+-------------+---------------------+
+| log_id | bank_id | old_deposit | new_deposit | updated_at          |
++--------+---------+-------------+-------------+---------------------+
+|      1 |      10 |        5500 |        6000 | 2025-07-15 15:56:49 |
++--------+---------+-------------+-------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = deposit - 500 WHERE bank_id = 10;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM itbank_update_log;
++--------+---------+-------------+-------------+---------------------+
+| log_id | bank_id | old_deposit | new_deposit | updated_at          |
++--------+---------+-------------+-------------+---------------------+
+|      1 |      10 |        5500 |        6000 | 2025-07-15 15:56:49 |
+|      2 |      10 |        6000 |        5500 | 2025-07-15 15:57:08 |
++--------+---------+-------------+-------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM itbank;
++---------+---------+---------------------+
+| bank_id | deposit | last_updated        |
++---------+---------+---------------------+
+|       1 |    4500 | 2025-07-15 15:35:33 |
+|       2 |    5500 | 2025-07-15 15:35:33 |
+|       3 |    4000 | 2025-07-15 15:35:33 |
+|       5 |    6000 | 2025-07-15 15:35:33 |
+|       6 |    5000 | 2025-07-15 15:35:33 |
+|       7 |    5000 | 2025-07-15 15:35:33 |
+|       8 |    5000 | 2025-07-15 15:35:33 |
+|       9 |    5000 | 2025-07-15 15:35:33 |
+|      10 |    5500 | 2025-07-15 15:57:08 |
+|      11 |    5000 | 2025-07-15 15:35:33 |
+|      12 |    5000 | 2025-07-15 15:35:33 |
+|      13 |    5000 | 2025-07-15 15:35:33 |
+|      14 |    5000 | 2025-07-15 15:35:33 |
+|      17 |    5000 | 2025-07-15 15:35:33 |
++---------+---------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = deposit - 500 WHERE id = 13;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> UPDATE itbank SET deposit = deposit - 500 WHERE bank_id = 13;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE itbank SET deposit = deposit + 500 WHERE bank_id = 14;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM itbank;
++---------+---------+---------------------+
+| bank_id | deposit | last_updated        |
++---------+---------+---------------------+
+|       1 |    4500 | 2025-07-15 15:35:33 |
+|       2 |    5500 | 2025-07-15 15:35:33 |
+|       3 |    4000 | 2025-07-15 15:35:33 |
+|       5 |    6000 | 2025-07-15 15:35:33 |
+|       6 |    5000 | 2025-07-15 15:35:33 |
+|       7 |    5000 | 2025-07-15 15:35:33 |
+|       8 |    5000 | 2025-07-15 15:35:33 |
+|       9 |    5000 | 2025-07-15 15:35:33 |
+|      10 |    5500 | 2025-07-15 15:57:08 |
+|      11 |    5000 | 2025-07-15 15:35:33 |
+|      12 |    5000 | 2025-07-15 15:35:33 |
+|      13 |    4500 | 2025-07-15 15:59:02 |
+|      14 |    5500 | 2025-07-15 15:59:09 |
+|      17 |    5000 | 2025-07-15 15:35:33 |
++---------+---------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT * FROM itbank_update_log;
++--------+---------+-------------+-------------+---------------------+
+| log_id | bank_id | old_deposit | new_deposit | updated_at          |
++--------+---------+-------------+-------------+---------------------+
+|      1 |      10 |        5500 |        6000 | 2025-07-15 15:56:49 |
+|      2 |      10 |        6000 |        5500 | 2025-07-15 15:57:08 |
+|      3 |      13 |        5000 |        4500 | 2025-07-15 15:59:02 |
+|      4 |      14 |        5000 |        5500 | 2025-07-15 15:59:09 |
++--------+---------+-------------+-------------+---------------------+
+4 rows in set (0.00 sec)
+
+mysql> DELIMITER $$
+mysql> CREATE FUNCTION getGrade(amount INT) RETURNS VARCHAR(10) DETERMINISTIC BEGIN RETURN CASE WHEN amount >= 4000 THEN 'GOLD' WHEN amount >= 3000 THEN 'SILVER' ELSE 'BRONZE' END; END; $$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT bank_id, deposit, getGrade(deposit) AS grade FROM itbank;
++---------+---------+-------+
+| bank_id | deposit | grade |
++---------+---------+-------+
+|       1 |    4500 | GOLD  |
+|       2 |    5500 | GOLD  |
+|       3 |    4000 | GOLD  |
+|       5 |    6000 | GOLD  |
+|       6 |    5000 | GOLD  |
+|       7 |    5000 | GOLD  |
+|       8 |    5000 | GOLD  |
+|       9 |    5000 | GOLD  |
+|      10 |    5500 | GOLD  |
+|      11 |    5000 | GOLD  |
+|      12 |    5000 | GOLD  |
+|      13 |    4500 | GOLD  |
+|      14 |    5500 | GOLD  |
+|      17 |    5000 | GOLD  |
++---------+---------+-------+
+14 rows in set (0.00 sec)
+
+mysql> UPDATE itbank SET deposit = 2500 WHERE id = 1, SET deposit = 3500 WHERE id = 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', SET deposit = 3500 WHERE id = 2' at line 1
+mysql> UPDATE itbank SET deposit = 2500 WHERE id = 1;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> UPDATE itbank SET deposit = 2500 WHERE bank_id = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE itbank SET deposit = 3500 WHERE bank_id = 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT bank_id, deposit, getGrade(deposit) AS grade FROM itbank;
++---------+---------+--------+
+| bank_id | deposit | grade  |
++---------+---------+--------+
+|       1 |    2500 | BRONZE |
+|       2 |    3500 | SILVER |
+|       3 |    4000 | GOLD   |
+|       5 |    6000 | GOLD   |
+|       6 |    5000 | GOLD   |
+|       7 |    5000 | GOLD   |
+|       8 |    5000 | GOLD   |
+|       9 |    5000 | GOLD   |
+|      10 |    5500 | GOLD   |
+|      11 |    5000 | GOLD   |
+|      12 |    5000 | GOLD   |
+|      13 |    4500 | GOLD   |
+|      14 |    5500 | GOLD   |
+|      17 |    5000 | GOLD   |
++---------+---------+--------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT name, salary, getGrade(salary) FROM employee;
++--------+--------+------------------+
+| name   | salary | getGrade(salary) |
++--------+--------+------------------+
+| 홍길동 |   2800 | BRONZE           |
+| 기안84 |   3800 | SILVER           |
+| 양코딩 |   2700 | BRONZE           |
+| 둘리   |   2500 | BRONZE           |
+| 유재석 |   4700 | GOLD             |
+| 레이첼 |   3200 | SILVER           |
+| 모니카 |   2500 | BRONZE           |
+| 피비   |   3300 | SILVER           |
+| 조이   |   3000 | SILVER           |
+| 챈들러 |   3600 | SILVER           |
+| 로스   |   3800 | SILVER           |
+| 김연아 |   4200 | GOLD             |
+| 아이유 |   5000 | GOLD             |
+| 강호동 |   NULL | BRONZE           |
++--------+--------+------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT name, salary, getGrade(salary) AS grade FROM employee;
++--------+--------+--------+
+| name   | salary | grade  |
++--------+--------+--------+
+| 홍길동 |   2800 | BRONZE |
+| 기안84 |   3800 | SILVER |
+| 양코딩 |   2700 | BRONZE |
+| 둘리   |   2500 | BRONZE |
+| 유재석 |   4700 | GOLD   |
+| 레이첼 |   3200 | SILVER |
+| 모니카 |   2500 | BRONZE |
+| 피비   |   3300 | SILVER |
+| 조이   |   3000 | SILVER |
+| 챈들러 |   3600 | SILVER |
+| 로스   |   3800 | SILVER |
+| 김연아 |   4200 | GOLD   |
+| 아이유 |   5000 | GOLD   |
+| 강호동 |   NULL | BRONZE |
++--------+--------+--------+
+14 rows in set (0.00 sec)
+
+mysql> DELIMITER //
+mysql> CREATE FUNCTION div_ninety(amount INT) RETURNS INT DETERMINISTIC BEGIN RETURN amount * 0.9 END; //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE FUNCTION div_ninety(amount INT) RETURNS INT DETERMINISTIC BEGIN RETURN amount * (0.9) END; //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE FUNCTION div_ninety(amount INT) RETURNS INT DETERMINISTIC BEGIN RETURN (amount * (0.9)) END; //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE FUNCTION div_ninety(amount INT) RETURNS INT DETERMINISTIC BEGIN RETURN (amount * (0.9))  //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> CREATE FUNCTION div_ninety(amount INT) RETURNS INT DETERMINISTIC BEGIN RETURN (amount * (0.9)) END; //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE FUNCTION div_ninety(amount INT) RETURNS INT NOT DETERMINISTIC BEGIN RETURN amount * (0.9) END; //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE FUNCTION div_ninety(salary INT) RETURNS INT NOT DETERMINISTIC BEGIN RETURN salary * (0.9) END; //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE FUNCTION div_ninety(salary INT) RETURNS INT NOT DETERMINISTIC BEGIN RETURN salary * 0.9 END; //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE FUNCTION div_ninety(salary INT) RETURNS INT NOT DETERMINISTIC BEGIN RETURN salary * 0.9; END; //
+ERROR 1418 (HY000): This function has none of DETERMINISTIC, NO SQL, or READS SQL DATA in its declaration and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable)
+mysql> CREATE FUNCTION div_ninety(salary INT) RETURNS INT DETERMINISTIC BEGIN RETURN salary * 0.9; END; //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT name, salary, div_ninety(salary) FROM employee;
+    -> //
++--------+--------+--------------------+
+| name   | salary | div_ninety(salary) |
++--------+--------+--------------------+
+| 홍길동 |   2800 |               2520 |
+| 기안84 |   3800 |               3420 |
+| 양코딩 |   2700 |               2430 |
+| 둘리   |   2500 |               2250 |
+| 유재석 |   4700 |               4230 |
+| 레이첼 |   3200 |               2880 |
+| 모니카 |   2500 |               2250 |
+| 피비   |   3300 |               2970 |
+| 조이   |   3000 |               2700 |
+| 챈들러 |   3600 |               3240 |
+| 로스   |   3800 |               3420 |
+| 김연아 |   4200 |               3780 |
+| 아이유 |   5000 |               4500 |
+| 강호동 |   NULL |               NULL |
++--------+--------+--------------------+
+14 rows in set (0.00 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT name, salary, div_ninety(salary) FROM employee;
++--------+--------+--------------------+
+| name   | salary | div_ninety(salary) |
++--------+--------+--------------------+
+| 홍길동 |   2800 |               2520 |
+| 기안84 |   3800 |               3420 |
+| 양코딩 |   2700 |               2430 |
+| 둘리   |   2500 |               2250 |
+| 유재석 |   4700 |               4230 |
+| 레이첼 |   3200 |               2880 |
+| 모니카 |   2500 |               2250 |
+| 피비   |   3300 |               2970 |
+| 조이   |   3000 |               2700 |
+| 챈들러 |   3600 |               3240 |
+| 로스   |   3800 |               3420 |
+| 김연아 |   4200 |               3780 |
+| 아이유 |   5000 |               4500 |
+| 강호동 |   NULL |               NULL |
++--------+--------+--------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT name, salary, div_ninety(salary) AS 세금 공제 이후 FROM employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '공제 이후 FROM employee' at line 1
+mysql> SELECT name, salary, div_ninety(salary) AS `세금 공제 이후` FROM employee;
++--------+--------+----------------+
+| name   | salary | 세금 공제 이후 |
++--------+--------+----------------+
+| 홍길동 |   2800 |           2520 |
+| 기안84 |   3800 |           3420 |
+| 양코딩 |   2700 |           2430 |
+| 둘리   |   2500 |           2250 |
+| 유재석 |   4700 |           4230 |
+| 레이첼 |   3200 |           2880 |
+| 모니카 |   2500 |           2250 |
+| 피비   |   3300 |           2970 |
+| 조이   |   3000 |           2700 |
+| 챈들러 |   3600 |           3240 |
+| 로스   |   3800 |           3420 |
+| 김연아 |   4200 |           3780 |
+| 아이유 |   5000 |           4500 |
+| 강호동 |   NULL |           NULL |
++--------+--------+----------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT name, salary, div_ninety(salary) AS `세금 공제 이후`, getGrade(`세금 공제 이후`) AS `세금 공제 이후 등급` FROM employee;
+ERROR 1054 (42S22): Unknown column '세금 공제 이후' in 'field list'
+mysql> SELECT name, salary, div_ninety(salary) AS `세금 공제 이후`, getGrade(세금 공제 이후) AS `세금 공제 이후 등급` FROM employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '이후) AS `세금 공제 이후 등급` FROM employee' at line 1
+mysql> SELECT name, salary, div_ninety(salary) AS `세금 공제 이후`, getGrade(div_ninety(salary)) AS `세금 공제 이후 등급` FROM employee;
++--------+--------+----------------+---------------------+
+| name   | salary | 세금 공제 이후 | 세금 공제 이후 등급 |
++--------+--------+----------------+---------------------+
+| 홍길동 |   2800 |           2520 | BRONZE              |
+| 기안84 |   3800 |           3420 | SILVER              |
+| 양코딩 |   2700 |           2430 | BRONZE              |
+| 둘리   |   2500 |           2250 | BRONZE              |
+| 유재석 |   4700 |           4230 | GOLD                |
+| 레이첼 |   3200 |           2880 | BRONZE              |
+| 모니카 |   2500 |           2250 | BRONZE              |
+| 피비   |   3300 |           2970 | BRONZE              |
+| 조이   |   3000 |           2700 | BRONZE              |
+| 챈들러 |   3600 |           3240 | SILVER              |
+| 로스   |   3800 |           3420 | SILVER              |
+| 김연아 |   4200 |           3780 | SILVER              |
+| 아이유 |   5000 |           4500 | GOLD                |
+| 강호동 |   NULL |           NULL | BRONZE              |
++--------+--------+----------------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT name, salary, div_ninety(salary) AS `실수령`, getGrade(실수령) AS `실수령 등급` FROM employee;
+ERROR 1054 (42S22): Unknown column '실수령' in 'field list'
+mysql> SELECT name, salary, div_ninety(salary) AS `실수령`, getGrade(`실수령`) AS `실수령 등급` FROM employee;
+ERROR 1054 (42S22): Unknown column '실수령' in 'field list'
+mysql> SELECT name, salary, div_ninety(salary) AS `실수령`, getGrade(div_ninety(salary)) AS `실수령 등급` FROM employee;
++--------+--------+--------+-------------+
+| name   | salary | 실수령 | 실수령 등급 |
++--------+--------+--------+-------------+
+| 홍길동 |   2800 |   2520 | BRONZE      |
+| 기안84 |   3800 |   3420 | SILVER      |
+| 양코딩 |   2700 |   2430 | BRONZE      |
+| 둘리   |   2500 |   2250 | BRONZE      |
+| 유재석 |   4700 |   4230 | GOLD        |
+| 레이첼 |   3200 |   2880 | BRONZE      |
+| 모니카 |   2500 |   2250 | BRONZE      |
+| 피비   |   3300 |   2970 | BRONZE      |
+| 조이   |   3000 |   2700 | BRONZE      |
+| 챈들러 |   3600 |   3240 | SILVER      |
+| 로스   |   3800 |   3420 | SILVER      |
+| 김연아 |   4200 |   3780 | SILVER      |
+| 아이유 |   5000 |   4500 | GOLD        |
+| 강호동 |   NULL |   NULL | BRONZE      |
++--------+--------+--------+-------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT name AS `이름`, salary AS `연봉`, div_ninety(salary) AS `실수령`, getGrade(div_ninety(salary)) AS `실수령 등급` FROM employee;
++--------+------+--------+-------------+
+| 이름   | 연봉 | 실수령 | 실수령 등급 |
++--------+------+--------+-------------+
+| 홍길동 | 2800 |   2520 | BRONZE      |
+| 기안84 | 3800 |   3420 | SILVER      |
+| 양코딩 | 2700 |   2430 | BRONZE      |
+| 둘리   | 2500 |   2250 | BRONZE      |
+| 유재석 | 4700 |   4230 | GOLD        |
+| 레이첼 | 3200 |   2880 | BRONZE      |
+| 모니카 | 2500 |   2250 | BRONZE      |
+| 피비   | 3300 |   2970 | BRONZE      |
+| 조이   | 3000 |   2700 | BRONZE      |
+| 챈들러 | 3600 |   3240 | SILVER      |
+| 로스   | 3800 |   3420 | SILVER      |
+| 김연아 | 4200 |   3780 | SILVER      |
+| 아이유 | 5000 |   4500 | GOLD        |
+| 강호동 | NULL |   NULL | BRONZE      |
++--------+------+--------+-------------+
+14 rows in set (0.00 sec)
+
+mysql> CREATE TABLE example (f FLOAT, d DOUBLE, c DECIMAL (10, 5));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO example (f, d, c) VALUES (0.1 + 0.2, 0.1 + 0.2, 0.1 + 0.2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM example
+    -> ;
++------+------+---------+
+| f    | d    | c       |
++------+------+---------+
+|  0.3 |  0.3 | 0.30000 |
++------+------+---------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO example (f, d, c) VALUES (0.1111111111 + 0.22222222222, 0.11111111111 + 0.22222222222, 0.11111111111 + 0.22222222222);
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> SELECT * FROM example;
++----------+---------------+---------+
+| f        | d             | c       |
++----------+---------------+---------+
+|      0.3 |           0.3 | 0.30000 |
+| 0.333333 | 0.33333333333 | 0.33333 |
++----------+---------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE FUNCTION add_five(origin INT) RETURNS INT DETERMINISTIC BEGIN RETURN origin + 5; END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> DELIMITER //
+mysql> CREATE FUNCTION add_five(origin INT) RETURNS INT DETERMINISTIC BEGIN RETURN origin + 5; END; //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT name, salary, add_five(salary) FROM employee;
++--------+--------+------------------+
+| name   | salary | add_five(salary) |
++--------+--------+------------------+
+| 홍길동 |   2800 |             2805 |
+| 기안84 |   3800 |             3805 |
+| 양코딩 |   2700 |             2705 |
+| 둘리   |   2500 |             2505 |
+| 유재석 |   4700 |             4705 |
+| 레이첼 |   3200 |             3205 |
+| 모니카 |   2500 |             2505 |
+| 피비   |   3300 |             3305 |
+| 조이   |   3000 |             3005 |
+| 챈들러 |   3600 |             3605 |
+| 로스   |   3800 |             3805 |
+| 김연아 |   4200 |             4205 |
+| 아이유 |   5000 |             5005 |
+| 강호동 |   NULL |             NULL |
++--------+--------+------------------+
+14 rows in set (0.00 sec)
+
+mysql> CREATE FUNCTION div_ten(i INT) RETURNS INT DETERMINISTIC BEGIN RETURN i / 10; END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> DELIMITER //
+mysql> CREATE FUNCTION div_ten(i INT) RETURNS INT DETERMINISTIC BEGIN RETURN i / 10; END;
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT name, salary, div_ten(salary) AS div_ten FROM employee;
++--------+--------+---------+
+| name   | salary | div_ten |
++--------+--------+---------+
+| 홍길동 |   2800 |     280 |
+| 기안84 |   3800 |     380 |
+| 양코딩 |   2700 |     270 |
+| 둘리   |   2500 |     250 |
+| 유재석 |   4700 |     470 |
+| 레이첼 |   3200 |     320 |
+| 모니카 |   2500 |     250 |
+| 피비   |   3300 |     330 |
+| 조이   |   3000 |     300 |
+| 챈들러 |   3600 |     360 |
+| 로스   |   3800 |     380 |
+| 김연아 |   4200 |     420 |
+| 아이유 |   5000 |     500 |
+| 강호동 |   NULL |    NULL |
++--------+--------+---------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
+| 17 | 강호동 |   50 | NULL   |        NULL |   NULL | NULL   | NULL    | NULL       |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+14 rows in set (0.00 sec)
+
+mysql> CREATE FUNCTION byebye(i INT) RETURNS INT DETERMINISTIC BEGIN RETURN i * 2; END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> DELIMITER //
+mysql> CREATE FUNCTION byebye(i INT) RETURNS INT DETERMINISTIC BEGIN RETURN i * 2; END;//
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT name, salary, byebye(salary) AS 퇴직금 FROM employee;
++--------+--------+--------+
+| name   | salary | 퇴직금 |
++--------+--------+--------+
+| 홍길동 |   2800 |   5600 |
+| 기안84 |   3800 |   7600 |
+| 양코딩 |   2700 |   5400 |
+| 둘리   |   2500 |   5000 |
+| 유재석 |   4700 |   9400 |
+| 레이첼 |   3200 |   6400 |
+| 모니카 |   2500 |   5000 |
+| 피비   |   3300 |   6600 |
+| 조이   |   3000 |   6000 |
+| 챈들러 |   3600 |   7200 |
+| 로스   |   3800 |   7600 |
+| 김연아 |   4200 |   8400 |
+| 아이유 |   5000 |  10000 |
+| 강호동 |   NULL |   NULL |
++--------+--------+--------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
+| 17 | 강호동 |   50 | NULL   |        NULL |   NULL | NULL   | NULL    | NULL       |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+14 rows in set (0.00 sec)
+
+mysql> ALTER TABLE employee ADD COLUMN last_update DATETIME NOT NULL DEFAULT NOW();
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date | last_update         |
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 | 2025-07-15 17:40:14 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 | 2025-07-15 17:40:14 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 | 2025-07-15 17:40:14 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 | 2025-07-15 17:40:14 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 | 2025-07-15 17:40:14 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 | 2025-07-15 17:40:14 |
+| 17 | 강호동 |   50 | NULL   |        NULL |   NULL | NULL   | NULL    | NULL       | 2025-07-15 17:40:14 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> DELIMITER //
+mysql> CREATE TRIGGER log_update AFTER UPDATE ON employee FOR EACH ROW BEGIN UPDATE employee SET last_update = NOW() END; //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> CREATE TRIGGER log_update AFTER UPDATE ON employee FOR EACH ROW BEGIN UPDATE employee SET last_update = NOW(); END; //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date | last_update         |
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 | 2025-07-15 17:40:14 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 | 2025-07-15 17:40:14 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 | 2025-07-15 17:40:14 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 | 2025-07-15 17:40:14 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 | 2025-07-15 17:40:14 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 | 2025-07-15 17:40:14 |
+| 17 | 강호동 |   50 | NULL   |        NULL |   NULL | NULL   | NULL    | NULL       | 2025-07-15 17:40:14 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET gender = 'M' WHERE id = 17;
+ERROR 1442 (HY000): Can't update table 'employee' in stored function/trigger because it is already used by statement which invoked this stored function/trigger.
+mysql> DROP TRIGGER log_update;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SHOW TRIGGER;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TRIGGER' at line 1
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_itcompany |
++---------------------+
+| circle_null         |
+| date_time           |
+| employee            |
+| employee2           |
+| example             |
+| high_salary         |
+| info_masking        |
+| itbank              |
+| itbank_update_log   |
+| marketer_high       |
+| name_position       |
+| no_position         |
+| null_table          |
+| position            |
++---------------------+
+14 rows in set (0.01 sec)
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date | last_update         |
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 | 2025-07-15 17:40:14 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 | 2025-07-15 17:40:14 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 | 2025-07-15 17:40:14 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 | 2025-07-15 17:40:14 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 | 2025-07-15 17:40:14 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 | 2025-07-15 17:40:14 |
+| 17 | 강호동 |   50 | NULL   |        NULL |   NULL | NULL   | NULL    | NULL       | 2025-07-15 17:40:14 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET gender = 'M' WHERE id = 17;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date | last_update         |
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 | 2025-07-15 17:40:14 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 | 2025-07-15 17:40:14 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 | 2025-07-15 17:40:14 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 | 2025-07-15 17:40:14 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 | 2025-07-15 17:40:14 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 | 2025-07-15 17:40:14 |
+| 17 | 강호동 |   50 | M      |        NULL |   NULL | NULL   | NULL    | NULL       | 2025-07-15 17:40:14 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> DELIMITER //
+mysql> CREATE TRIGGER log_update AFTER UPDATE ON employee FOR EACH ROW BEGIN INSERT INTO employee last_update VALUES NOW(); END;
+    -> //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'last_update VALUES NOW(); END' at line 1
+mysql> CREATE TRIGGER log_update AFTER UPDATE ON employee FOR EACH ROW BEGIN INSERT INTO employee (last_update) VALUES (NOW()); END;//
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date | last_update         |
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 | 2025-07-15 17:40:14 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 | 2025-07-15 17:40:14 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 | 2025-07-15 17:40:14 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 | 2025-07-15 17:40:14 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 | 2025-07-15 17:40:14 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 | 2025-07-15 17:40:14 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 | 2025-07-15 17:40:14 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 | 2025-07-15 17:40:14 |
+| 17 | 강호동 |   50 | M      |        NULL |   NULL | NULL   | NULL    | NULL       | 2025-07-15 17:40:14 |
++----+--------+------+--------+-------------+--------+--------+---------+------------+---------------------+
+14 rows in set (0.00 sec)
+
+mysql> UPDATE employee SET salary = 6500 WHERE id = 17;
+ERROR 1442 (HY000): Can't update table 'employee' in stored function/trigger because it is already used by statement which invoked this stored function/trigger.
+mysql> DROP TRIGGER log_update;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> ALTER TABLE employee DROP COLUMN last_update;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employee;
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+| id | name   | age  | gender | position_id | salary | grade  | circle  | start_date |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+|  1 | 홍길동 |   33 | M      |           1 |   2800 | low    | Hiking  | 2022-05-06 |
+|  2 | 기안84 |   38 | M      |           2 |   3800 | high   | Fishing | 2025-07-09 |
+|  3 | 양코딩 |   28 | M      |           3 |   2700 | low    | Movie   | 2023-12-15 |
+|  5 | 둘리   |   20 | M      |           2 |   2500 | low    | Movie   | 2025-07-09 |
+|  6 | 유재석 |   42 | M      |           1 |   4700 | high   | Fishing | 2021-03-01 |
+|  7 | 레이첼 |   31 | F      |           2 |   3200 | middle | Movie   | 2025-07-09 |
+|  8 | 모니카 |   32 | F      |           4 |   2500 | low    | Movie   | 2025-07-09 |
+|  9 | 피비   |   33 | F      |           1 |   3300 | middle | Hiking  | 2025-07-09 |
+| 10 | 조이   |   32 | M      |           1 |   3000 | middle | Movie   | 2025-07-09 |
+| 11 | 챈들러 |   33 | M      |           3 |   3600 | middle | Hiking  | 2025-07-09 |
+| 12 | 로스   |   33 | M      |           4 |   3800 | middle | Hiking  | 2025-07-09 |
+| 13 | 김연아 |   37 | F      |        NULL |   4200 | high   | NULL    | 2025-07-09 |
+| 14 | 아이유 |   34 | F      |           3 |   5000 | high   | NULL    | 2025-07-09 |
+| 17 | 강호동 |   50 | M      |        NULL |   NULL | NULL   | NULL    | NULL       |
++----+--------+------+--------+-------------+--------+--------+---------+------------+
+14 rows in set (0.00 sec)
+
+mysql>
+mysql> ;
+ERROR:
+No query specified
+
+mysql> dkdkdkdkdkdkdk
+    -> dkdkdkdkdkdkdk
+    -> dkdkdkdkdkdkdk;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dkdkdkdkdkdkdk
+dkdkdkdkdkdkdk
+dkdkdkdkdkdkdk' at line 1
+mysql> SHOW FUNCTIONS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FUNCTIONS' at line 1
+mysql> DELIMITER //
+mysql> CREATE FUNCTION add_5000(i INT) RETURNS INT DETERMINISTIC BEGIN RETURN i + 5000; END; //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT name, salary, add_5000(salary) FROM employee;
++--------+--------+------------------+
+| name   | salary | add_5000(salary) |
++--------+--------+------------------+
+| 홍길동 |   2800 |             7800 |
+| 기안84 |   3800 |             8800 |
+| 양코딩 |   2700 |             7700 |
+| 둘리   |   2500 |             7500 |
+| 유재석 |   4700 |             9700 |
+| 레이첼 |   3200 |             8200 |
+| 모니카 |   2500 |             7500 |
+| 피비   |   3300 |             8300 |
+| 조이   |   3000 |             8000 |
+| 챈들러 |   3600 |             8600 |
+| 로스   |   3800 |             8800 |
+| 김연아 |   4200 |             9200 |
+| 아이유 |   5000 |            10000 |
+| 강호동 |   NULL |             NULL |
++--------+--------+------------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT TRIGGER_NAME, EVENT_OBJECT_TABLE, EVENT_MANIPULATION, ACTION_TIMING, ACTION_STATEMENT
+    -> FROM INFORMATION_SCHEMA.TRIGGERS
+    -> WHERE TRIGGER_SCHEMA = 'ITCompany';
++-------------------+--------------------+--------------------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| TRIGGER_NAME      | EVENT_OBJECT_TABLE | EVENT_MANIPULATION | ACTION_TIMING | ACTION_STATEMENT                                                                                                                               |
++-------------------+--------------------+--------------------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| update_last       | itbank             | UPDATE             | BEFORE        | BEGIN SET NEW.last_updated = CURRENT_TIMESTAMP; END                                                                                            |
+| log_itbank_update | itbank             | UPDATE             | AFTER         | BEGIN INSERT INTO itbank_update_log (bank_id, old_deposit, new_deposit, updated_at) VALUES (OLD.bank_id, OLD.deposit, NEW.deposit, NOW()); END |
++-------------------+--------------------+--------------------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT ROUTINE_NAME, ROUTINE_TYPE, DTD_IDENTIFIER, ROUTINE_DEFINITION
+    -> FROM INFORMATION_SCHEMA.ROUTINES
+    -> WHERE ROUTINE_TYPE = 'FUNCTION'
+    ->   AND ROUTINE_SCHEMA = 'ITCompany';
++--------------+--------------+----------------+------------------------------------------------------------------------------------------------------------+
+| ROUTINE_NAME | ROUTINE_TYPE | DTD_IDENTIFIER | ROUTINE_DEFINITION                                                                                         |
++--------------+--------------+----------------+------------------------------------------------------------------------------------------------------------+
+| add_5000     | FUNCTION     | int            | BEGIN RETURN i + 5000; END                                                                                 |
+| add_five     | FUNCTION     | int            | BEGIN RETURN origin + 5; END                                                                               |
+| byebye       | FUNCTION     | int            | BEGIN RETURN i * 2; END                                                                                    |
+| div_ninety   | FUNCTION     | int            | BEGIN RETURN salary * 0.9; END                                                                             |
+| div_ten      | FUNCTION     | int            | BEGIN RETURN i / 10; END                                                                                   |
+| getGrade     | FUNCTION     | varchar(10)    | BEGIN RETURN CASE WHEN amount >= 4000 THEN 'GOLD' WHEN amount >= 3000 THEN 'SILVER' ELSE 'BRONZE' END; END |
++--------------+--------------+----------------+------------------------------------------------------------------------------------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> DROP FUNCTION add_5000;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DROP FUNCTION add_five;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DROP FUNCTION byebye;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT ROUTINE_NAME, ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYE = 'FUNCTION' AND ROUTINE_SCHEMA = 'ITCompany';
+ERROR 1054 (42S22): Unknown column 'ROUTINE_TYE' in 'where clause'
+mysql> SELECT ROUTINE_NAME, ROUTINE_DEFINITION FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = 'FUNCTION' AND ROUTINE_SCHEMA = 'ITCompany';
++--------------+------------------------------------------------------------------------------------------------------------+
+| ROUTINE_NAME | ROUTINE_DEFINITION                                                                                         |
++--------------+------------------------------------------------------------------------------------------------------------+
+| div_ninety   | BEGIN RETURN salary * 0.9; END                                                                             |
+| div_ten      | BEGIN RETURN i / 10; END                                                                                   |
+| getGrade     | BEGIN RETURN CASE WHEN amount >= 4000 THEN 'GOLD' WHEN amount >= 3000 THEN 'SILVER' ELSE 'BRONZE' END; END |
++--------------+------------------------------------------------------------------------------------------------------------+
+3 rows in set (0.00 sec)
+
 mysql>

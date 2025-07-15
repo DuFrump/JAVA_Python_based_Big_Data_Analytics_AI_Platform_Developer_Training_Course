@@ -1,0 +1,251 @@
+-- ✅ UNSIGNED
+
+-- 숫자형 컬럼에 사용할 수 있는 속성. 음수를 허용하지 않음
+-- 즉, 0 이상의 값만 저장 가능
+
+-- 예:
+CREATE TABLE score (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  points INT UNSIGNED
+);
+
+-- 참고: INT 범위
+-- INT:    -2,147,483,648 ~ 2,147,483,647
+-- UNSIGNED INT: 0 ~ 4,294,967,295
+
+
+=====================================================================
+
+
+-- ✅ TRANSACTION (트랜잭션)
+
+-- 여러 SQL 작업을 하나의 단위로 묶는 기능 (모두 성공하거나, 모두 실패)
+-- 데이터의 일관성과 안정성을 유지하는 데 사용
+
+-- 기본 문법:
+START TRANSACTION;
+-- 또는 BEGIN;
+
+-- 예:
+START TRANSACTION;
+UPDATE account SET balance = balance - 1000 WHERE id = 1;
+UPDATE account SET balance = balance + 1000 WHERE id = 2;
+COMMIT;
+
+-- 만약 문제가 생기면 ROLLBACK;
+
+
+-- ✅ COMMIT
+
+-- 트랜잭션 내에서 실행된 작업들을 **확정(저장)**함
+-- 이후에는 ROLLBACK 불가 (되돌릴 수 없음)
+
+-- 예:
+COMMIT;
+
+
+-- ✅ ROLLBACK
+
+-- 트랜잭션 내에서 실행된 모든 변경을 취소함 (되돌림)
+-- COMMIT 전까지만 유효함
+
+-- 예:
+START TRANSACTION;
+DELETE FROM employee WHERE id = 10;
+ROLLBACK;  -- 삭제 취소됨
+
+
+-- ✅ SAVEPOINT
+
+-- 트랜잭션 중간에 저장 지점을 설정할 수 있음
+-- 특정 지점까지 되돌리기 가능
+
+-- 기본 문법:
+SAVEPOINT 지점이름;
+ROLLBACK TO 지점이름;
+
+-- 예:
+START TRANSACTION;
+UPDATE employee SET salary = salary + 1000 WHERE id = 1;
+SAVEPOINT after_raise;
+UPDATE employee SET salary = salary - 5000 WHERE id = 2;
+ROLLBACK TO after_raise;
+COMMIT;
+
+-- 위 예시에서 두 번째 UPDATE만 취소되고 첫 번째는 유지됨
+
+
+===================================================================
+
+
+-- ✅ TRIGGER (트리거)
+
+-- ✅ 개념 설명
+-- 트리거는 특정 테이블에 INSERT, UPDATE, DELETE 같은 이벤트가 발생했을 때
+-- 자동으로 실행되는 SQL 블록(프로시저)
+
+-- ✅ 트리거의 주요 목적
+-- - 데이터 변경 감지 및 자동 처리
+-- - 로그 기록 (예: 변경 전 데이터 백업)
+-- - 데이터 무결성 보장 (예: 자동 계산, 상태 동기화 등)
+-- - 복잡한 검증 로직 삽입
+
+-- ✅ 기본 문법
+DELIMITER //
+
+CREATE TRIGGER 트리거명
+[BEFORE | AFTER] [INSERT | UPDATE | DELETE]
+ON 테이블명
+FOR EACH ROW
+BEGIN
+  -- 실행할 SQL 문장들
+END;
+//
+
+DELIMITER ;
+
+-- ✅ DELIMITER의 개념
+-- MySQL 기본 명령 구분자는 `;` 이지만, 트리거처럼 여러 줄 블록(SQL 문)이 들어갈 때는
+-- 중간에 `;`가 많아지므로 임시로 구분자를 변경해야 함
+-- 그래서 BEGIN ~ END 블록을 정의할 때는 DELIMITER를 `//` 또는 `$$` 등으로 바꿔 사용
+
+-- ✅ 예제 1: employee 테이블의 DELETE 이벤트를 로그로 남기는 트리거
+CREATE TABLE employee_delete_log (
+  id INT,
+  name VARCHAR(50),
+  deleted_at DATETIME
+);
+
+DELIMITER //
+
+CREATE TRIGGER trg_employee_delete
+AFTER DELETE ON employee
+FOR EACH ROW
+BEGIN
+  INSERT INTO employee_delete_log (id, name, deleted_at)
+  VALUES (OLD.id, OLD.name, NOW());
+END;
+//
+
+DELIMITER ;
+
+-- ✅ 예제 2: 급여가 바뀐 경우 변경 전/후 로그 기록
+CREATE TABLE salary_log (
+  id INT,
+  old_salary INT,
+  new_salary INT,
+  changed_at DATETIME
+);
+
+DELIMITER //
+
+CREATE TRIGGER trg_salary_update
+AFTER UPDATE ON employee
+FOR EACH ROW
+BEGIN
+  IF OLD.salary != NEW.salary THEN
+    INSERT INTO salary_log (id, old_salary, new_salary, changed_at)
+    VALUES (OLD.id, OLD.salary, NEW.salary, NOW());
+  END IF;
+END;
+//
+
+DELIMITER ;
+
+-- ✅ 트리거 관련 키워드 정리
+
+-- OLD: 트리거 대상이 되는 "기존 값" (DELETE, UPDATE 시 사용 가능)
+-- NEW: 트리거 대상이 되는 "새로운 값" (INSERT, UPDATE 시 사용 가능)
+
+-- ✅ 트리거 삭제
+DROP TRIGGER IF EXISTS 트리거명;
+
+-- ✅ 주의사항
+-- - 하나의 테이블에 같은 이벤트(예: BEFORE INSERT) 트리거는 하나만 가능
+-- - 트리거 내부에서는 COMMIT / ROLLBACK 사용 불가
+-- - 트리거는 자동 실행되므로, 성능에 영향을 줄 수 있음
+
+
+===================================================================
+
+
+-- ✅ FUNCTION (함수)
+
+-- ✅ 개념 설명
+-- MySQL에서 사용자 정의 함수(User Defined Function, UDF)는
+-- 특정 입력값을 받아 계산하거나 처리를 한 후, **단일 값**을 반환하는 SQL 객체
+
+-- ✅ 함수 vs 프로시저 비교
+
+| 항목         | FUNCTION                          | PROCEDURE                         |
+|--------------|-----------------------------------|-----------------------------------|
+| 반환값       | ✅ 반드시 단일 값 반환               | ❌ 반환값 없음 (OUT 파라미터 사용) |
+| 호출 방식    | SELECT로 직접 호출 가능            | CALL 명령어로 호출                |
+| 용도         | 계산/변환/검사 등 단일 값 반환용    | 트랜잭션/복잡 처리용              |
+
+-- ✅ 기본 문법
+
+DELIMITER //
+
+CREATE FUNCTION 함수이름(매개변수 datatype, ...)
+RETURNS 반환타입
+[DETERMINISTIC | NOT DETERMINISTIC]
+BEGIN
+  -- 로직
+  RETURN 결과값;
+END;
+//
+
+DELIMITER ;
+
+-- ✅ 예제 1: 두 숫자의 평균 반환 함수
+
+DELIMITER //
+
+CREATE FUNCTION avg_two(a INT, b INT)
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+BEGIN
+  RETURN (a + b) / 2;
+END;
+//
+
+DELIMITER ;
+
+-- ✅ 예제 2: 연봉 계산 함수 (월급 × 12)
+
+DELIMITER //
+
+CREATE FUNCTION yearly_salary(monthly INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+  RETURN monthly * 12;
+END;
+//
+
+DELIMITER ;
+
+-- ✅ 함수 호출 방법
+
+SELECT avg_two(100, 200);         -- 결과: 150.00
+SELECT name, yearly_salary(salary) AS 연봉 FROM employee;
+
+-- ✅ DETERMINISTIC 키워드
+
+| 키워드               | 의미                                                             |
+|----------------------|------------------------------------------------------------------|
+| DETERMINISTIC        | 항상 동일한 입력에 대해 동일한 결과 반환 (예: 1+1, a+b 등)       |
+| NOT DETERMINISTIC    | 동일한 입력에도 결과가 달라질 수 있음 (예: NOW(), RAND())        |
+
+-- ✅ DETERMINISTIC을 명시해야 하는 이유
+- MySQL에서 함수는 VIEW나 STORED FUNCTION 내에 포함될 수 있는데,
+  이 경우 함수가 DETERMINISTIC인지 명확히 지정하지 않으면 오류 발생 가능
+
+-- ✅ 함수 삭제
+
+DROP FUNCTION 함수이름;
+
+-- ✅ 주의사항
+- 함수 내부에서는 INSERT/UPDATE/DELETE 같은 데이터 조작문(DML)을 사용할 수 없음
+- 복잡한 로직이나 트랜잭션 처리에는 PROCEDURE 사용이 적합
