@@ -1,0 +1,103 @@
+MySQL 워크벤치 사용 방법
+
+
+=========================================================
+
+
+-- ✅ PROCEDURE (프로시저)
+
+-- SQL 구문들을 하나의 블록으로 저장해두고, 나중에 호출해서 실행할 수 있는 기능
+-- 반복적인 작업, 복잡한 로직을 재사용할 때 유용함
+
+-- 기본 구조:
+DELIMITER //
+
+CREATE PROCEDURE 프로시저명()
+BEGIN
+  -- 실행할 SQL 문
+END;
+//
+
+DELIMITER ;
+
+-- 예:
+DELIMITER //
+
+CREATE PROCEDURE hello_world()
+BEGIN
+  SELECT '안녕하세요, 지훈님!';
+END;
+//
+
+DELIMITER ;
+
+
+-- ✅ CALL
+
+-- 저장된 프로시저를 호출할 때 사용하는 명령어
+
+-- 기본 문법:
+CALL 프로시저명();
+
+-- 예:
+CALL hello_world();
+
+
+-- ✅ 여러 개의 CALL 문 실행
+
+-- 여러 프로시저를 연속 실행할 수 있음
+-- 반드시 세미콜론(;)으로 각각 구분해야 함
+
+-- 예:
+CALL procedure1();
+CALL procedure2();
+
+
+-- ✅ 상위 프로시저에서 하위 프로시저 여러 개 호출
+
+-- 예:
+DELIMITER //
+
+CREATE PROCEDURE master()
+BEGIN
+  CALL procedure1();
+  CALL procedure2();
+END;
+//
+
+DELIMITER ;
+
+CALL master();
+
+
+-- ✅ 프로시저 목록 조회
+
+-- 현재 데이터베이스의 프로시저 목록을 확인하는 쿼리
+
+-- 예:
+SHOW PROCEDURE STATUS WHERE Db = '데이터베이스명';
+
+-- 또는:
+SELECT ROUTINE_NAME, ROUTINE_DEFINITION
+FROM INFORMATION_SCHEMA.ROUTINES
+WHERE ROUTINE_TYPE = 'PROCEDURE'
+  AND ROUTINE_SCHEMA = '데이터베이스명';
+
+
+-- ✅ 프로시저 삭제
+
+-- 프로시저를 삭제할 때 사용하는 명령어
+
+-- 예:
+DROP PROCEDURE IF EXISTS 프로시저명;
+
+-- 예:
+DROP PROCEDURE IF EXISTS hello_world;
+
+
+-- ⚠️ 주의사항
+
+-- 1. CALL 여러 개 실행할 땐 반드시 세미콜론으로 구분
+-- 2. 프로시저 안에서 CALL 여러 개 호출 가능
+-- 3. 프로시저 안에서 DELIMITER 꼭 조심
+-- 4. 트리거/함수 내부에서 프로시저 직접 호출은 불가 (MySQL은 트리거에서 CALL 금지)
