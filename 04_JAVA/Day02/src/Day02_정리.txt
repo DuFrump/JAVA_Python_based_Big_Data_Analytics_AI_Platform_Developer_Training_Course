@@ -1,0 +1,177 @@
+01_Printf.java — printf() 포맷 출력
+System.out.printf()를 이용하면 변수의 값을 형식화하여 출력할 수 있음.
+
+%d, %f, %s 등을 사용해 정수, 실수, 문자열을 출력.
+
+%5d, %-5d 와 같이 자릿수를 지정하면 오른쪽/왼쪽 정렬 가능.
+
+%.2f와 같은 방식으로 소수점 자리수를 제어 가능.
+
+예:
+
+java
+복사
+편집
+System.out.printf("%d은 첫 번째, %f은 두 번째, %s은 3 번째.", 1, 2.0, "색");
+
+
+02_Variable.java — 변수 선언 및 출력
+문자열, 정수, 문자 타입 변수 선언과 초기화:
+
+java
+복사
+편집
+String name = "홍길동";
+int age = 20;
+char bloodType = 'B';
++ 연산자와 printf()로 출력 가능.
+
+
+03_Variable2.java — 변수 값 교환
+변수 간 값 교환을 위해 임시 변수를 사용하는 구조:
+
+java
+복사
+편집
+int temp = myAge;
+myAge = yourAge;
+yourAge = temp;
+
+
+04_DataType.java — 데이터 타입
+기본 정수형: byte, short, int, long의 범위 설명.
+
+실수형: float, double
+
+float은 접미사 f 필요.
+
+정수 <-> 실수 간 형 변환 가능.
+
+예:
+
+java
+복사
+편집
+double pieDouble = 3.141592653589793;
+float pieFloat = 3.141592653589793f;
+
+
+05_Char.java — 문자형 자료형 char
+한 글자를 나타냄. 예: '가', 'A'
+
+문자 → 정수: 문자에 해당하는 유니코드 값 출력됨.
+
+java
+복사
+편집
+int na = '나';  // 유니코드 값
+
+
+06_String.java — 문자열 타입 String
+String은 객체이며, 긴 문자열 저장 가능.
+
+java
+복사
+편집
+String c = "이것은 긴 글을 저장할 수 있는 스트링입니다.";
+
+
+07_TypeTrans.java — 형 변환 (Type Casting)
+자동 형 변환: 작은 타입 → 큰 타입 (int → double)
+
+강제 형 변환: 큰 타입 → 작은 타입은 (타입)을 붙여야 함.
+
+java
+복사
+편집
+double num = (double) intNum;
+byte b = (byte) 128;  // 오버플로우 발생 가능
+
+
+08_Scanner.java — 입력 받기 (Scanner)
+Scanner를 사용하여 사용자로부터 입력 받기:
+
+java
+복사
+편집
+Scanner sc = new Scanner(System.in);
+int age = sc.nextInt();
+String name = sc.next();
+여러 타입 입력 가능 (int, String, double 등).
+
+
+09_ScannerNextLine.java — next() vs nextLine()
+next()는 단어 단위, nextLine()은 줄 전체 입력.
+
+nextLine() 전에 next()나 nextInt()를 쓰면 개행 문자 문제 생길 수 있음 → sc.nextLine() 한 줄 소비 필요.
+
+
+10_Quiz.java — 입력 연습 퀴즈
+사용자가 입력한 언어와 느낌을 받아 출력.
+
+java
+복사
+편집
+무슨 언어를 배우시나요? : Java
+배우시니 어떠신가요? : 재미있어요
+
+
+11_Print.java
+System.out.println()과 System.out.print()의 차이 실습
+
+줄 바꿈 O (println) vs 줄 바꿈 X (print)
+
+
+12_Out.java
+printf() 사용법 학습
+
+정수(%d), 실수(%f), 문자열(%s)의 형식 지정 연습
+
+응용 출력 포맷을 통해 컬럼 정렬 실습
+
+
+13__Operator.java
+단항 연산자: +x, -x
+
+음수/양수 표현 실습
+
+
+14_Operator2.java
+증감 연산자: ++, --
+
+전위/후위 차이 실습
+
+부정 연산자: !
+
+문자(char) 증감 연산으로 유니코드 다음 문자 확인
+
+
+15_Operator3.java
+산술 연산자: +, -, *, /, %
+
+복합 대입 연산자: +=, -=, *=, %=
+
+int 범위 초과 사례 (int 오버플로우) 주의
+
+
+16_Operator4.java
+비교 연산자: >, <, >=, <=, ==, !=
+
+논리 연산자:
+
+AND &&, OR ||, XOR ^
+
+다양한 조합을 통한 불린 연산 확인
+
+
+17_Operator5.java
+삼항 연산자: 조건식 ? 참 : 거짓
+
+조건에 따른 값 선택 연습
+
+
+18_Quiz.java
+사용자로부터 키를 입력받고 조건에 따라 "탑승 가능/불가능" 출력
+
+삼항 연산자 실전 예제
+→ Java를 배우니 재미있어요 합니다.
