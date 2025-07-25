@@ -3,6 +3,7 @@ package ClassBlackbox;
 public class BlackBox {
     String modelName;
     String resolution;
+
     int price;
     String color;
     int serialNumber;
