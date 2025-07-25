@@ -16,14 +16,14 @@ public class GameMechanism {
 
     public void start() {
         while (true) {
-            System.out.println("\n\n=== RPG 게임 ===");
+            System.out.println("\n\n=== 미니 RPG 게임 ===");
             System.out.println("1. 전투");
             System.out.println("2. 회복");
             System.out.println("3. 골드 확인");
             System.out.println("4. 상점");
             System.out.println("5. 스탯 확인");
             System.out.println("0. 종료");
-            System.out.print("선택: \n");
+            System.out.print("선택: ");
 
             boolean isBoss = Math.random() < 0.007;
             int choice = scanner.nextInt();
@@ -31,6 +31,8 @@ public class GameMechanism {
             switch (choice) {
                 case 1:
                     Monster monster = new Monster(isBoss);
+
+                    System.out.println("\n===========================================");
 
                     System.out.printf("몬스터 등장! HP: %d, ATK: %d, DEF: %d\n",
                             monster.hp, monster.atk, monster.def);
@@ -79,14 +81,20 @@ public class GameMechanism {
                     }
                     break;
                 case 2:
+                    System.out.println("\n===========================================");
+
                     System.out.println("회복을 시도합니다.");
                     player.heal();
                     break;
                 case 3:
+                    System.out.println("\n===========================================");
+
                     System.out.println("가지고 있는 골드를 확인합니다.");
                     System.out.printf("잔여 골드 : %d GOLD", player.gold);
                     break;
                 case 4:
+                    System.out.println("\n===========================================");
+
                     System.out.println("상점에 입장합니다.");
                     while (true) {
                         store.showItems();
@@ -102,6 +110,8 @@ public class GameMechanism {
                     }
                     break;
                 case 5:
+                    System.out.println("\n===========================================");
+
                     System.out.println("현재 스탯을 확인합니다.");
                     System.out.printf("HP : %d%n", player.hp);
                     System.out.printf("공격력 : %d%n", player.atk);
