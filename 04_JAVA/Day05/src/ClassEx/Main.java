@@ -36,5 +36,23 @@ public class Main {
 
         System.out.println("자기 소개 횟수: " + Dog.count);
 
+
+        System.out.println("----------------------------------");
+
+        Cat nabi = new Cat("나비", 8);
+
+        nabi.cry();
+        nabi.introduce();
+
+        System.out.println("제 이름은 " + nabi.name);
+        System.out.println("제 나이는 " + nabi.age);
+
+        nabi.introduce_dream("행복한 고양이");
+
+        int poopy = nabi.feed_unga(5);
+        System.out.println("결론적으로 똥 싸는 횟수는 : " + poopy);
+
+        int poopy2 = nabi.feed_unga(2, 2);
+        System.out.printf("결론적으로 똥 싸는 횟수는 : %d%n", poopy2);
     }
 }

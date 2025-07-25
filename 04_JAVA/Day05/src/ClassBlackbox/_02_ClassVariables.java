@@ -22,6 +22,5 @@ public class _02_ClassVariables {
         System.out.println(b1.modelName + " 자동 신고기능 : " + b1.conAutoReport);
         System.out.println(b2.modelName + " 자동 신고기능 : " + b2.conAutoReport);
         System.out.println("모든 블랙박스 제품 자동 신고 기능 : " + BlackBox.conAutoReport); //권장
-
     }
 }
