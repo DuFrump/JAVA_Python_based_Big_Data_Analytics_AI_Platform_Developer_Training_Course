@@ -16,7 +16,7 @@ public class GameMechanism {
 
     public void start() {
         while (true) {
-            System.out.println("\n\n=== 미니 RPG 게임 ===");
+            System.out.println("\n\n========== 미니 RPG 게임 ===========");
             System.out.println("1. 전투");
             System.out.println("2. 회복");
             System.out.println("3. 골드 확인");
