@@ -27,5 +27,23 @@ public class Main {
         sc01.showMainFeature();
         sc01.takePicture();
         sc01.recordVideo();
+
+
+        // -------------------------------- 8/5일 다형성 -------------------------------------
+
+        System.out.println();
+        System.out.println();
+        System.out.println("=================8/5일 다형성 부분===================");
+        System.out.println();
+
+        Camera[] cameras = new Camera[3];
+
+        cameras[0] = new Camera();
+        cameras[1] = new FactoryCam();
+        cameras[2] = new SpeedCam();
+
+        for (Camera cam : cameras) {
+            cam.showMainFeature();
+        }
     }
 }
