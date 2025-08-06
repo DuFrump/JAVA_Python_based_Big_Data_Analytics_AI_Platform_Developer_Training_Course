@@ -1,4 +1,4 @@
-package MultiInterface;
+package _04_MultiInterface;
 
 public class BlueToothMIC implements Speaker, Microphone {
     @Override

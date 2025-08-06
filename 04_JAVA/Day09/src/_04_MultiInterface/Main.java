@@ -1,4 +1,4 @@
-package MultiInterface;
+package _04_MultiInterface;
 
 public class Main {
     public static void main(String[] args) {
