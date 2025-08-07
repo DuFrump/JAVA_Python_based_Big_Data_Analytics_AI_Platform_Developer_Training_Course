@@ -21,7 +21,6 @@ public class BlackBox {
         this();
 
         this.modelName = modelName;
-        this.serialNumber = serialNumber;
         this.resolution = resolution;
         this.price = price;
         this.color = color;

@@ -20,11 +20,11 @@ public class _07_Constructor {
         System.out.println("------------------------------------------");
 
         BlackBox b6 = new BlackBox("핑퐁이", "UHD", 300000, "분홍");
-        System.out.println(b2.modelName);
-        System.out.println(b2.resolution);
-        System.out.println(b2.price);
-        System.out.println(b2.color);
-        System.out.println(b2.serialNumber);
+        System.out.println(b6.modelName);
+        System.out.println(b6.resolution);
+        System.out.println(b6.price);
+        System.out.println(b6.color);
+        System.out.println(b6.serialNumber);
 
         System.out.println("총 출고 대수 : " + BlackBox.counter);
     }

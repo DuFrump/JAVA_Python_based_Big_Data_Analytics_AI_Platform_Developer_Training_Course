@@ -43,4 +43,8 @@ public class Dog {
         System.out.println("이름은 " + this.name + " 나이는 " + this.age);
         count++;
     }
+
+    public void bark() {
+        System.out.println(this.name + "이(가) " + barkSound + " 짖습니다.");
+    }
 }

@@ -14,14 +14,22 @@ public class Main {
         myCar.car_type_menu(car_type);
         int car_brand = sc.nextInt();
 
-        if (car_type.equals("SUV") && car_brand == 1) {
-            myCar.car_type_menu_brand_Ferrari ();
-        } else if (car_type.equals("SUV") && car_brand == 2) {
-            myCar.car_type_menu_brand_Genesis ();
-        } else if (car_type.equals("스포츠카") && car_brand == 1) {
-            myCar.car_type_menu_brand_Porsche ();
-        } else if (car_type.equals("스포츠카") && car_brand == 2) {
-            myCar.car_type_menu_brand_Benz ();
+        if (car_type.equals("SUV")) {
+            if (car_brand == 1) {
+                myCar.car_type_menu_brand_Ferrari();
+            } else if (car_brand == 2) {
+                myCar.car_type_menu_brand_Genesis();
+            } else {
+                System.out.println("ERROR: !!다시 실행해주세요!!");
+            }
+        } else if (car_type.equals("스포츠카")) {
+            if (car_brand == 1) {
+                myCar.car_type_menu_brand_Porsche();
+            } else if (car_brand == 2) {
+                myCar.car_type_menu_brand_Benz();
+            } else {
+                System.out.println("ERROR: !!다시 실행해주세요!!");
+            }
         } else {
             System.out.println("ERROR: !!다시 실행해주세요!!");
         }
@@ -30,23 +38,17 @@ public class Main {
         System.out.print("차 색상을 알려주세요. : ");
         String car_color = sc.next();
 
-        int car_price = 0;
+        Map<String, Integer> carPrices = new HashMap<>();
+        carPrices.put("푸로산게", 570000000);
+        carPrices.put("GV80", 80000000);
+        carPrices.put("GV70", 65000000);
+        carPrices.put("911", 210000000);
+        carPrices.put("718", 190000000);
+        carPrices.put("AMG GT", 150000000);
+        carPrices.put("AMG GT R 프로", 211000000);
 
-        if(car_name.equals("푸로산게")) {
-            car_price += 570000000;
-        } else if(car_name.equals("GV80")) {
-            car_price += 80000000;
-        } else if(car_name.equals("GV70")) {
-            car_price += 65000000;
-        } else if(car_name.equals("911")) {
-            car_price += 210000000;
-        } else if(car_name.equals("718")) {
-            car_price += 190000000;
-        } else if(car_name.equals("AMG GT")) {
-            car_price += 150000000;
-        } else if(car_name.equals("AMG GT R 프로")) {
-            car_price += 211000000;
-        } else {
+        int car_price = carPrices.getOrDefault(car_name, 0);
+        if (car_price == 0) {
             System.out.println("ERROR: !!다시 실행해주세요!!");
         }
 

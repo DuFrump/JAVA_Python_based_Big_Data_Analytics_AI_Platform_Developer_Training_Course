@@ -32,7 +32,7 @@ public class Main {
         dog4.setAge(1);
         dog4.introduce();
 
-        System.out.println("우리는 " + Dog.bark + " 짖어요");
+        dog1.bark();
 
         System.out.println("자기 소개 횟수: " + Dog.count);
 
