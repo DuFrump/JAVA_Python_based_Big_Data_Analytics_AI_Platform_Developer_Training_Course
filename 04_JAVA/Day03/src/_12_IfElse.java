@@ -1,37 +1,40 @@
-// 조건문 `if-else`에 대해 배우는 예제입니다.
-// `if-else` 문은 조건식이 참(true)일 때와 거짓(false)일 때 각각 다른 코드 블록을 실행합니다.
+// 안녕하세요, 두프룸프님!
+// 이 파일은 자바의 조건문 중 가장 기본적이고 많이 사용되는 `if-else` 문에 대해 배우는 예제입니다.
+// `if-else` 문은 '만약 어떤 조건이 참(true)이라면 이렇게 하고, 그렇지 않다면(false) 저렇게 해라'와 같이
+// 두 가지 경우 중 하나를 선택하여 실행할 때 사용합니다.
 
-public class _12_IfElse {
-    public static void main(String[] args) {
+public class _12_IfElse { // 클래스 선언
+    public static void main(String[] args) { // main 메서드: 프로그램 시작점
+
         // [1] 기본적인 if-else 문
-        int num = 5;
+        // `if (조건식) { ... } else { ... }` 구조입니다.
+        // - 괄호 안의 '조건식'이 참(true)이면 `if` 블록 안의 코드가 실행됩니다.
+        // - 괄호 안의 '조건식'이 거짓(false)이면 `else` 블록 안의 코드가 실행됩니다.
+        // 둘 중 하나만 반드시 실행됩니다.
 
-        // 조건식: num > 4 (5는 4보다 큰가? -> true)
-        if (num > 4) {
-            // 조건식이 참(true)일 때 실행되는 블록
-            System.out.println(num + "는 4보다 큽니다.");
-        } else {
-            // 조건식이 거짓(false)일 때 실행되는 블록
+        int num = 5; // 정수형 변수 num에 5 할당
+
+        // 조건식: num > 4 (5는 4보다 큰가?) -> 결과는 true
+        if (num > 4) { // 조건식이 참(true)이므로 이 블록이 실행됩니다.
+            System.out.println(num + "는 4보다 큽니다."); // 출력: 5는 4보다 큽니다.
+        } else { // 이 else 블록은 실행되지 않습니다.
             System.out.println(num + "는 4보다 작거나 같습니다.");
         }
 
-        System.out.println("
-----------------------------------------
-");
+        System.out.println("\n----------------------------------------\n"); // 구분선
 
         // [2] 다른 변수를 이용한 if-else 문
-        int a = 3;
-        int b = 10;
+        int a = 3;  // 정수형 변수 a에 3 할당
+        int b = 10; // 정수형 변수 b에 10 할당
 
-        // 조건식: a > b (3은 10보다 큰가? -> false)
-        if (a > b) {
-            // 조건식이 참(true)일 때 실행되는 블록
-            System.out.printf("%d는 %d보다 큽니다.
-", a, b);
-        } else {
-            // 조건식이 거짓(false)일 때 실행되는 블록
-            System.out.printf("%d는 %d보다 작거나 같습니다.
-", a, b);
+        // 조건식: a > b (3은 10보다 큰가?) -> 결과는 false
+        if (a > b) { // 조건식이 거짓(false)이므로 이 if 블록은 실행되지 않습니다.
+            System.out.printf("%d는 %d보다 큽니다.%n", a, b);
+        } else { // 이 else 블록이 실행됩니다.
+            System.out.printf("%d는 %d보다 작거나 같습니다.%n", a, b); // 출력: 3는 10보다 작거나 같습니다.
         }
+
+        // `if-else`는 두 가지 경우의 수를 처리할 때 가장 효율적이고 명확한 방법입니다.
+        // 어떤 상황에서든 '예' 또는 '아니오'로 나눌 수 있다면 `if-else`를 떠올려 보세요!
     }
 }

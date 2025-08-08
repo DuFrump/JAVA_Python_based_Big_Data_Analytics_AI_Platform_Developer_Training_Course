@@ -1,29 +1,40 @@
-// `if-else if-else` 조건문을 사용하여 여러 상황에 따른 의사결정을 시뮬레이션하는 예제입니다.
+// 안녕하세요, 두프룸프님!
+// 이 파일은 `if-else if-else` 조건문을 사용하여 일상생활에서 우리가 내리는 '의사결정' 과정을
+// 프로그래밍으로 어떻게 표현할 수 있는지 보여주는 예제입니다.
+// 마치 친구와 점심 메뉴를 고르는 상황을 코드로 옮겨놓은 것과 같아요!
 
-public class _16_Else_If2 {
-    public static void main(String[] args) {
-        // 메뉴 선택 상황을 가정합니다.
+public class _16_Else_If2 { // 클래스 선언
+    public static void main(String[] args) { // main 메서드: 프로그램 시작점
+
+        // 메뉴 선택 상황을 가정해봅시다.
         // 제육 덮밥, 돈까스, 김치찌개 중 하나를 선택하는 시나리오입니다.
 
-        boolean jaeyook = true;   // 제육 덮밥을 먹을 수 있는지 여부
-        boolean donggass = false; // 돈까스를 먹을 수 있는지 여부
+        // `boolean` 변수는 참(true) 또는 거짓(false) 두 가지 값만 가질 수 있어요.
+        // `jaeyook`이 true면 제육 덮밥을 먹을 수 있다는 뜻이고, false면 먹을 수 없다는 뜻입니다.
+        boolean jaeyook = true;   // 제육 덮밥을 먹을 수 있는지 여부 (현재는 먹을 수 있음)
+        boolean donggass = false; // 돈까스를 먹을 수 있는지 여부 (현재는 먹을 수 없음)
 
-        System.out.println("언제 와? 뭐 먹을거? 시켜놓을게.");
+        System.out.println("언제 와? 뭐 먹을거? 시켜놓을게."); // 친구의 메시지
 
         // [1] 첫 번째 조건: 제육 덮밥을 먹을 수 있는가?
-        // `jaeyook == true`는 `jaeyook`으로 간결하게 표현할 수 있습니다.
-        if (jaeyook) {
-            System.out.println("제육 시켜줘.");
+        // `if (jaeyook)`은 `if (jaeyook == true)`와 완전히 동일한 의미입니다.
+        // `boolean` 변수 자체가 참/거짓을 나타내므로, `== true`를 생략하여 코드를 더 간결하게 만들 수 있어요!
+        if (jaeyook) { // 만약 제육 덮밥을 먹을 수 있다면 (jaeyook이 true라면)...
+            System.out.println("제육 시켜줘."); // 이 메시지를 출력하고, 나머지 `else if`와 `else`는 건너뜁니다.
         } 
         // [2] 두 번째 조건: 돈까스를 먹을 수 있는가? (제육 덮밥을 먹을 수 없을 때만 검사)
-        else if (donggass) {
-            System.out.println("그럼 돈까스 먹지 뭐.");
+        // `else if (donggass)`는 `else if (donggass == true)`와 동일합니다.
+        else if (donggass) { // 만약 제육 덮밥은 못 먹고, 돈까스를 먹을 수 있다면...
+            System.out.println("그럼 돈까스 먹지 뭐."); // 이 메시지를 출력하고, 나머지 `else`는 건너뜁니다.
         } 
         // [3] 모든 조건이 거짓일 때: 제육 덮밥도, 돈까스도 먹을 수 없을 때
-        else {
-            System.out.println("아.. 김치찌개 말곤 안 된대? 김치찌개 먹어야지 뭐..");
+        else { // 만약 제육 덮밥도 못 먹고, 돈까스도 못 먹는다면...
+            System.out.println("아.. 김치찌개 말곤 안 된대? 김치찌개 먹어야지 뭐.."); // 이 메시지를 출력합니다.
         }
-        System.out.println("금방 갈게. 전화 끊어.");
+        System.out.println("금방 갈게. 전화 끊어."); // 나의 답변
+
+        // 이 예제를 통해 `if-else if-else`가 실제 상황에서 어떻게 의사결정 로직을 구현하는 데 사용되는지,
+        // 그리고 `boolean` 변수를 활용하여 코드를 얼마나 간결하게 만들 수 있는지 이해하셨기를 바랍니다!
     }
 }
 

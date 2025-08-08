@@ -1,45 +1,68 @@
-// 변수 이름을 짓는 규칙(Naming Convention)에 대해 배우는 예제입니다.
+// 변수 이름을 짓는 규칙(Naming Convention)과 좋은 이름의 중요성에 대해 배우는 예제입니다.
+
 public class _05_VariableNaming {
     public static void main(String[] args) {
-        /**
-         * 자바 변수 명명 규칙 (Java Variable Naming Conventions)
-         *
-         * 1. 저장할 값에 어울리는 이름: 변수가 어떤 데이터를 저장하는지 명확히 알 수 있도록 이름을 짓습니다. (예: 'a' 보다는 'age')
-         * 2. 사용 가능 문자: 밑줄(_), 문자(a-z, A-Z), 숫자(0-9)를 사용할 수 있습니다. (공백 사용 불가)
-         * 3. 시작 문자: 숫자로 시작할 수 없습니다. 밑줄(_)이나 문자로 시작해야 합니다.
-         * 4. 단어 조합 방식 (자바에서는 주로 카멜 케이스를 권장합니다):
-         *    - 카멜 케이스(Camel Case): 첫 단어는 소문자로, 이후 단어들의 첫 글자는 대문자로 작성합니다. (예: flightNumber)
-         *    - 스네이크 케이스(Snake Case): 단어들을 밑줄(_)로 연결하고 모두 소문자로 작성합니다. (예: flight_number)
-         * 5. 예약어 사용 불가: 자바에서 문법적으로 의미를 가지는 단어(public, static, void, int 등)는 변수명으로 사용할 수 없습니다.
-         * 6. 상수(Constant) 명명 규칙: 모든 글자를 대문자로 작성하고, 단어 사이는 밑줄(_)로 구분합니다. (예: MAX_VALUE)
+
+        /*
+         * [변수 이름, 왜 중요할까?]
+         * - 좋은 변수 이름은 코드의 가독성을 높여 다른 사람(그리고 미래의 나)이 코드를 쉽게 이해하도록 돕습니다.
+         * - 변수 이름만 보고도 "이 변수가 어떤 데이터를 담고 있겠구나"라고 예측할 수 있어야 합니다.
+         * - 예시: `int a = 20;` (나쁜 예) vs `int userAge = 20;` (좋은 예)
          */
 
-        // 아래는 입국 신고서(arrival card)를 예시로 변수명을 지어본 것입니다.
+        // --- 1. 변수 명명 규칙 (필수) ---
+        // 1-1. 사용 가능 문자: 영문자(a-z, A-Z), 숫자(0-9), 밑줄(_), 달러($) 기호를 사용할 수 있습니다.
+        // 1-2. 시작 문자: 숫자로 시작할 수 없습니다. (예: `int 1stPlace;` -> 에러)
+        // 1-3. 공백 사용 불가: 단어 사이에 공백을 넣을 수 없습니다. (예: `String user name;` -> 에러)
+        // 1-4. 예약어 사용 불가: `public`, `class`, `static`, `int` 등 자바 문법에서 사용하는 키워드는 이름으로 쓸 수 없습니다.
 
-        // 스네이크 케이스(snake_case) 명명 규칙을 사용한 예시
-        String nationality = "대한민국";
-        String first_name = "길동";
-        String last_name = "홍";
-        String date_of_birth = "2001-07-18";
-        String residental_address = "라마호텔";
-        String purpose_of_visit = "business";
+        // --- 2. 명명 관례 (권장) ---
+        // 자바 개발자들 사이의 약속으로, 코드의 일관성과 가독성을 위해 지키는 것이 좋습니다.
+        /*
+         * ----------------------------------------------------------------------
+         * | 구분          | 명명 규칙          | 예시                           |
+         * |---------------|--------------------|--------------------------------|
+         * | 클래스 (Class)  | 파스칼 케이스      | public class UserInfo          |
+         * |               | (PascalCase)       | public class CarController     |
+         * |---------------|--------------------|--------------------------------|
+         * | 변수 (Variable) | 카멜 케이스        | String userName;               |
+         * | 메소드 (Method) | (camelCase)        | int userAge;                   |
+         * |               |                    | void printUserInfo() {}        |
+         * |---------------|--------------------|--------------------------------|
+         * | 상수 (Constant) | 스크리밍 스네이크  | final int MAX_SPEED = 300;     |
+         * |               | (SCREAMING_SNAKE)  | final double PI = 3.14159;    |
+         * ----------------------------------------------------------------------
+         */
 
-        // 변수명에는 숫자도 포함될 수 있습니다.
-        String flight_no_01 = "KE234";
-        String flight_no_02 = "ER345";
+        // --- 예시 코드로 규칙 살펴보기 ---
+
+        // 입국 신고서(arrival card) 정보를 변수에 저장하는 예시
+        String nationality = "대한민국";         // 국적
+        String firstName = "길동";             // 이름 (성을 제외)
+        String lastName = "홍";              // 성
+        String dateOfBirth = "2001-07-18";   // 생년월일
+        String residentialAddress = "서울시 강남구"; // 거주지 주소
+        String purposeOfVisit = "관광";        // 방문 목적
+
+        // 숫자를 포함한 변수명 (주로 여러 개를 구분할 때 사용)
+        String flightNo1 = "KE234";
+        String flightNo2 = "OZ102";
 
         // 의미를 알기 어려운 변수명 (나쁜 예시)
-        String item1 = "passport";
-        String item2 = "mobile_phone";
-        // 아래처럼 의미를 명확하게 작성하는 것이 좋습니다.
-        String personalItem1 = "iPad";
+        String a = "여권";
+        int b = 1;
+        // 위 보다는 아래처럼 의미를 명확하게 작성하는 것이 훨씬 좋습니다.
+        String item = "여권";
+        int itemCount = 1;
 
 
-        // 상수(Constant) 선언: final 키워드를 사용합니다.
-        // 상수는 프로그램 실행 중에 값을 변경할 수 없는 변수입니다.
-        // 상수명은 관례적으로 '모두 대문자'로 작성합니다.
-        final String CODE ="KR";
-        // CODE = "US"; // 주석을 해제하면 컴파일 에러가 발생합니다. (final 변수에는 새로운 값을 할당할 수 없음)
-        System.out.println("국가 코드는 " + CODE + "입니다.");
+        // 상수(Constant) 선언: `final` 키워드를 사용합니다.
+        // 상수는 프로그램이 실행되는 동안 절대 변하지 않는 값을 의미합니다.
+        // 예: 원주율(PI), 최대 허용 속도, 국가 코드 등
+        final String COUNTRY_CODE = "KR"; // 국가 코드는 바뀌지 않는 값이므로 상수로 선언
+
+        // COUNTRY_CODE = "US"; // 주석을 해제하면 컴파일 에러가 발생합니다. (final 변수에는 값을 다시 할당할 수 없음)
+
+        System.out.println("국가 코드는 " + COUNTRY_CODE + "입니다.");
     }
 }

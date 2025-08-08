@@ -1,41 +1,54 @@
-// 조건문(Conditional Statement) `if`에 대해 배우는 예제입니다.
-// `if` 문은 특정 조건이 참(true)일 때만 코드 블록을 실행합니다.
+// 안녕하세요, 두프룸프님!
+// 이 파일은 자바 프로그래밍의 '조건문(Conditional Statement)' 중 가장 기본이 되는 `if`문에 대해 배우는 예제입니다.
+// 조건문은 프로그램이 특정 '조건'이 참(true)일 때만 특정 코드를 실행하도록 만들 때 사용해요.
+// 마치 우리가 "만약 비가 오면 우산을 가져간다"라고 생각하는 것과 같아요!
 
-import java.util.Scanner;
+import java.util.Scanner; // 사용자 입력을 위한 Scanner 클래스를 불러옵니다.
 
-public class _10_If1 {
-    public static void main(String[] args) {
-        int result = 0;
+public class _10_If1 { // 클래스 선언
+    public static void main(String[] args) { // main 메서드: 프로그램 시작점
+
+        int result = 0; // 결과를 저장할 변수를 초기화합니다.
 
         // [1] 기본적인 if 문
-        // 조건식 (3 > 4)은 거짓(false)이므로, if 블록 안의 코드는 실행되지 않습니다.
-        if(3 > 4) { // 조건식이 거짓이므로 이 블록은 건너뜀
-            result = 3;
-        }
-        System.out.println("if (3 > 4) 결과: " + result); // 출력: 0 (result는 초기값 그대로)
+        // `if (조건식) { ... }` 구조입니다.
+        // 괄호 안의 '조건식'이 참(true)일 경우에만 중괄호 `{}` 안의 코드 블록이 실행됩니다.
+        // 만약 조건식이 거짓(false)이라면, 중괄호 안의 코드는 완전히 무시되고 다음 줄로 넘어갑니다.
 
-        System.out.println("
-----------------------------------------
-");
+        // 예시: 3이 4보다 큰가? (3 > 4) -> 이 조건식은 거짓(false)입니다.
+        if(3 > 4) { // 조건식이 거짓이므로, 이 if 블록 안의 코드는 실행되지 않습니다.
+            result = 3; // 이 코드는 실행되지 않아요!
+        }
+        System.out.println("if (3 > 4) 결과: " + result); // result는 초기값 0 그대로 출력됩니다.
+
+        System.out.println("\n----------------------------------------\n"); // 구분선
 
         // [2] if-else if-else 문
-        // 여러 개의 조건을 순차적으로 검사하여, 가장 먼저 참이 되는 조건의 블록을 실행합니다.
-        // 모든 조건이 거짓일 경우 `else` 블록이 실행됩니다.
+        // 여러 개의 조건을 순차적으로 검사하여, 가장 먼저 참이 되는 조건의 코드 블록을 실행하고,
+        // 나머지 조건들은 검사하지 않고 건너뛰는 구조입니다。
+        // 만약 모든 `if`와 `else if`의 조건이 거짓일 경우, 마지막 `else` 블록이 실행됩니다.
 
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in); // 사용자 입력을 받기 위한 Scanner 객체 생성
         System.out.print("나이를 입력해 주세요 : ");
 
-        int age = sc.nextInt();
+        int age = sc.nextInt(); // 사용자로부터 나이를 정수 형태로 입력받습니다.
 
-        if (age >= 19) { // 첫 번째 조건: 나이가 19세 이상인가?
-            System.out.println("성인입니다.");
-        } else if(age >= 8) { // 두 번째 조건: 나이가 8세 이상인가? (첫 번째 조건이 거짓일 때만 검사)
-            System.out.println("학생입니다.");
-        } else { // 모든 조건이 거짓일 때 (나이가 8세 미만일 때)
-            System.out.println("어린이/유아입니다.");
+        // 첫 번째 조건: 나이가 19세 이상인가?
+        if (age >= 19) { // 만약 나이가 19세 이상이라면...
+            System.out.println("성인입니다."); // 이 메시지를 출력하고, 나머지 else if와 else는 건너뜁니다.
+        } 
+        // 두 번째 조건: 첫 번째 조건이 거짓일 때만 이 조건을 검사합니다.
+        // 나이가 8세 이상인가? (즉, 19세 미만이면서 8세 이상인가?)
+        else if(age >= 8) { // 만약 나이가 8세 이상이라면 (그리고 19세 미만이라면)...
+            System.out.println("학생입니다."); // 이 메시지를 출력하고, 나머지 else는 건너뜁니다.
+        } 
+        // 마지막 조건: 위의 모든 if와 else if 조건이 거짓일 때만 이 else 블록이 실행됩니다.
+        // 즉, 나이가 8세 미만일 때.
+        else { // 만약 위의 어떤 조건도 해당하지 않는다면 (나이가 8세 미만이라면)...
+            System.out.println("어린이/유아입니다."); // 이 메시지를 출력합니다.
         }
 
         System.out.println("프로그램을 종료합니다.");
-        sc.close(); // Scanner 자원 해제
+        sc.close(); // Scanner 자원 해제: 사용이 끝났으면 꼭 닫아주세요!
     }
 }

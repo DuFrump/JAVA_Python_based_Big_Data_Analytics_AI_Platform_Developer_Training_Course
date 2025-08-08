@@ -1,46 +1,72 @@
-// System.out.printf() 메소드를 사용하여 형식(format)에 맞춰 출력하는 방법을 배우는 예제입니다.
-// printf는 'print formatted'의 줄임말입니다.
-
+/**
+ * System.out.printf() 메소드를 사용하여 원하는 형식(format)으로 출력하는 방법을 배웁니다.
+ * printf는 "print formatted"의 줄임말로, C언어에서 유래된 기능입니다.
+ *
+ * 주요 형식 지정자(format specifier)
+ * - %d: 정수 (decimal)
+ * - %f: 실수 (floating-point)
+ * - %s: 문자열 (string)
+ * - %c: 문자 (character)
+ * - %b: 불리언 (boolean)
+ * - %n: 줄 바꿈 (new line)
+ * - %%: '%' 문자 자체를 출력
+ */
 public class _01_Printf {
     public static void main(String[] args) {
-        // %d : 정수(decimal)
-        System.out.printf("저는 대학교 %d학년에 재학 중입니다.", 3);
-        System.out.println(); // 줄바꿈
+        // ------------------- 기본 사용법 -------------------
+        // System.out.printf("출력할 형식", 값1, 값2, ...);
+        // 형식 지정자를 사용하여 원하는 위치에 값을 넣어 출력할 수 있습니다.
 
-        // 여러 개의 형식 지정자 사용하기
-        // %d: 정수, %f: 실수(float), %s: 문자열(string)
-        System.out.printf("%d은 첫 번째, %f은 두 번째, %s은 세 번째.", 1, 2.0, "셋"); // 오타 수정: "색" -> "셋"
-        System.out.println("\n"); // 줄바꿈 2번
+        // 예시 1: 정수(int) 값을 문장 속에 넣어 출력하기
+        // "저는 대학교 3학년에 재학 중입니다." 라는 문장을 출력하고 싶을 때
+        System.out.printf("저는 대학교 %d학년에 재학 중입니다.%n", 3); // %d 위치에 정수 3이 들어갑니다.
+        // System.out.println(); 대신 %n을 사용하면 printf 메소드 내에서 줄바꿈이 가능하여 더 편리합니다.
 
-        // 출력 공간 확보하기
-        // %5d: 5칸의 공간을 확보하고 오른쪽 정렬하여 정수 출력
-        System.out.println("---오른쪽 정렬---");
-        System.out.printf("%5d\n", 1);
-        System.out.printf("%5d\n", 12);
-        System.out.printf("%5d\n", 123);
-        System.out.printf("%5d\n", 1234);
-        System.out.printf("%5d\n", 12345);
+        // 예시 2: 여러 개의 값을 한 번에 출력하기
+        // %d에는 정수 1, %f에는 실수 2.0, %s에는 문자열 "셋"이 순서대로 들어갑니다.
+        System.out.printf("%d은 첫 번째, %f은 두 번째, %s은 세 번째.%n", 1, 2.0, "셋");
 
-        // %-5d: 5칸의 공간을 확보하고 왼쪽 정렬하여 정수 출력
-        System.out.println("---왼쪽 정렬---");
-        System.out.printf("%-5d\n", 1);
-        System.out.printf("%-5d\n", 12);
-        System.out.printf("%-5d\n", 123);
-        System.out.printf("%-5d\n", 1234);
-        System.out.printf("%-5d\n", 12345);
-        System.out.println();
 
-        // 소수점 자릿수 지정하기
-        // %.1f: 소수점 첫째 자리까지 표시
-        System.out.printf("%.1f\n", 1.234567); // 1.2
-        // %.2f: 소수점 둘째 자리까지 표시 (셋째 자리에서 반올림)
-        System.out.printf("%.2f\n", 1.234567); // 1.23
-        // %.3f: 소수점 셋째 자리까지 표시 (넷째 자리에서 반올림)
-        System.out.printf("%.3f\n", 1.234567); // 1.235
-        System.out.println();
+        // ------------------- 출력 공간 확보하기 -------------------
+        // 숫자나 문자열을 출력할 때, 정해진 칸을 확보하고 정렬할 수 있습니다.
+        // 쇼핑몰 영수증이나 성적표처럼 깔끔하게 정렬된 출력이 필요할 때 유용합니다.
 
-        // 변수를 사용하여 출력하기
-        int grade = 3;
-        System.out.printf("저는 대학교 %d학년에 재학 중입니다.", grade);
+        // 예시 3: 5칸을 확보하고 오른쪽 정렬하여 숫자 출력하기
+        // %5d: 5칸의 공간을 확보하고, 값을 오른쪽부터 채웁니다. 남는 공간은 공백으로 표시됩니다.
+        System.out.println("---오른쪽 정렬 (5칸)---");
+        System.out.printf("%5d%n", 1);       // "    1"
+        System.out.printf("%5d%n", 12);      // "   12"
+        System.out.printf("%5d%n", 123);     // "  123"
+        System.out.printf("%5d%n", 1234);    // " 1234"
+        System.out.printf("%5d%n", 12345);   // "12345"
+
+        // 예시 4: 5칸을 확보하고 왼쪽 정렬하여 숫자 출력하기
+        // %-5d: '-' 기호를 붙이면 왼쪽부터 값을 채웁니다.
+        System.out.println("---왼쪽 정렬 (5칸)---");
+        System.out.printf("%-5d%n", 1);      // "1    "
+        System.out.printf("%-5d%n", 12);     // "12   "
+        System.out.printf("%-5d%n", 123);    // "123  "
+        System.out.printf("%-5d%n", 1234);   // "1234 "
+        System.out.printf("%-5d%n", 12345);  // "12345"
+
+
+        // ------------------- 소수점 자릿수 지정하기 -------------------
+        // 실수를 출력할 때 원하는 소수점 자릿수까지만 표시할 수 있습니다.
+        // 원주율(3.141592...)을 소수점 둘째 자리(3.14)까지만 보여주고 싶을 때 사용합니다.
+
+        // 예시 5: 소수점 자릿수 제어하기
+        // %.nf: 소수점 n번째 자리까지 표시합니다. (n+1번째 자리에서 반올림)
+        System.out.println("---소수점 자릿수 제어---");
+        System.out.printf("원래 값: %f%n", 1.234567);
+        System.out.printf("소수점 첫째 자리: %.1f%n", 1.234567); // 1.2 (둘째 자리 3에서 반올림 X)
+        System.out.printf("소수점 둘째 자리: %.2f%n", 1.234567); // 1.23 (셋째 자리 4에서 반올림 X)
+        System.out.printf("소수점 셋째 자리: %.3f%n", 1.234567); // 1.235 (넷째 자리 5에서 반올림 O)
+
+
+        // ------------------- 변수와 함께 사용하기 -------------------
+        // 변수에 저장된 값을 출력할 때도 동일하게 사용할 수 있습니다.
+        int grade = 4;
+        String name = "두프룸프";
+        System.out.printf("%s님은 %d학년입니다.%n", name, grade);
     }
 }
