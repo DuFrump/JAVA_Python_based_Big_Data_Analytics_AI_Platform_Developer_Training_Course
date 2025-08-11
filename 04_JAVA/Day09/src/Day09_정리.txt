@@ -1,95 +1,27 @@
-DeliveryApp.java — 다형성을 활용한 배달 앱 주문 시스템
-`Menu` 부모 클래스를 상속받는 `Chicken`, `Pizza`, `Jokbal` 클래스를 구현하여 다형성을 활용한 주문 시스템을 만듭니다. 사용자의 메뉴 선택에 따라 오버라이딩된 `order()` 메소드가 실행되며, `Scanner`를 이용한 사용자 입력과 반복적인 주문 처리를 포함합니다.
+# Day09 학습 정리
 
-_01_Receipt/Main.java — 추상 클래스 활용 (레시피)
-`Recipe` 추상 클래스를 상속받는 `PastaRecipe`와 `StakeRecipe` 클래스를 활용하는 메인 클래스입니다. 추상 클래스는 직접 객체 생성이 불가능하며, 자식 클래스에서 구현된 메소드를 호출하여 다형성을 보여줍니다.
+Day09에서는 자바 객체 지향 프로그래밍의 핵심 개념인 '추상 클래스(Abstract Class)'와 '인터페이스(Interface)'를 심도 있게 학습하고, 이들을 활용한 '다형성(Polymorphism)'의 다양한 적용 사례를 살펴보았습니다.
 
-_01_Receipt/PastaRecipe.java — Recipe 추상 클래스 상속 (파스타 레시피)
-`Recipe` 추상 클래스를 상속받는 `PastaRecipe` 클래스입니다. 파스타를 만드는 고유한 메소드 `makePasta()`를 가집니다.
+## 주요 학습 내용:
 
-_01_Receipt/Recipe.java — 추상 클래스 정의 (레시피)
-요리사의 이름(chef)을 속성으로 가지며, `info()` 메소드를 통해 레시피 정보를 출력하는 추상 클래스입니다. 추상 클래스는 직접 객체 생성이 불가능하며, 자식 클래스에서 특정 메소드를 구현하도록 강제할 수 있습니다.
+1.  **추상 클래스 (Abstract Class) (_01_Receipt, _02_Phone, _05_Camera)**
+    *   **정의**: `abstract` 키워드로 선언되며, 직접 객체를 생성할 수 없는 '미완성된 설계도'임을 이해했습니다.
+    *   **추상 메소드**: 선언만 있고 구현부가 없는 메소드이며, 이를 포함하는 클래스는 반드시 추상 클래스여야 함을 학습했습니다.
+    *   **구현 의무**: 추상 클래스를 상속받는 자식 클래스는 부모의 모든 추상 메소드를 반드시 구현(오버라이딩)해야 하며, 그렇지 않으면 자식 클래스도 추상 클래스가 되어야 함을 파악했습니다.
+    *   **생성자**: 추상 클래스도 생성자를 가질 수 있으며, 자식 클래스에서 `super()`를 통해 호출됨을 확인했습니다.
+    *   **다형성**: 추상 클래스 타입의 참조 변수가 자식 객체를 참조할 수 있음을 다양한 예제(`Recipe`, `Phone`, `Camera`)를 통해 실습했습니다.
 
-_01_Receipt/StakeRecipe.java — Recipe 추상 클래스 상속 (스테이크 레시피)
-`Recipe` 추상 클래스를 상속받는 `StakeRecipe` 클래스입니다. 스테이크를 굽는 고유한 메소드 `grillStake()`를 가집니다.
+2.  **인터페이스 (Interface) (_03_Phone2, _04_MultiInterface, _06_Detector, _07_Reporter)**
+    *   **정의**: `interface` 키워드를 사용하여 선언되며, 클래스가 구현해야 할 메소드들의 '규약' 또는 '청사진'을 정의함을 이해했습니다.
+    *   **구성 요소**: 모든 필드는 `public static final`이고, 모든 메소드는 기본적으로 `public abstract`임을 학습했습니다. (Java 8+ `default`, `static` 메소드도 언급)
+    *   **구현 (`implements`)**: 클래스가 인터페이스의 규약을 따르겠다고 선언할 때 `implements` 키워드를 사용하며, 인터페이스의 모든 추상 메소드를 구현해야 함을 파악했습니다.
+    *   **다중 구현**: 자바는 클래스의 다중 상속은 허용하지 않지만, 인터페이스는 여러 개를 동시에 구현할 수 있음을 (`BlueToothMIC`) 통해 확인했습니다.
+    *   **인터페이스 상속**: 인터페이스도 다른 인터페이스를 `extends`하여 상속받을 수 있음을 (`BlueToothMIC2`) 학습했습니다.
+    *   **다형성**: 인터페이스 타입의 참조 변수가 해당 인터페이스를 구현한 모든 클래스의 객체를 참조할 수 있음을 (`Phone`, `Detectable`) 통해 실습했습니다.
+    *   **느슨한 결합**: `Person` 클래스가 `Phone` 인터페이스를 통해 휴대폰을 사용함으로써 특정 구현체에 종속되지 않는 '느슨한 결합'과 '의존성 주입'의 개념을 이해했습니다.
 
-_02_Phone/Main.java — 추상 클래스 활용 (핸드폰)
-`Phone` 추상 클래스를 상속받는 `PineapplePhone` 클래스를 활용하는 메인 클래스입니다. 추상 클래스의 메소드를 호출하여 핸드폰의 전원 켜고 끄기, 로고 표시 등의 동작을 보여줍니다.
+3.  **다형성(Polymorphism)의 심화 및 활용**: 
+    *   추상 클래스와 인터페이스를 활용한 다형성이 코드의 유연성, 확장성, 유지보수성을 어떻게 극대화하는지 다양한 예제(`DeliveryApp`, `_06_Detector.Interface`, `_04_MultiInterface.Main2`)를 통해 깊이 있게 이해했습니다.
+    *   참조 변수의 타입이 호출 가능한 메소드를 결정하는 컴파일 시점의 타입 체크와 실제 객체의 메소드가 실행되는 런타임 다형성(동적 바인딩)의 관계를 명확히 했습니다.
 
-_02_Phone/Phone.java — 추상 클래스 정의 (핸드폰)
-핸드폰의 기본적인 동작(전원 켜기/끄기, 로고 표시)을 정의하는 추상 클래스입니다. `openingLogo()` 메소드는 추상 메소드로 선언되어 자식 클래스에서 반드시 구현하도록 강제합니다.
-
-_02_Phone/PineapplePhone.java — Phone 추상 클래스 상속 (파인애플 폰)
-`Phone` 추상 클래스를 상속받는 `PineapplePhone` 클래스입니다. `openingLogo()` 추상 메소드를 오버라이드하여 파인애플 폰만의 로고를 출력합니다.
-
-_03_Phone2/Main.java — 인터페이스와 다형성 활용 (핸드폰 교체 시뮬레이션)
-`Phone` 인터페이스를 구현하는 `PineapplePhone2`와 `ThreeStarPhone2` 클래스를 활용하여 사용자가 핸드폰을 사용하고 교체하는 시뮬레이션을 보여줍니다. 인터페이스를 통해 다양한 종류의 핸드폰을 일관된 방식으로 다루는 다형성을 강조합니다.
-
-_03_Phone2/Person.java — 핸드폰을 사용하는 사람 클래스
-`Phone` 인터페이스 타입의 핸드폰 객체를 가지는 `Person` 클래스입니다. 핸드폰을 켜고 끄고, 유튜브를 시청하고, 충전하는 등의 동작을 수행하며, 새로운 핸드폰으로 교체하는 기능도 포함합니다.
-
-_03_Phone2/Phone.java — 인터페이스 정의 (핸드폰)
-핸드폰의 필수적인 기능(전원 켜기/끄기, 전원 상태 확인, 유튜브 시청, 충전)을 정의하는 인터페이스입니다. `MAX_BATTERY_CAPACITY`와 같은 상수를 정의할 수 있습니다.
-
-_03_Phone2/PineapplePhone2.java — Phone 인터페이스 구현 (파인애플 폰 2)
-`Phone` 인터페이스를 구현하는 `PineapplePhone2` 클래스입니다. 인터페이스에 정의된 모든 메소드를 구현하며, 배터리 잔량에 따른 동작 변화를 포함합니다.
-
-_03_Phone2/ThreeStarPhone2.java — Phone 인터페이스 구현 (쓰리스타 폰 2)
-`Phone` 인터페이스를 구현하는 `ThreeStarPhone2` 클래스입니다. 인터페이스에 정의된 모든 메소드를 구현하며, 배터리 잔량에 따른 동작 변화를 포함합니다.
-
-_04_MultiInterface/BlueToothMIC.java — 다중 인터페이스 구현 (블루투스 마이크)
-`Speaker`와 `Microphone` 두 개의 인터페이스를 동시에 구현하는 `BlueToothMIC` 클래스입니다. 두 인터페이스의 모든 추상 메소드를 구현하여 하나의 클래스가 여러 기능을 수행할 수 있음을 보여줍니다.
-
-_04_MultiInterface/BlueToothMIC2.java — 인터페이스 상속 (블루투스 마이크 2)
-`Microphone`과 `Speaker` 인터페이스를 상속받는 `BlueToothMIC2` 인터페이스입니다. 인터페이스 간의 상속을 통해 새로운 기능을 추가할 수 있음을 보여줍니다.
-
-_04_MultiInterface/Main.java — 다중 인터페이스 활용
-`_04_MultiInterface` 패키지의 메인 클래스입니다. `BlueToothMIC` 객체를 생성하고, 이를 `Microphone` 또는 `Speaker` 타입으로 형 변환하여 각 인터페이스에 정의된 메소드만 호출할 수 있음을 보여줍니다.
-
-_04_MultiInterface/Main2.java — 인터페이스 상속 및 다형성 활용
-`_04_MultiInterface` 패키지의 메인 클래스입니다. `TJmic` 객체를 생성하고, 이를 `BlueToothMIC2`, `Microphone`, `Speaker` 인터페이스 타입으로 형 변환하여 각 인터페이스가 제공하는 기능만 접근할 수 있음을 보여주며 다형성을 강조합니다.
-
-_04_MultiInterface/Microphone.java — 인터페이스 정의 (마이크)
-마이크의 기능인 `sing()` 메소드를 정의하는 인터페이스입니다.
-
-_04_MultiInterface/Speaker.java — 인터페이스 정의 (스피커)
-스피커의 기능인 `music()` 메소드를 정의하는 인터페이스입니다.
-
-_04_MultiInterface/TJmic.java — BlueToothMIC2 인터페이스 구현 (TJ 마이크)
-`BlueToothMIC2` 인터페이스를 구현하는 `TJmic` 클래스입니다. `BlueToothMIC2` 인터페이스에 정의된 모든 메소드(`sing()`, `music()`, `connect()`)를 구현합니다.
-
-_05_Camera/_06_AbstractClass.java — 추상 클래스 활용 (카메라)
-`Camera` 추상 클래스를 상속받는 `FactoryCam` 클래스를 활용하는 메인 클래스입니다. 추상 메소드가 자식 클래스에서 구현되어 호출되는 과정을 보여줍니다.
-
-_05_Camera/Camera.java — 추상 클래스 정의 (카메라)
-카메라의 공통 기능(`showFeature()`)과 자식 클래스에서 반드시 구현해야 할 추상 기능(`showMainFeature()`)을 정의하는 추상 클래스입니다.
-
-_05_Camera/FactoryCam.java — Camera 추상 클래스 상속 (공장 카메라)
-`Camera` 추상 클래스를 상속받는 `FactoryCam` 클래스입니다. `showMainFeature()` 추상 메소드를 오버라이드하여 공장 카메라의 주요 기능을 출력합니다.
-
-_05_Camera/SpeedCam.java — Camera 추상 클래스 상속 (과속 단속 카메라)
-`Camera` 추상 클래스를 상속받는 `SpeedCam` 클래스입니다. `showMainFeature()` 추상 메소드를 오버라이드하여 과속 단속 카메라의 주요 기능을 출력합니다.
-
-_06_Detector/AccidentDetector.java — Detectable 인터페이스 구현 (사고 감지기)
-`Detectable` 인터페이스를 구현하는 `AccidentDetector` 클래스입니다. `detect()` 메소드를 오버라이드하여 일반 성능으로 사고를 감지하는 기능을 제공합니다.
-
-_06_Detector/AdvancedFireDetector.java — Detectable 인터페이스 구현 (고급 화재 감지기)
-`Detectable` 인터페이스를 구현하는 `AdvancedFireDetector` 클래스입니다. `detect()` 메소드를 오버라이드하여 고급 성능으로 화재를 감지하는 기능을 제공합니다.
-
-_06_Detector/Detectable.java — 인터페이스 정의 (감지 가능)
-`detect()` 메소드를 정의하는 인터페이스입니다. 다양한 종류의 감지기가 이 인터페이스를 구현하여 감지 기능을 제공할 수 있습니다.
-
-_06_Detector/FireDetector.java — Detectable 인터페이스 구현 (화재 감지기)
-`Detectable` 인터페이스를 구현하는 `FireDetector` 클래스입니다. `detect()` 메소드를 오버라이드하여 일반 성능으로 화재를 감지하는 기능을 제공합니다.
-
-_06_Detector/Interface.java — 인터페이스와 다형성 활용 (감지기)
-`Detectable` 인터페이스를 구현하는 다양한 감지기(`FireDetector`, `AdvancedFireDetector`, `AccidentDetector`) 객체를 생성하고, 인터페이스 타입으로 이들을 다루며 `detect()` 메소드를 호출하여 다형성을 보여줍니다.
-
-_07_Reporter/NormalReporter.java — Reportable 인터페이스 구현 (일반 리포터)
-`Reportable` 인터페이스를 구현하는 `NormalReporter` 클래스입니다. `report()` 메소드를 오버라이드하여 일반 화재 신고를 진행하는 기능을 제공합니다.
-
-_07_Reporter/Reportable.java — 인터페이스 정의 (보고 가능)
-`report()` 메소드를 정의하는 인터페이스입니다. 다양한 종류의 리포터가 이 인터페이스를 구현하여 보고 기능을 제공할 수 있습니다.
-
-_07_Reporter/VideoReporter.java — Reportable 인터페이스 구현 (비디오 리포터)
-`Reportable` 인터페이스를 구현하는 `VideoReporter` 클래스입니다. `report()` 메소드를 오버라이드하여 영상과 함께 신고를 진행하는 기능을 제공합니다.
+Day09 학습을 통해 자바 객체 지향 프로그래밍의 핵심 설계 원칙인 추상화와 다형성을 마스터하고, 이를 실제 코드에 적용하여 유연하고 확장 가능한 시스템을 설계하는 능력을 크게 향상시켰습니다.

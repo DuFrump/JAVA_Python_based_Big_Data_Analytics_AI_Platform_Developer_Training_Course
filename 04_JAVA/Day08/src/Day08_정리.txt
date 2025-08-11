@@ -1,77 +1,38 @@
-_01_TypeChange.java — 다형성(Polymorphism) 기본
-다형성의 기본적인 개념을 설명합니다. 부모 클래스 타입의 참조 변수가 자식 클래스의 객체를 참조할 수 있음을 보여주며, 같은 객체를 참조하는지 확인하는 예제를 포함합니다.
+# Day08 학습 정리
 
-_02_TypeChange.java — 다형성(Polymorphism)과 상속 관계
-다형성이 적용되는 상속 관계(부모-자식, 조부모-자식 등)를 다양한 자동차 클래스 예시를 통해 보여줍니다. 상속 관계가 아닌 클래스 간에는 다형성이 적용되지 않음을 설명합니다.
+Day08에서는 자바 객체 지향 프로그래밍의 핵심인 '다형성(Polymorphism)'과 '타입 변환(Type Casting)'을 심도 있게 다루고, 이와 관련된 중요한 개념들을 학습했습니다.
 
-_03_TypeChange_calendar/Calendar.java — 달력 기본 클래스
-달력의 기본 기능을 정의하는 클래스입니다.
+## 주요 학습 내용:
 
-_03_TypeChange_calendar/DeskCalendar.java — Calendar 클래스 상속 (탁상 달력)
-`Calendar` 클래스를 상속받는 `DeskCalendar` 클래스입니다. `showDate()` 메소드를 오버라이드하여 탁상 달력에 특화된 날짜 표시 기능을 제공합니다.
+1.  **다형성(Polymorphism)과 타입 변환 (_01_TypeChange.java, _02_TypeChange.java, _03_TypeChange_calendar, _04_TypeChange_bike)**
+    *   **다형성 개념**: 하나의 객체가 여러 형태를 가질 수 있는 능력으로, 부모 타입의 참조 변수가 자식 객체를 참조하는 것을 이해했습니다.
+    *   **업캐스팅(Upcasting)**: 자식 객체를 부모 타입으로 참조하는 자동적이고 안전한 형변환을 학습했습니다.
+    *   **다운캐스팅(Downcasting)**: 부모 타입으로 참조되던 객체를 다시 자식 타입으로 변환하는 명시적 형변환을 배웠으며, `instanceof` 연산자를 사용하여 `ClassCastException`을 방지하는 안전한 방법을 강조했습니다.
+    *   **필드 접근 vs 메소드 호출**: 다형성 환경에서 필드 접근은 참조 변수 타입에, 메소드 호출은 실제 객체 타입에 따라 결정됨을 명확히 구분했습니다.
+    *   `Parent/Child`, `Car/Bus/SchoolBus/OpenCar/SportsCar`, `Calendar/DeskCalendar`, `Bike/FourWheelBike` 등 다양한 예시를 통해 다형성과 타입 변환의 원리를 시각적으로 이해했습니다.
 
-_03_TypeChange_calendar/Main.java — 다형성 활용 (달력)
-`_03_TypeChange_calendar` 패키지의 메인 클래스입니다. `Calendar`와 `DeskCalendar` 객체를 생성하고, `Calendar` 타입으로 `DeskCalendar` 객체를 참조하여 다형성을 보여줍니다.
+2.  **다형성 활용 실습 (_05_Practice_Computer)**
+    *   `ComputerRoom` 예제를 통해 `Computer` 타입의 참조 변수로 `LG`와 `Samsung` 컴퓨터 객체를 관리하며, 다형성이 코드의 유연성과 확장성을 어떻게 높이는지 실습했습니다.
 
-_04_TypeChange_bike/Bike.java — 자전거 기본 클래스
-자전거의 기본 기능을 정의하는 클래스입니다.
+3.  **`instanceof` 연산자 (_06_InstanceOf.java, _08_InstanceOf.java)**
+    *   **`instanceof`**: 객체의 실제 타입을 확인하는 `instanceof` 연산자의 사용법을 배웠습니다.
+    *   `instanceof`와 `==` 연산자의 차이점(`instanceof`는 타입 확인, `==`는 메모리 주소 비교)을 명확히 이해했습니다.
 
-_04_TypeChange_bike/FourWheelBike.java — Bike 클래스 상속 (사륜 자전거)
-`Bike` 클래스를 상속받는 `FourWheelBike` 클래스입니다. `ride()` 메소드를 오버라이드하여 사륜 자전거에 특화된 주행 기능을 제공합니다.
+4.  **다형성을 통한 코드 개선 (_07_CheckByMethod.java)**
+    *   `instanceof` 없이 메소드 오버라이딩과 다형성만으로 객체의 종류에 따라 다른 동작을 수행하게 하여, 더 깔끔하고 확장성 있는 코드를 작성하는 방법을 학습했습니다.
 
-_04_TypeChange_bike/Main.java — 다형성 활용 (자전거)
-`_04_TypeChange_bike` 패키지의 메인 클래스입니다. `Bike`와 `FourWheelBike` 객체를 생성하고, `Bike` 타입으로 `FourWheelBike` 객체를 참조하여 다형성을 보여줍니다.
+5.  **기본 자료형 vs 참조 자료형 (_09_Reference.java)**
+    *   **기본 자료형**: 실제 값을 저장하며 '값 전달(Call by Value)' 방식으로 동작함을 이해했습니다.
+    *   **참조 자료형**: 객체의 메모리 주소를 저장하며 '참조 전달(Call by Reference)' 방식으로 동작함을 이해했습니다.
+    *   메소드 호출 시 참조 자료형의 변경이 원본 객체에 영향을 미치는 과정을 확인했습니다.
 
-_05_Practice_Computer/Computer.java — 컴퓨터 기본 클래스 (연습)
-컴퓨터의 기본 기능을 정의하는 클래스입니다.
+6.  **메소드 오버로딩 vs 오버라이딩 (_10_OverloadingOverriding.java)**
+    *   **오버로딩**: 같은 클래스 내에서 메소드 이름은 같지만 매개변수가 다른 여러 메소드를 정의하는 것임을 명확히 했습니다.
+    *   **오버라이딩**: 부모 클래스의 메소드를 자식 클래스에서 재정의하는 것임을 이해했습니다.
+    *   다형성 환경에서 오버라이딩된 메소드는 실제 객체의 메소드가 호출되지만, 오버로딩된 메소드는 부모 타입 참조 변수로 직접 호출할 수 없음을 확인했습니다.
 
-_05_Practice_Computer/ComputerRoom.java — 컴퓨터실 클래스 (연습)
-컴퓨터실에서 컴퓨터를 사용하는 기능을 정의하는 클래스입니다. `Computer` 타입의 객체를 매개변수로 받아 다형성을 활용합니다.
+7.  **다형성 활용 퀴즈 (_11_Quiz/BurgerType, _12_Day08LastQuiz/Zoo, Zoo2)**
+    *   **햄버거 조리 시뮬레이션**: `Hamburger` 배열에 다양한 자식 햄버거 객체를 저장하고 `cook()` 메소드를 호출하여 다형성을 실습했습니다.
+    *   **동물원 시뮬레이션**: 다형성을 사용하지 않은 `Zoo` 예제(`Zoo.java`)의 문제점(코드 중복, 확장성 부족)을 파악하고, `Zoo2` 예제(`Zoo2.java`)에서 다형성을 활용하여 이를 어떻게 해결하는지 비교 분석했습니다.
 
-_05_Practice_Computer/LG.java — Computer 클래스 상속 (LG 컴퓨터) (연습)
-`Computer` 클래스를 상속받는 `LG` 클래스입니다. `powerOn()` 메소드를 오버라이드하여 LG 컴퓨터만의 추가 메시지를 출력합니다.
-
-_05_Practice_Computer/Main.java — 다형성 활용 (컴퓨터실) (연습)
-`_05_Practice_Computer` 패키지의 메인 클래스입니다. `LG`와 `Samsung` 컴퓨터 객체를 생성하고, `ComputerRoom` 클래스를 통해 다형성을 활용하여 다양한 컴퓨터를 사용하는 예시를 보여줍니다.
-
-_05_Practice_Computer/Samsung.java — Computer 클래스 상속 (삼성 컴퓨터) (연습)
-`Computer` 클래스를 상속받는 `Samsung` 클래스입니다. `powerOn()` 메소드를 오버라이드하여 삼성 컴퓨터만의 추가 메시지를 출력합니다.
-
-_06_InstanceOf.java — instanceof 연산자
-`instanceof` 연산자의 사용법을 설명합니다. 객체가 특정 클래스 또는 인터페이스의 인스턴스인지 여부를 확인하는 방법을 보여주며, 이를 통해 객체의 실제 타입을 판별하여 조건부 로직을 수행하는 예시를 제공합니다.
-
-_07_CheckByMethod.java — 메소드 오버라이딩을 통한 다형성 활용
-메소드 오버라이딩을 통해 다형성을 활용하는 방법을 보여줍니다. 부모 클래스에 정의된 메소드를 자식 클래스에서 재정의하고, 부모 타입의 참조 변수로 자식 객체의 오버라이딩된 메소드를 호출하여 각 객체에 맞는 동작을 수행하는 예시를 제공합니다.
-
-_08_InstanceOf.java — instanceof와 참조 비교
-`instanceof` 연산자와 `==` 연산자의 차이점을 다시 한번 설명합니다. `instanceof`는 객체의 타입 관계를 확인하고, `==`는 두 참조 변수가 동일한 객체를 참조하는지(메모리 주소)를 비교함을 명확히 보여줍니다.
-
-_09_Reference.java — 기본 자료형과 참조 자료형의 차이
-기본 자료형(primitive type)과 참조 자료형(reference type)의 근본적인 차이점을 설명합니다. 변수에 값이 직접 저장되는 기본 자료형과 객체의 메모리 주소가 저장되는 참조 자료형의 특성을 비교하고, 참조 자료형 변수 간의 할당이 어떻게 동작하는지 예시를 통해 보여줍니다.
-
-_10_OverloadingOverriding.java — 오버로딩(Overloading)과 오버라이딩(Overriding)
-메소드 오버로딩과 오버라이딩의 개념을 설명합니다. 오버라이딩은 부모 클래스의 메소드를 자식 클래스에서 재정의하는 것이고, 오버로딩은 같은 이름의 메소드를 여러 개 정의하는 것임을 보여줍니다. 각 개념의 특징과 사용 시점을 예시를 통해 설명합니다.
-
-_11_Quiz/BurgerType/BulgogiBurger.java — Burgers 클래스 상속 (불고기 버거)
-`Burgers` 클래스를 상속받는 `BulgogiBurger` 클래스입니다. 불고기 버거의 고유한 정보를 설정합니다.
-
-_11_Quiz/BurgerType/Burgers.java — 버거 기본 클래스
-버거의 이름(name)과 가격(price)을 속성으로 가지며, `info()` 메소드를 통해 버거 정보를 출력하는 기본 클래스입니다.
-
-_11_Quiz/BurgerType/CheeseBurger.java — Burgers 클래스 상속 (치즈 버거)
-`Burgers` 클래스를 상속받는 `CheeseBurger` 클래스입니다. 치즈 버거의 고유한 정보를 설정합니다.
-
-_11_Quiz/BurgerType/Hamburger.java — Burgers 클래스 상속 (햄버거)
-`Burgers` 클래스를 상속받는 `Hamburger` 클래스입니다. 햄버거의 고유한 정보를 설정합니다.
-
-_11_Quiz/BurgerType/ShrimpBurger.java — Burgers 클래스 상속 (새우 버거)
-`Burgers` 클래스를 상속받는 `ShrimpBurger` 클래스입니다. 새우 버거의 고유한 정보를 설정합니다.
-
-_11_Quiz/Main.java — 다형성 활용 (버거 주문)
-`_11_Quiz` 패키지의 메인 클래스입니다. `Burgers` 타입의 배열에 다양한 종류의 버거 객체를 담아 다형성을 활용하여 각 버거의 정보를 출력하는 예시를 보여줍니다.
-
-_12_Day08LastQuiz/Zoo.java — 동물원 클래스 (다형성 활용)
-동물원 클래스에서 `Animal` 타입의 객체를 매개변수로 받아 다양한 동물의 소리를 출력하는 메소드를 포함합니다. 다형성을 활용하여 여러 종류의 동물을 일관된 방식으로 처리합니다.
-
-_12_Day08LastQuiz/Zoo2.java — 동물원 클래스 (다형성 활용, 배열)
-동물원 클래스에서 `Animal` 타입의 배열을 사용하여 여러 동물의 소리를 일괄적으로 출력하는 메소드를 포함합니다. 다형성을 활용하여 동물 객체들을 배열로 관리하고 순회하는 예시를 보여줍니다.
+Day08 학습을 통해 자바 객체 지향 프로그래밍의 핵심인 다형성과 타입 변환을 깊이 이해하고, 이를 실제 코드에 적용하여 유연하고 확장 가능한 프로그램을 설계하는 능력을 크게 향상시켰습니다.
