@@ -80,3 +80,21 @@ DAO(Data Access Object) - 실제로는 DB의 데이터에 접근하는 객체
 스프링 부프 - MVC 패턴 - JPA - Thymeleaf(뷰, html) -> REST API (비동기 처리)
 
 => render 배포 (postgresql <==> DBeaver) <=> git과 연결 (자동 배포)
+
+
+스프링 이니셜라이져 - Spring Web, Thymeleaf, Spring Data JPA, Validation, Lombok, H2 Database, Spring Boot DEV Tools
+
+Article (Entity) - 데이터 맵핑 그릇
+Repository - CRUD 기능 제공
+Service - 비지니스 로직 (원하는 서비스 로직 구현)
+dto - 운반 그릇
+Controller - 뷰로부터 요청 받는 중간다리 역할
+
+html - 뷰
+
+ V	  C			 M		----- MVC 패턴 (구조)
+화면	중계	   로직	       데이터처리
+뷰 -> Controller -> Service -> Repository (Entity) -> Service -> Controller -> 뷰
+중간에 dto가 데이터 전달하는 역할 / Repo에서 Database 접근
+
+rest api - 
