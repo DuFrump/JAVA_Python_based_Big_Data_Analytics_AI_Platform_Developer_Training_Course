@@ -1,76 +1,66 @@
-// 배열(Array)에 난수(Random Number)를 저장하고, 짝수의 합을 계산하며,
-// `while(true)` 반복문과 `break`를 사용하여 특정 조건이 될 때까지 반복하는 예제입니다.
-
+/**
+ * 두프룸프님, 이번 예제는 지금까지 배운 것들을 종합적으로 활용하는 실전 응용 문제입니다!
+ * 마치 게임처럼, 특정 조건이 만족될 때까지 계속해서 새로운 판을 시작하는 프로그램을 만들어 볼 거예요.
+ *
+ * 여기서 우리는...
+ * 1. 배열(Array)을 만들어 난수(Random Number)들을 저장합니다.
+ * 2. for문을 사용해 배열의 모든 값을 탐색하고, 특정 조건(짝수)에 맞는 값들의 합을 구합니다.
+ * 3. while(true) 무한 루프와 break 키워드를 사용해서, 이 모든 과정을 '짝수의 합이 0'이라는
+ *    아주 특별한 조건이 달성될 때까지 무한 반복하는 시뮬레이션을 만듭니다.
+ *
+ * 로또 1등에 당첨될 때까지 계속 로또를 사는 것처럼, 우리가 정한 '행운의 순간'이 올 때까지
+ * 컴퓨터가 얼마나 많은 시도를 하는지 지켜보는 재미있는 실험이 될 거예요!
+ */
 public class _09_Array2 {
     public static void main(String[] args) {
-        // 주석 처리된 이전 코드 (1회 실행 예제)
-        /*
-        int[] numbers = new int[10];
 
-        for (int i = 0; i < numbers.length; i++) {
-            // Math.random()은 0.0 이상 1.0 미만의 double 값을 반환합니다.
-            // (int)(Math.random() * 30) + 1: 1부터 30까지의 정수 난수를 생성합니다.
-            numbers[i] = (int)(Math.random() * 30) + 1;
-        }
+        // while(true)는 의도적으로 만드는 무한 루프입니다. "일단 계속 반복해!"
+        // 반드시 루프 안에서 특정 조건이 되면 break; 를 통해 탈출해야 합니다.
+        int attempt = 0; // 몇 번의 시도를 했는지 세는 변수
 
-        int sum = 0;
+        while (true) {
+            attempt++; // 시도 횟수 1 증가
+            System.out.printf("\n--- [ %d번째 시도 ] ---%n", attempt);
 
-        for (int i = 0; i < numbers.length ; i++) {
-            if (numbers[i] % 2 == 0) { // 배열 요소가 짝수인지 확인
-                sum += numbers[i]; // 짝수이면 합계에 더함
-            }
-        }
+            // [1단계] 10개의 정수를 담을 수 있는 배열(수납장)을 새로 만듭니다.
+            int[] numbers = new int[10];
 
-        for (int i = 0; i < numbers.length; i++) {
-            System.out.printf("%d번째 난수 (1 ~ 30 사이) : %d%n", i + 1, numbers[i]);
-        }
-
-        System.out.printf("짝수 합산 : %d%n", sum);
-        System.out.println(Math.pow(0.5, 10)); // 0.5의 10승 계산 (예시용)
-        */
-
-        System.out.printf("%n%n===============================================%n");
-
-        // [2] `while(true)`와 `break`를 이용한 반복 실행 예제
-        // `while(true)`는 무한 루프를 의미하며, 특정 조건이 충족될 때 `break` 문으로 루프를 종료합니다.
-        int count = 0; // 총 반복 횟수를 세는 변수
-
-        while (true) { // 무한 반복 시작
-            System.out.println("
---- 새로운 난수 배열 생성 및 짝수 합산 ---");
-            int sum = 0; // 각 반복마다 합계를 초기화
-
-            int[] numbers = new int[10]; // 10개의 정수를 저장할 배열 생성
-
-            // 배열에 1부터 30까지의 난수 10개 저장
+            // [2단계] for문을 이용해 배열의 각 칸에 1~30 사이의 난수를 채워 넣습니다.
             for (int i = 0; i < numbers.length; i++) {
+                // Math.random()      -> 0.0 이상 1.0 미만의 소수(double)를 무작위로 생성 (ex: 0.123, 0.987...)
+                // * 30               -> 0.0 이상 30.0 미만의 소수가 됨 (ex: 3.69, 29.61...)
+                // (int)              -> 소수점 아래를 모두 버리고 정수만 남김 (ex: 3, 29)
+                // + 1                -> 1 ~ 30 사이의 정수가 됨 (ex: 4, 30)
                 numbers[i] = (int)(Math.random() * 30) + 1;
             }
 
-            // 배열의 짝수 요소 합산
-            for (int i = 0; i < numbers.length ; i++) {
-                if (numbers[i] % 2 == 0) {
-                    sum += numbers[i];
+            // [3단계] 배열에 들어있는 숫자들을 출력하고, 동시에 짝수의 합을 계산합니다.
+            int evenSum = 0; // 짝수 합계를 저장할 변수. 매 시도마다 0으로 초기화됩니다.
+
+            System.out.println("생성된 난수 목록:");
+            // ★★★ 향상된 for문 (for-each) 맛보기! ★★★
+            // for (int num : numbers) { ... }
+            // "numbers 배열에서 값을 하나씩 꺼내서 num이라는 변수에 담아서 반복해줘!"
+            // 인덱스(i)가 필요 없고, 배열의 모든 값을 순서대로 확인만 하면 될 때 사용하면 코드가 아주 깔끔해져요.
+            for (int num : numbers) {
+                System.out.print(num + " "); // 생성된 난수를 한 줄에 출력
+                if (num % 2 == 0) { // 꺼낸 숫자가 짝수인지 확인
+                    evenSum += num; // 짝수라면 합계에 더하기
                 }
             }
+            System.out.println(); // 줄바꿈
+            System.out.printf("→ 이번 시도의 짝수 합: %d%n", evenSum);
 
-            // 생성된 난수 배열 출력
-            for (int i = 0; i < numbers.length; i++) {
-                System.out.printf("%d번째 난수 (1 ~ 30 사이) : %d%n", i + 1, numbers[i]);
-            }
-
-            System.out.printf("짝수 합산 : %d%n", sum);
-            count += 1; // 반복 횟수 증가
-
-            // [종료 조건] 짝수의 합이 0이 되면 반복을 종료합니다.
-            if(sum == 0){ // 1부터 30까지의 난수 중 짝수가 하나도 없을 경우 (매우 낮은 확률)
-                System.out.println("짝수의 합이 0이 되어 반복을 종료합니다.");
-                break; // `while(true)` 루프를 빠져나갑니다.
+            // [4단계] 종료 조건을 확인합니다.
+            // 만약 이번에 뽑은 난수 10개 중에 짝수가 하나도 없어서 합계가 0이라면?
+            if(evenSum == 0){
+                System.out.println("\n*** 드디어 짝수가 하나도 없는 배열이 만들어졌습니다! ***");
+                System.out.println("*** 시뮬레이션을 종료합니다. (break!) ***");
+                break; // while(true) 무한 루프를 탈출!
             }
         }
 
-        System.out.println();
-        System.out.println("총 반복 횟수 : " + count);
-
+        System.out.println("\n===============================================");
+        System.out.println("총 " + attempt + "번의 시도 끝에 성공했습니다!");
     }
 }

@@ -1,95 +1,78 @@
-// 배열(Array)의 선언, 초기화, 요소 접근, 그리고 `length` 속성을 배우는 예제입니다.
-// 배열은 같은 타입의 여러 변수를 하나의 이름으로 묶어서 다루는 자료구조입니다.
-
+/**
+ * 두프룸프님, 프로그래밍의 새로운 세계, '배열(Array)'에 오신 것을 환영합니다!
+ * 지금까지는 변수 하나에 값 하나만 저장했죠? (ex: int num = 10;)
+ * 하지만 만약 우리 반 학생 30명의 점수를 저장해야 한다면, 변수를 30개나 만들어야 할까요? 너무 힘들겠죠!
+ *
+ * 배열은 바로 이럴 때 사용하는 '데이터 보관함' 또는 '아파트' 같은 개념이에요.
+ * 하나의 이름(배열 변수)으로, 같은 타입의 데이터 여러 개를 한 줄로 쭉~ 보관할 수 있는 공간이죠.
+ * 각 데이터는 0번 방, 1번 방, 2번 방... 처럼 고유한 방 번호(인덱스, index)를 갖게 됩니다.
+ * ★★★ 가장 중요한 점! 이 방 번호는 항상 0부터 시작한다는 사실! ★★★
+ *
+ * 이 예제에서는 배열을 왜 써야 하는지, 어떻게 만들고 사용하는지, 그리고 for문과 얼마나 찰떡궁합인지 알아볼 거예요.
+ */
 public class _08_Array {
     public static void main(String[] args) {
-        // [1] 배열을 사용하지 않고 여러 변수를 선언한 경우
-        // 변수가 많아지면 관리하기 어렵고, 반복문을 사용할 수 없습니다.
-        String a = "알파";
-        String b = "브라보";
-        String c = "찰리";
-        String d = "델타";
-        String e = "에코";
-        String f = "폭스프롯";
-        String g = "골프";
-        String h = "호텔";
-        String i = "인디아";
-        String j = "줄리엣";
-        String k = "킬로";
-        String l = "라마";
+        // [1] 만약 배열이 없다면? -> 변수를 일일이 만들어야 해서 너무 불편해요.
+        String name1 = "김두프";
+        String name2 = "박루프";
+        String name3 = "이프룸";
+        // ... 30명이면 30개 만들어야 함 ...
+        System.out.println(name1 + "님 안녕하세요!");
+        System.out.println(name2 + "님 안녕하세요!");
+        System.out.println(name3 + "님 안녕하세요!");
 
-        System.out.printf("토끼와 거북이 동화에 문제가 생겼다.%n");
-        System.out.printf("%s 출동!%n", g);
-        System.out.printf("%s 출동!%n", b);
-        System.out.printf("%s 출동!%n", e);
-        System.out.printf("%s 출동!%n%n%n", l);
+        System.out.println("\n----------------------------------------\n");
 
-        System.out.println("
-----------------------------------------
-");
+        // [2] 배열 사용하기 (선언과 동시에 값 목록을 넣어주기)
+        // String 타입의 데이터를 담을 수 있는, 방 3개짜리 아파트(배열)를 짓고 바로 입주시키는 것과 같아요.
+        String[] names = {"김두프", "박루프", "이프룸"};
 
-        // [2] 배열 선언 및 초기화 (방법 1: 선언과 동시에 초기화)
-        // String[] teamsign: String 타입의 배열을 선언합니다.
-        // { ... }: 중괄호 안에 초기값을 나열하여 배열을 초기화합니다.
-        String[] teamsign = {"Alpha", "Bravo", "Charlie", "Delta", "Echo"};
+        // 배열의 각 방(요소)에 접근할 때는 `배열이름[방번호]` 형식을 사용해요.
+        // 방 번호(인덱스)는 0부터 시작하는 것, 절대 잊지 마세요!
+        System.out.println(names[0] + "님 안녕하세요!"); // 0번 방(첫 번째) 입주민
+        System.out.println(names[1] + "님 안녕하세요!"); // 1번 방(두 번째) 입주민
+        System.out.println(names[2] + "님 안녕하세요!"); // 2번 방(세 번째) 입주민
+        // System.out.println(names[3]); // Error! 3번 방은 없으므로 에러가 발생해요. (ArrayIndexOutOfBoundsException)
 
-        // 배열 요소 접근: `배열이름[인덱스]` 형태로 접근합니다. 인덱스는 0부터 시작합니다.
-        System.out.printf("%s 출동!%n", teamsign[0]); // 첫 번째 요소 (인덱스 0)
-        System.out.printf("%s 출동!%n", teamsign[1]); // 두 번째 요소 (인덱스 1)
-        System.out.printf("%s 출동!%n", teamsign[2]); // 세 번째 요소 (인덱스 2)
-        System.out.printf("%s 출동!%n%n", teamsign[3]); // 네 번째 요소 (인덱스 3)
-
-        // 반복문을 사용하여 배열의 모든 요소에 접근할 수 있습니다.
-        System.out.println("--- 반복문으로 배열 요소 출력 ---");
-        for (int m = 0; m < teamsign.length; m++) { // teamsign.length는 배열의 길이를 반환합니다.
-            System.out.printf("%s 출동!%n", teamsign[m]);
+        System.out.println("\n--- for문과 배열은 최고의 짝꿍! ---");
+        // 배열의 길이(방의 개수)는 `배열이름.length` 로 알 수 있어요. names.length는 3이겠죠?
+        // for문을 이용하면 배열의 모든 방을 처음부터 끝까지 순서대로 방문할 수 있답니다.
+        for (int i = 0; i < names.length; i++) {
+            System.out.println(names[i] + "님, 환영합니다!");
         }
 
-        System.out.println("
-----------------------------------------
-");
+        System.out.println("\n----------------------------------------\n");
 
-        // [3] 배열 선언 및 초기화 (방법 2: 크기만 지정하고 나중에 값 할당)
-        // new int[3]: int 타입의 요소를 3개 저장할 수 있는 배열을 생성합니다.
-        // 배열 생성 시 기본값으로 초기화됩니다. (정수형은 0, 실수형은 0.0, boolean은 false, 참조형은 null)
-        int[] numbers = new int[3];
-        numbers[0] = 1; // 첫 번째 요소에 1 할당
-        numbers[1] = 5; // 두 번째 요소에 5 할당
-        numbers[2] = 7; // 세 번째 요소에 7 할당
+        // [3] 배열 사용하기 (방 개수만 정해서 만들기)
+        // "일단 정수(int)를 담을 수 있는 방 5개짜리 아파트를 지어줘! 입주는 나중에 시킬게."
+        int[] scores = new int[5]; // new 키워드는 새로운 아파트(배열 객체)를 짓는 행위라고 생각하세요.
 
-        System.out.println("--- numbers 배열 요소 출력 ---");
-        for (int m = 0; m < numbers.length; m++) {
-            System.out.println(numbers[m]);
+        // 나중에 각 방에 값을 할당(입주)할 수 있어요.
+        scores[0] = 100;
+        scores[1] = 80;
+        scores[2] = 95;
+        scores[3] = 70;
+        scores[4] = 88;
+
+        System.out.println("--- 학생 5명의 점수 출력 ---");
+        int sum = 0;
+        for (int i = 0; i < scores.length; i++) {
+            System.out.println((i + 1) + "번 학생의 점수: " + scores[i]);
+            sum += scores[i]; // 점수 총합 구하기
         }
+        System.out.println("학생들의 총점: " + sum);
+        System.out.println("학생들의 평균: " + (double)sum / scores.length);
 
-        System.out.println("
-----------------------------------------
-");
+        System.out.println("\n----------------------------------------\n");
 
-        // [4] 배열 생성 시 기본값 확인
-        int[] intArray = new int[5];       // 정수형 배열 (모든 요소 0으로 초기화)
-        String[] strArray = new String[5]; // 문자열 배열 (모든 요소 null로 초기화)
+        // [4] 배열을 만들면 방은 무엇으로 채워져 있을까? (기본 초기값)
+        // 값을 넣어주지 않고 방만 만들면, Java가 자동으로 기본값으로 채워줘요.
+        int[] intArray = new int[3];       // 숫자 타입(int, double 등)은 0으로 채워져요.
+        boolean[] boolArray = new boolean[3]; // boolean 타입은 false로 채워져요.
+        String[] strArray = new String[3]; // 문자열, 클래스 등 참조 타입은 null로 채워져요. (null은 '아무것도 없다', '비어있다'는 뜻)
 
-        // [5] 배열 선언 및 초기화 (방법 3: 선언과 동시에 초기화, 크기 자동 지정)
-        int[] varArray = {1, 2, 3, 4, 5};
-
-        System.out.println("intArray[0] = " + intArray[0]); // 0
-        System.out.println("intArray[1] = " + intArray[1]); // 0
-
-        System.out.println("strArray[0] = " + strArray[0]); // null
-        System.out.println("strArray[1] = " + strArray[1]); // null
-
-        System.out.println("varArray[0] = " + varArray[0]); // 1
-        System.out.println("varArray[1] = " + varArray[1]); // 2
-
-        System.out.println("
-----------------------------------------
-");
-
-        // [6] 배열의 길이 (`length` 속성)
-        // 배열의 크기(요소의 개수)를 반환합니다.
-        System.out.println("intArray의 길이: " + intArray.length); // 5
-        System.out.println("strArray의 길이: " + strArray.length); // 5
-        System.out.println("numbers의 길이: " + numbers.length); // 3
+        System.out.println("int 배열의 0번 방: " + intArray[0]);
+        System.out.println("boolean 배열의 0번 방: " + boolArray[0]);
+        System.out.println("String 배열의 0번 방: " + strArray[0]);
     }
 }

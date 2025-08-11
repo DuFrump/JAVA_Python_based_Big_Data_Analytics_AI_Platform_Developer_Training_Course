@@ -1,18 +1,82 @@
+/**
+ * 안녕하세요, 두프룸프님! 이번에는 'Phone'이라는 '인터페이스(Interface)'를 자세히 살펴볼 거예요.
+ * 인터페이스는 자바에서 '다형성'을 구현하고, 클래스 간의 '느슨한 결합'을 가능하게 하는 핵심적인 요소입니다.
+ *
+ * <오늘 배울 핵심 개념>
+ * 1.  **인터페이스 (Interface) 정의**: 
+ *     - `interface` 키워드를 사용하여 선언하며, 클래스가 구현해야 할 메소드들의 '규약' 또는 '청사진'을 정의합니다.
+ *     - 인터페이스는 그 자체로 객체를 생성할 수 없으며, 다른 클래스에 의해 `implements` 키워드를 사용하여 구현됩니다.
+ *
+ * 2.  **인터페이스의 구성 요소**: 
+ *     - **상수 필드**: 인터페이스에 선언된 모든 필드는 자동으로 `public static final`이 됩니다.
+ *       (예: `int MAX_BATTERY_CAPACITY = 100;`)
+ *       따라서 대문자로 표기하고 초기값을 반드시 지정해야 합니다.
+ *     - **추상 메소드**: 인터페이스에 선언된 모든 메소드는 기본적으로 `public abstract`입니다.
+ *       (예: `void powerOn();`)
+ *       구현부가 없으며, 이 인터페이스를 구현하는 모든 클래스는 이 메소드들을 반드시 오버라이딩하여 구현해야 합니다.
+ *     - **`default` 메소드 (Java 8부터)**: `default` 키워드를 사용하여 구현부를 가질 수 있는 메소드입니다.
+ *       인터페이스를 구현한 기존 클래스들을 깨뜨리지 않고 새로운 기능을 추가할 때 유용합니다.
+ *     - **`static` 메소드 (Java 8부터)**: `static` 키워드를 사용하여 인터페이스 이름으로 직접 호출할 수 있는 메소드입니다.
+ *       유틸리티 메소드 등을 정의할 때 사용됩니다.
+ *
+ * 이 'Phone' 인터페이스는 모든 휴대폰이 공통적으로 가져야 할 필수적인 기능들을 정의함으로써,
+ * 다양한 휴대폰 모델들이 이 '규약'을 따르도록 강제하고, 이를 통해 프로그램의 일관성과 확장성을 확보합니다.
+ * 함께 코드를 보면서 인터페이스의 역할과 중요성을 이해해 봅시다!
+ */
+
 package _03_Phone2;
 
 // Phone 인터페이스는 휴대폰이 가져야 할 필수적인 기능들을 정의합니다.
 // 인터페이스는 `interface` 키워드를 사용하여 선언하며, 상수와 추상 메소드만을 가질 수 있습니다.
-// (Java 8부터 default, static 메소드도 가질 수 있게 됨)
+// (Java 8부터 default, static 메소드도 가질 수 있게 되었습니다.)
 public interface Phone {
-    // [1] 상수 필드: `public static final`이 자동으로 붙습니다.
-    // 배터리 최대 용량을 나타내는 상수입니다.
-    public static final int MAX_BATTERY_CAPACITY = 100;
+    /**
+     * [1] 상수 필드: `MAX_BATTERY_CAPACITY`
+     * 인터페이스에 선언된 모든 필드는 자동으로 `public static final`이 됩니다.
+     * 따라서 이 필드는 어디서든 `Phone.MAX_BATTERY_CAPACITY`와 같이 접근할 수 있으며,
+     * 한 번 초기화되면 값을 변경할 수 없는 상수입니다.
+     * 배터리 최대 용량을 나타내는 상수입니다.
+     */
+    int MAX_BATTERY_CAPACITY = 100; // public static final은 생략 가능
 
-    // [2] 추상 메소드: `public abstract`이 자동으로 붙습니다.
-    // 이 메소드들은 인터페이스를 구현하는 모든 클래스에서 반드시 오버라이딩하여 구현해야 합니다.
-    abstract void powerOn();      // 전원 켜기
-    abstract void powerOff();     // 전원 끄기
-    abstract boolean isOn();      // 전원 켜짐 상태 확인
-    abstract void watchYouTube(); // 유튜브 시청
-    abstract void charge();       // 충전
+    /**
+     * [2] 추상 메소드: `powerOn()`
+     * 인터페이스에 선언된 모든 메소드는 기본적으로 `public abstract`입니다.
+     * 이 메소드는 선언만 있고 구현(몸체)이 없으며,
+     * 이 인터페이스를 구현하는 모든 클래스에서 반드시 오버라이딩하여 구현해야 합니다.
+     * 휴대폰의 전원을 켜는 기능을 정의합니다.
+     */
+    void powerOn(); // public abstract는 생략 가능
+
+    /**
+     * 추상 메소드: `powerOff()`
+     * 휴대폰의 전원을 끄는 기능을 정의합니다.
+     */
+    void powerOff();
+
+    /**
+     * 추상 메소드: `isOn()`
+     * 휴대폰의 전원 켜짐 상태를 확인하는 기능을 정의합니다.
+     * 반환 타입이 `boolean`이므로, 켜져 있으면 `true`, 꺼져 있으면 `false`를 반환해야 합니다.
+     */
+    boolean isOn();
+
+    /**
+     * 추상 메소드: `watchYouTube()`
+     * 휴대폰으로 유튜브를 시청하는 기능을 정의합니다.
+     */
+    void watchYouTube();
+
+    /**
+     * 추상 메소드: `charge()`
+     * 휴대폰을 충전하는 기능을 정의합니다.
+     */
+    void charge();
+
+    // [참고] Java 8부터 인터페이스에 추가된 기능:
+    // default 메소드: 구현부를 가질 수 있으며, 인터페이스를 구현한 클래스에서 오버라이딩할 수 있습니다.
+    // default void printModel() { System.out.println("모델 정보 없음"); }
+
+    // static 메소드: 인터페이스 이름으로 직접 호출할 수 있으며, 구현부를 가집니다.
+    // static void displayInfo() { System.out.println("Phone 인터페이스 정보"); }
 }

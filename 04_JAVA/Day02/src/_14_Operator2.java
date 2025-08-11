@@ -55,7 +55,7 @@ public class _14_Operator2 {
         System.out.println("y--: " + y--);       // 후위: 먼저 9 출력, 그 후 y는 8이 됨
         System.out.println("y: " + y);         // 현재 y는 8
 
-        System.out.println("\n--- 2. 논리 부정 연산자 (!) ---
+        System.out.println("\n--- 2. 논리 부정 연산자 (!) ---");
         // boolean 타입의 값(true 또는 false)을 반대로 바꿉니다.
         // 마치 스위치를 켜고 끄는 것과 같습니다.
 
