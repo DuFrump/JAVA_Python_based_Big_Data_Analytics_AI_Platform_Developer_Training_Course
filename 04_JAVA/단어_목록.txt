@@ -53,6 +53,8 @@ ex) String sql = "INSERT INTO employee (name, age) VALUSE (? , ?)";
 JPA - SQL 작성 없이 객체(Entity) 중심 개발
 - CRUD 기능을 기본적으로 제공 (CREATE READ UPDATE DELETE)
 
+의존성(Dependency) - ex) Car 객체가 Engine 객체를 사용하는 경우, Car는 Engine에 의존
+
 ===============================
 
 JDBC - 콘솔 기반(뷰 X) 회원 관리 프로그램 (CRUD 기능) - mySQL 연결 - maven
@@ -66,8 +68,6 @@ maven - Java 기반 프로젝트의 라이프사이클 관리를 위한 빌드 �
 	또한 라이브러리 관리 기능도 내포하고 있다.
 	Java로 개발하다 보면 다양한 라이브러리를 필요로 하게 되는데, 
 	pom.xml 파일에 필요한 라이브러리만 적으면 Maven이 알아서 다운 받고 설치해주고 경로까지 지정해준다.  ==> 의존성 관리!!!
-
-의존성(Dependency) - ex) Car 객체가 Engine 객체를 사용하는 경우, Car는 Engine에 의존	
 
 DAO(Data Access Object) - 실제로는 DB의 데이터에 접근하는 객체
 	Service와 DB를 연결하는 역할을 하며,
