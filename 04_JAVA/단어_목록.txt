@@ -21,6 +21,8 @@ HTML은 디자이너가 하고, 자바 로직은 개발자가 작성
 	<h1> 안녕하세요, <%= request.getParameter("name") %> 님! </h1>
 </body> </html>
 
+
+
 <MVC 구조>
 Controller - 중간 다리 역할
 View - 화면
