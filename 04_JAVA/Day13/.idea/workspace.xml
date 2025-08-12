@@ -5,36 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="136513b7-d01f-4878-86bf-8c63c680d346" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/04_JAVA.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/java/com/example/newboard/NewboardApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/java/com/example/newboard/config/jpaConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/java/com/example/newboard/domain/Article.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/java/com/example/newboard/repository/ArticleRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/java/com/example/newboard/service/ArticleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/java/com/example/newboard/web/api/ArticleAPIController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/java/com/example/newboard/web/dto/ArticleCreateRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/java/com/example/newboard/web/dto/ArticleListViewResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/java/com/example/newboard/web/dto/ArticleUpdateRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/java/com/example/newboard/web/view/ArticleViewController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/resources/static/js/article.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/resources/templates/article-form.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/resources/templates/article-list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/main/resources/templates/layout.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Day12_JDBC_Board/newboard/src/test/java/com/example/newboard/NewboardApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../자바_주석용_프롬프트.txt" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/newboard.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/view/HelloController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/view/ProbeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/newboard/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/NewboardApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/NewboardApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/domain/Article.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/domain/Article.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/repository/ArticleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/repository/ArticleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/service/ArticleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/service/ArticleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/dto/ArticleCreateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/dto/ArticleCreateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/view/ArticleViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/view/ArticleViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newboard/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,34 +48,48 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "DuFrump"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DuFrump&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/DuFrump/JAVA_Python-_-_-_-_AI-_-_-.git",
-    "accountId": "4b22e31e-4088-4544-a6c3-bb3b97a8bb8e"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DuFrump/JAVA_Python-_-_-_-_AI-_-_-.git&quot;,
+    &quot;accountId&quot;: &quot;4b22e31e-4088-4544-a6c3-bb3b97a8bb8e&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="318Mw1PBumWylg27Fn1yVZpv1rc" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.newboard [:com.example.newboard.NewboardApplication.main()].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Program Files (x86)/__DuFrump__/DuFrump_산대특_과정/04_JAVA/Day13",

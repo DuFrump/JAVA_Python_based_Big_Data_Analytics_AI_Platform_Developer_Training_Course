@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NewboardApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NewboardApplication.class, args);
+
+        SpringApplication.run(NewboardApplication.class, args);
 	}
 
 }
