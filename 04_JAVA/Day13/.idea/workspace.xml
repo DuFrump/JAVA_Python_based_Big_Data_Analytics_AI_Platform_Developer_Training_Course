@@ -5,21 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="136513b7-d01f-4878-86bf-8c63c680d346" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/newboard.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/view/HelloController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/view/ProbeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/newboard/src/main/resources/data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/NewboardApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/NewboardApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/domain/Article.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/domain/Article.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/repository/ArticleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/repository/ArticleRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/service/ArticleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/service/ArticleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/dto/ArticleCreateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/dto/ArticleCreateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/dto/ArticleUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/dto/ArticleUpdateRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/view/ArticleViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/view/ArticleViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../단어_목록.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../단어_목록.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +48,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -84,7 +80,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "Gradle.newboard [:com.example.newboard.NewboardApplication.main()].executor": "Run",
+    "Gradle.소스 다운로드.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",

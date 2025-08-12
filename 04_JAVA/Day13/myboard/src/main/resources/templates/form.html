@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Article Form</title>
+</head>
+<body>
+    <!--
+      th:if="${article == null}"
+      Thymeleaf의 조건문입니다. 만약 모델에 담겨온 'article' 객체가 null이면 (즉, 새 글 작성이면)
+      이 <h1> 태그가 화면에 표시됩니다.
+    -->
+    <h1 th:if="${article == null}">New Article</h1>
+    <!--
+      th:if="${article != null}"
+      반대로 'article' 객체가 null이 아니면 (즉, 기존 글 수정이면)
+      이 <h1> 태그가 화면에 표시됩니다.
+      이렇게 th:if를 사용해서 상황에 따라 다른 내용을 보여줄 수 있습니다.
+    -->
+    <h1 th:if="${article != null}">Edit Article</h1>
+
+    <!--
+      th:action="${article != null} ? @{/articles/{id}/update(id=${article.id})} : @{/articles}"
+      폼(form)이 제출될 URL을 동적으로 결정하는 부분입니다. Thymeleaf의 삼항 연산자를 사용했습니다.
+      - 조건: ${article != null} (article 객체가 존재하는가? -> 수정 모드인가?)
+      - 참일 때: @{/articles/{id}/update(id=${article.id})} (수정 URL을 생성)
+      - 거짓일 때: @{/articles} (새 글 생성 URL을 생성)
+      이처럼 하나의 폼으로 두 가지 다른 동작(생성/수정)을 처리할 수 있습니다.
+    -->
+    <form th:action="${article != null} ? @{/articles/{id}/update(id=${article.id})} : @{/articles}" method="post">
+        <div>
+            <label for="title">Title</label>
+            <!--
+              th:value="${article?.title}"
+              <input> 태그의 value 속성값을 설정합니다.
+              수정 모드일 경우(${article != null}), 기존 게시글의 제목(${article.title})이 입력창에 미리 채워집니다.
+              '?'(Safe Navigation Operator)는 article이 null일 경우 NullPointerException을 발생시키지 않고 그냥 null을 반환합니다.
+              즉, 새 글 작성 모드에서는 value 속성이 비어있게 됩니다.
+            -->
+            <input type="text" id="title" name="title" th:value="${article?.title}">
+        </div>
+        <div>
+            <label for="content">Content</label>
+            <!--
+              th:text="${article?.content}"
+              <textarea> 태그의 내부 텍스트를 설정합니다.
+              수정 모드일 경우, 기존 게시글의 내용이 텍스트 영역에 미리 채워집니다.
+              새 글 작성 모드에서는 비어있게 됩니다.
+            -->
+            <textarea id="content" name="content" th:text="${article?.content}"></textarea>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <a href="/articles">Back to list</a>
+</body>
+</html>
