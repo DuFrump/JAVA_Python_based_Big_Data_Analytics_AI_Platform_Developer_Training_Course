@@ -1,3 +1,11 @@
+// csrf 방지
+function csrf() {
+  const token = document.querySelector('meta[name="_csrf"]')?.content;
+  const header = document.querySelector('meta[name="_csrf_header"]')?.content || 'X-CSRF-TOKEN';
+  if (!token) console.warn('CSRF token not found in meta tags.');
+  return { header, token };
+}
+
 // 삭제
 const deleteButton = document.getElementById('delete-btn');
 if (deleteButton) {
@@ -6,7 +14,13 @@ if (deleteButton) {
 
         if (!id) return alert('해당 게시물이 존재하지 않습니다.')
 
-        const res = await fetch(`/api/articles/${id}`, {method:'DELETE'});
+//        const res = await fetch(`/api/articles/${id}`, {method:'DELETE'});
+        const { header, token } = csrf();
+           const res = await fetch(`/api/articles/${id}`, {
+              method: 'DELETE',
+              headers: token ? { [header]: token } : undefined,
+              credentials: 'same-origin'
+            });
 
         if (!res.ok) return alert('삭제 실패: ' + res.status);
         alert('삭제가 완료 되었습니다.');
@@ -28,11 +42,21 @@ if (modifyButton) {
             content: document.getElementById('content').value
         };
 
-        const res = await fetch(`/api/articles/${id}`, {
-            method:'PUT',
-            headers:{"Content-Type": "application/json"},
-            body:JSON.stringify(body)
-        });
+//        const res = await fetch(`/api/articles/${id}`, {
+//            method:'PUT',
+//            headers:{"Content-Type": "application/json"},
+//            body:JSON.stringify(body)
+//        });
+        const { header, token } = csrf();
+            const res = await fetch(`/api/articles/${id}`, {
+              method: 'PUT',
+              headers: {
+                "Content-Type": "application/json",
+                ...(token ? { [header]: token } : {})
+              },
+              body: JSON.stringify(body),
+              credentials: 'same-origin'
+            });
 
         if(!res.ok) return alert('수정 실패: ' + res.status);
         alert('수정이 완료 되었습니다.');
@@ -50,11 +74,21 @@ if (createButton) {
             content: document.getElementById('content').value
         }
 
-        const res = await fetch('/api/articles', {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(body)
-        });
+//        const res = await fetch('/api/articles', {
+//            method: 'POST',
+//            headers: {"Content-Type": "application/json"},
+//            body: JSON.stringify(body)
+//        });
+        const { header, token } = csrf();
+            const res = await fetch('/api/articles', {
+              method: 'POST',
+              headers: {
+                "Content-Type": "application/json",
+                ...(token ? { [header]: token } : {})
+              },
+              body: JSON.stringify(body),
+              credentials: 'same-origin'
+            });
 
         if(!res.ok) return alert('생성 실패: ' + res.status);
         alert('생성이 완료 되었습니다.');
