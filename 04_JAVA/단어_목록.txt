@@ -1,3 +1,5 @@
+<< 스프링 및 스프링부트 역사 및 개념 >>
+
 CGI(Common Gateway Interface)
 - 요청이 올때마다 새로운 프로세스를 생성하는 방식 (외부프로그램을 통해)
 
@@ -5,12 +7,12 @@ CGI(Common Gateway Interface)
 프로그램 하나만 켜두고 요청이 오면 쓰레드만 새로 생성해서 처리
 ex> System.out.println("<h1> 안녕하세요 </h1>"); - 아직 복잡하다.
 
-========================================================
+===========================================================
 
 자바 - 객체지향언어
 클래스, 상속(추상메서드 - 오버라이딩), 다형성, 추상클래스/인터페이스, +익명클래스
 
-========================================================
+===========================================================
 
 (2000 ~) JSP(Java Server Pages) 등장.
 HTML 기반 파일에 <% 자바코드 %>
@@ -21,7 +23,7 @@ HTML은 디자이너가 하고, 자바 로직은 개발자가 작성
 	<h1> 안녕하세요, <%= request.getParameter("name") %> 님! </h1>
 </body> </html>
 
-
+===========================================================
 
 <MVC 구조>
 Controller - 중간 다리 역할
@@ -47,6 +49,34 @@ Spring - 자바 웹 개발을 쉽게 하게끔 도와주는 프레임워크
  - 관점 지향 프로그래밍: "여러 파트로 나누겠다."
 
 SpringBoot - 스프링 사용을 쉽게 해 주는(한 방에) 프로젝트
+ㄴ> 다양한 어노테이션 효과
+@SpringBootApplication — 부트 애플리케이션 시작점, 자동설정 + 컴포넌트 스캔 — Spring Boot
+@Controller — 요청 처리 후 뷰 반환 — Spring MVC
+@RestController — JSON 응답 전용 컨트롤러 — Spring MVC
+@GetMapping — GET 요청 매핑 — Spring MVC
+@PostMapping — POST 요청 매핑 — Spring MVC
+@PathVariable — URL 경로 변수 매핑 — Spring MVC
+@RequestParam — 쿼리 파라미터/폼 데이터 매핑 — Spring MVC
+@RequestBody — 요청 바디(JSON)를 객체로 변환 — Spring MVC + Jackson
+@ResponseBody — 반환 값을 HTTP 바디에 직렬화 — Spring MVC + Jackson
+@Service — 서비스 계층 컴포넌트 지정 — Spring Framework
+@Repository — DAO/데이터 접근 계층 지정, 예외 변환 — Spring Framework
+@Component — 일반 컴포넌트 등록 — Spring Framework
+@Autowired — 의존성 주입 — Spring Framework
+@RequiredArgsConstructor — final 필드 기반 생성자 자동 생성 — Lombok
+@NoArgsConstructor — 파라미터 없는 기본 생성자 자동 생성 — Lombok
+@AllArgsConstructor — 모든 필드를 받는 생성자 자동 생성 — Lombok
+@Entity — JPA 엔티티 클래스 매핑 — JPA/Hibernate
+@Id — 엔티티 기본키 필드 지정 — JPA/Hibernate
+@GeneratedValue — PK 생성 전략 지정 — JPA/Hibernate
+@Column — 컬럼 매핑/제약 지정 — JPA/Hibernate
+@Table — 테이블 이름 매핑 — JPA/Hibernate
+@Transactional — 트랜잭션 경계 지정 — Spring Tx
+@Valid — 요청 DTO 검증 활성화 — Jakarta Bean Validation
+@NotNull — null 불가 제약 — Jakarta Validation
+@Size — 문자열/컬렉션 크기 제약 — Jakarta Validation
+@Builder — 객체 생성 빌더 패턴 적용 — Lombok
+@Getter — 게터 자동 생성 — Lombok
 
 DB 쪽 :
 JDBC(Java DataBase Connectivity) - 
@@ -57,7 +87,10 @@ JPA - SQL 작성 없이 객체(Entity) 중심 개발
 
 의존성(Dependency) - ex) Car 객체가 Engine 객체를 사용하는 경우, Car는 Engine에 의존
 
-===============================
+===========================================================
+===========================================================
+
+<< 게시판 만들기 초반 설명 >>
 
 JDBC - 콘솔 기반(뷰 X) 회원 관리 프로그램 (CRUD 기능) - mySQL 연결 - maven
 
@@ -75,26 +108,58 @@ DAO(Data Access Object) - 실제로는 DB의 데이터에 접근하는 객체
 	Service와 DB를 연결하는 역할을 하며,
 	실제로 DB에 접근하여 data를 삽입, 삭제, 조회, 수정 등 CRUD 기능을 수행 
 
-===============================
+===========================================================
+===========================================================
+
+<< 게시판 진도 계획 >>
 
 스프링 부프 - MVC 패턴 - JPA - Thymeleaf(뷰, html) -> REST API (비동기 처리)
 
 => render 배포 (postgresql <==> DBeaver) <=> git과 연결 (자동 배포)
 
-
 스프링 이니셜라이져 - Spring Web, Thymeleaf, Spring Data JPA, Validation, Lombok, H2 Database, Spring Boot DEV Tools
 
-Article (Entity) - 데이터 맵핑 그릇
-Repository - CRUD 기능 제공
-Service - 비지니스 로직 (원하는 서비스 로직 구현)
-dto - 운반 그릇
-Controller - 뷰로부터 요청 받는 중간다리 역할
+===========================================================
+===========================================================
 
-html - 뷰
+<< 게시판 전체 구성 >>
+
+Config
+Article (Entity) - 데이터 맵핑 그릇, Spring data Jpa, @Entity, @Getter/Setter, @NoArgsConstructor
+Repository - CRUD 기능 제공, Spring data Jpa
+Service - 비지니스 로직 (원하는 서비스 로직 구현, 실제 CRUD 메서드 구현), @Transactional
+dto - 운반 그릇 @Getter, @NoArgsConstructor
+Controller - 뷰로부터 요청 받는 중간다리 역할 @GetMapping, @PostMapping, @PathVariable, Model 객체
+
+Main - Spring, Spring Boot
+
+html - 뷰, Thymeleaf <form method="post" action="/articles">
+
+application.yml - app 설정 파일
+
+build.gradle - (의존성 관리) - spring data jpa, thymeleaf, validation, web, lombok, h2 ...
+
+===========================================================
+
+<< 전체 흐름 예시 >>
 
  V	  C			 M		----- MVC 패턴 (구조)
 화면	중계	   로직	       데이터처리
 뷰 -> Controller -> Service -> Repository (Entity) -> Service -> Controller -> 뷰
 중간에 dto가 데이터 전달하는 역할 / Repo에서 Database 접근
 
-rest api - 
+===========================================================
+
+SSR(Server Side Rendering) - CRUD 기능 구현 완료
+
+REST api 방식으로 - CUD 기능 전환 (바꿈) - js (자바 스크립트 조금)
+
+form 로그인 도입 - !!스프링 시큐리티(Spring Security)!!
+
+접근 제한 로직 구현 & html 수정 (제공)
+
+구글 api를 통한 로그인 시스템 도입
+
+배포
+
+디자인
