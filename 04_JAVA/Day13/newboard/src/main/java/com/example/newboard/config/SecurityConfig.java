@@ -1,9 +1,9 @@
 package com.example.newboard.config;
 
+import com.example.newboard.service.security.CustomOidcUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +13,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final CustomOidcUserService customOidcUserService;
 
     @Bean
     PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
@@ -39,6 +40,13 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/articles")
+                )
+
+                .oauth2Login(oauth -> oauth
+                        .loginPage("/login")
+                        .userInfoEndpoint(u -> u
+                                .oidcUserService(customOidcUserService)
+                        )
                 )
 // → 세션 무효화/쿠키 삭제 등 기본 로그아웃 동작 수행
                 .csrf(csrf -> csrf

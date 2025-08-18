@@ -1,4 +1,4 @@
-package com.example.newboard.config;
+package com.example.newboard.service.security;
 
 import com.example.newboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

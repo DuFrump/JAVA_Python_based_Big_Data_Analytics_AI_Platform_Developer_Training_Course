@@ -20,5 +20,16 @@ public class User {
 
     @Column(nullable=false, length=20)
     private String role; // "USER"
+
+    private User(String email, String name) {
+        this.email = email;
+        this.name = name;
+        this.password = ""; // OAuth 가입자는 비번 공란 가능
+        this.role = "USER";
+    }
+
+    public static User create(String email, String name) {
+        return new User(email, name);
+    }
 }
 
