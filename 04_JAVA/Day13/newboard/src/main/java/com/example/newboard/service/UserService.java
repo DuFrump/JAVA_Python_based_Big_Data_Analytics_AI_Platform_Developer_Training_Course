@@ -17,7 +17,6 @@ public class UserService {
     public void join(JoinRequest req){
         if (userRepository.existsByEmail(req.getEmail()))
             throw new IllegalArgumentException("이미 가입된 이메일입니다.");
-
         userRepository.save(User.builder()
                 .email(req.getEmail())
                 .password(passwordEncoder.encode(req.getPassword()))
@@ -26,3 +25,4 @@ public class UserService {
                 .build());
     }
 }
+

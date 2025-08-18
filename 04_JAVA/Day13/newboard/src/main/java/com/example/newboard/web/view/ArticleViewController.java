@@ -16,22 +16,22 @@ public class ArticleViewController {
     private final ArticleService articleService;
 
     @GetMapping({"/", "/articles"})
-    public String list(Model model) {
+    public String list(Model model){
         model.addAttribute("articles", articleService.findAll());
         return "article-list";
     }
 
     @GetMapping("/articles/new")
-    public String createForm() { return "article-form"; }
+    public String createForm() { return "article-form";}
 
-    @PostMapping("/articles")
-    public String create(ArticleCreateRequest req) {
-        articleService.create(req);
-        return "redirect:/articles";
-    }
+//    @PostMapping("/articles")
+//    public String create(ArticleCreateRequest req){
+//        articleService.create(req);
+//        return "redirect:/articles";
+//    }
 
     @GetMapping("/articles/{id}")
-    public String detail(@PathVariable Long id, Model model) {
+    public String detail(@PathVariable Long id, Model model){
         var article = articleService.findById(id);
         model.addAttribute("article", article);
         return "article-detail";
@@ -44,15 +44,17 @@ public class ArticleViewController {
         return "article-edit";
     }
 
-    @PostMapping("/articles/{id}/edit")
-    public String edit(@PathVariable Long id, ArticleUpdateRequest req){
-        articleService.update(id, req);
-        return "redirect:/articles/" + id; // 수정 후 상세로 이동
-    }
+//    @PostMapping("/articles/{id}/edit")
+//    public String edit(@PathVariable Long id, ArticleUpdateRequest req){
+//        articleService.update(id, req);
+//        return "redirect:/articles/" + id; // 수정 후 상세로 이동
+//    }
 
-    @PostMapping("/articles/{id}/delete")
-    public String delete(@PathVariable Long id) {
-        articleService.delete(id);
-        return "redirect:/articles";
-    }
+//    @PostMapping("/articles/{id}/delete")
+//    public String delete(@PathVariable Long id){
+//        articleService.delete(id);
+//        return "redirect:/articles";
+//    }
+
+
 }

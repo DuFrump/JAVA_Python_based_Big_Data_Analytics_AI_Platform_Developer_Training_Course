@@ -6,8 +6,7 @@ import lombok.*;
 @Entity @Table(name="users", uniqueConstraints=@UniqueConstraint(columnNames="email"))
 @Getter @NoArgsConstructor @AllArgsConstructor @Builder
 public class User {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable=false, length=100)
@@ -22,3 +21,4 @@ public class User {
     @Column(nullable=false, length=20)
     private String role; // "USER"
 }
+

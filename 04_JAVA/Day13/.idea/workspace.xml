@@ -5,41 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="136513b7-d01f-4878-86bf-8c63c680d346" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/config/CustomUserDetailsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/domain/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/dto/JoinRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/web/view/AuthViewController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/newboard/src/main/resources/templates/join.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/newboard/src/main/resources/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/java/com/example/myboard/MyboardApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/java/com/example/myboard/controller/ArticleController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/java/com/example/myboard/domain/Article.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/java/com/example/myboard/dto/ArticleCreateRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/java/com/example/myboard/dto/ArticleResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/java/com/example/myboard/dto/ArticleUpdateRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/java/com/example/myboard/repository/ArticleRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/java/com/example/myboard/service/ArticleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/resources/templates/article.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/resources/templates/form.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myboard/src/main/resources/templates/list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/config/jpaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/java/com/example/newboard/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/src/main/resources/static/js/article.js" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/resources/static/js/article.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/newboard/src/main/resources/templates/article-list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newboard/src/main/resources/templates/layout.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

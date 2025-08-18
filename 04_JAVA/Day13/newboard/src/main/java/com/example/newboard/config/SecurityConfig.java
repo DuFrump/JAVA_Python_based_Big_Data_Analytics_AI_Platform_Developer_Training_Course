@@ -22,9 +22,9 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/", "/articles", "/articles/", "/login", "/join", "/css/", "/js/").permitAll()
+                                .requestMatchers("/", "/articles", "/articles/**", "/login", "/join", "/css/**", "/js/**").permitAll()
 // → 위 경로들은 누구나 접근 가능(비로그인 허용)
-                                .requestMatchers("/api/").authenticated()
+                                .requestMatchers("/api/**").authenticated()
 // → /api/** 요청은 인증 필요 (CUD 보호 목적)
                                 .anyRequest().permitAll()
 // → 그 외 나머지는 일단 허용
@@ -48,3 +48,4 @@ public class SecurityConfig {
         return http.build();
     }
 }
+

@@ -156,7 +156,15 @@ REST api 방식으로 - CUD 기능 전환 (바꿈) - js (자바 스크립트 조
 
 form 로그인 도입 - !!스프링 시큐리티(Spring Security)!!
 
+============================================================
 접근 제한 로직 구현 & html 수정 (제공)
+
+UserRepository repoBean = new JpaUserRepository();
+PasswordEncoder encoderBean = new BCryptPasswordEncoder();
+UserService serviceBean = new UserService(repoBean, encoderBean);
+AuthViewController authBean = new AuthViewController(serviceBean);
+authBean.join();
+===========================================================
 
 구글 api를 통한 로그인 시스템 도입
 

@@ -12,7 +12,7 @@
 <form method="post" action="/articles">
     <div>
         <label>제목
-            <input id="title" type="text" name="title" required>
+            <input type="text" id="title" name="title" required>
         </label>
     </div>
     <div>
@@ -20,11 +20,9 @@
             <textarea id="content" name="content" rows="8" required></textarea>
         </label>
     </div>
-    <button id="create-btn" type="button">저장</button>
+    <button type="button" id="create-btn">저장</button>
     <a href="/articles">목록</a>
 </form>
-
 <script src="/js/article.js" defer></script>
-
 </body>
 </html>
