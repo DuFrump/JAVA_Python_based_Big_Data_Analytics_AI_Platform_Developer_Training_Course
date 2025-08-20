@@ -1,0 +1,6 @@
+print("-" * 17)
+print()
+print("안녕, 첫 프린트야.")
+print('이건 작은 따옴표.')
+print()
+print("-" * 17)
