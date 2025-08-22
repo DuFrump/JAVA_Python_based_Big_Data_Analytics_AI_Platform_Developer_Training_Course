@@ -1,77 +1,106 @@
-# 문자열 관련 내장 함수
+# 문자열 관련 내장함수
+
 a = "hobby"
-print(a.count('b')) # 2
+print(a.count('b'))
 
+print()
 a = "Python is the best choice"
-print(a.find('b')) # 14
-print(a.find('k')) # -1
+print(a.find('b'))
+print(a.find('k'))  # 찾는 값 없을 때는 -1 반환
 
-a = "Life is too short"
-print(a.index('t')) # 8. 't'가 처음 나오는 위치
-# print(a.index('k')) # find()와 달리, index()는 찾는 문자가 없으면 ValueError를 발생시키며 프로그램이 멈춥니다.
-
-a = ","
-print(a.join('abcd')) # a,b,c,d
 print()
+a = "Python is the best choice"
+print(a.index('b'))
+# print(a.index('k')) 찾는 값 없을 때는 에러 
 
-
-print("----- High/Low Case -----")
-a = "hi"
-b = "HI"
-print(a.upper()) # HI
-print(b.lower()) # hi
 print()
+a = 'abcd'
+print(",".join(a))  #a,b,c,d
 
-
-print("----- Strip -----")
-a = " hi "
-print(a.lstrip()) # "hi "
-print(a.rstrip()) # " hi"
-print(a.strip()) # "hi"
 print()
+b = ['a', 'b', 'c', 'd']
+print(".".join(b))  #a.b.c.d
 
-
-print("----- Replace, Split -----")
-a = "Life is too short"
-print(a.replace("Life", "Your leg")) # Your leg is too short
-print(a.split()) # ['Life', 'is', 'too', 'short']
-
-b = "a:b:c:d"
-print(b.split(':')) # ['a', 'b', 'c', 'd']
 print()
-
-
-print("----- 문자열이 알파벳으로만 이루어져있는지 확인 -----")
-s = "Python"
-print(s.isalpha()) # True
-
-s = "Python123"
-print(s.isalpha()) # False
-
-s = "Python Good"
-print(s.isalpha()) # False
-print()
-
-
-print("----- 문자열이 숫자로만 이루어져있는지 확인 -----")
-s = "12345"
-print(s.isdigit()) # True
-
-s = "12345abc"
-print(s.isdigit()) # False
-print()
-
-
-print("----- 특정 문자열로 시작/끝나는지 확인 -----")
-s = "report.xlsx"
-print(s.startswith("report")) # True
-print(s.endswith(".xlsx")) # True
-print()
-
-print("----- Extra -----")
 a = "hi"
 print(a.upper())
+
+a = "HI"
 print(a.lower())
 
-a = a.upper()
+print()
+print("-----스트립-----")
+print()
+
+a = "  hi  "
 print(a)
+print(a.lstrip())  # 왼쪽 공백 제거
+print(a.rstrip())  # 오른쪽 공백 제거
+print(a.strip())   # 양쪽 공백 제거
+
+print()
+print("----------")
+print()
+
+a = "Life is too short"
+b = a.replace("Life", "Movie")
+print(b)
+
+print()
+a = "Life is too short"
+b = a.split()
+print(b)
+
+print()
+a = "Life:is:too:short"
+b = a.split(':')
+print(b)
+
+print()
+print("---문자열이 알파벳으로만 이루어졌는지 확인---")
+
+s = "Python"
+print(s.isalpha()) # 알파벳만 있기 때문에 True
+
+s = "Python3"
+print(s.isalpha())  # 숫자가 있어서 False
+
+s = "Hello world"
+print(s.isalpha())  # 공백이 있어서 False
+
+print()
+print("---문자열이 숫자로만 이루어졌는지 확인---")
+
+s = "12345"
+print(s.isdigit())
+s = "1234a"
+print(s.isdigit())
+s = "12 45"
+print(s.isdigit())
+
+print()
+print("---문자열이 특정 문자(열)로 시작/끝 하는지 확인---")
+
+s = "Life is too short"
+print(s.startswith("Life"))
+print(s.startswith("too"))
+print()
+print(s.endswith("short"))
+print(s.endswith("is"))
+
+a = 'hi'
+print(a.upper())  # HI
+print(a)          # hi
+a = a.upper()
+print(a)          # HI
+
+
+
+
+
+
+
+
+
+
+
