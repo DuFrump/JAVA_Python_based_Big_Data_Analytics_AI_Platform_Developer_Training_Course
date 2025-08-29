@@ -47,4 +47,3 @@ except FileNotFoundError:
 print("프로그램이 정상적으로 실행됩니다.")
 
 
-
