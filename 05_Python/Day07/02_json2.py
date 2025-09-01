@@ -1,6 +1,12 @@
 # 리스트를 제이슨으로 저장/로드 하기
 
 import json
+import os
+
+# 현재 파일의 디렉토리 경로
+script_dir = os.path.dirname(os.path.abspath(__file__))
+# 저장할 파일의 전체 경로
+file_path = os.path.join(script_dir, "people.json")
 
 people = [
     {"name": "Tom", "age": 25},
@@ -9,11 +15,11 @@ people = [
 ]
 
 # 제이슨으로 덤프하기
-with open("people.json", "w", encoding="utf-8") as f:
+with open(file_path, "w", encoding="utf-8") as f:
     json.dump(people, f, ensure_ascii=False, indent=4)
 
 # 제이슨 파일 불러오기
-with open("people.json", "r", encoding="utf-8") as f:
+with open(file_path, "r", encoding="utf-8") as f:
     loaded_people = json.load(f)
 
 print()

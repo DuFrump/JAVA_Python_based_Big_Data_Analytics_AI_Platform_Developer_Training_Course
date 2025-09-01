@@ -3,7 +3,10 @@
 import json
 import os
 
-filename = "people2.json"
+# 현재 파일의 디렉토리 경로
+script_dir = os.path.dirname(os.path.abspath(__file__))
+# 저장할 파일의 전체 경로
+filename = os.path.join(script_dir, "people2.json")
 
 if not os.path.exists(filename):
     with open(filename, "w", encoding="utf-8") as f:

@@ -1,7 +1,10 @@
 import json
 import os
 
-filename = "hotel.json"
+# 현재 파일의 디렉토리 경로
+script_dir = os.path.dirname(os.path.abspath(__file__))
+# 저장할 파일의 전체 경로
+filename = os.path.join(script_dir, "hotel.json")
 
 # 초기 데이터
 hotel = {
@@ -36,7 +39,7 @@ while True:
         room_num = input("호실입력: ") # 203
         floor = room_num[0] + "층"
         if floor in hotel and room_num in hotel[floor]:
-            if hotel[floor][room_num] == '---':
+            if hotel[floor][room_num] == "---":
                 name = input("이름 입력: ")
                 hotel[floor][room_num] = name
                 print("입실 완료 하였습니다.")
@@ -50,8 +53,8 @@ while True:
         room_num = input("호실입력: ")
         floor = room_num[0] + "층"
         if floor in hotel and room_num in hotel[floor]:
-            if hotel[floor][room_num] != '---':
-                hotel[floor][room_num] = '---'
+            if hotel[floor][room_num] != "---":
+                hotel[floor][room_num] = "---"
                 print("퇴실 완료 하였습니다.")
             else:
                 print("빈 방입니다.")
@@ -66,3 +69,8 @@ while True:
         break
     else:
         print("번호를 잘못 입력하셨습니다.")
+
+
+# 파일에 저장하기
+with open(filename, "w", encoding='utf-8') as f:
+    json.dump(hotel, f, ensure_ascii=False, indent=4)

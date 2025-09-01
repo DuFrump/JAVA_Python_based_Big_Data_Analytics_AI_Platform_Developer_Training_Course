@@ -18,6 +18,10 @@
 #         print('환영합니다.')        
 # finally:
 #     print('어쨌든 반갑습니다.')
+import os
+
+# 현재 파일의 디렉토리 경로
+script_dir = os.path.dirname(os.path.abspath(__file__))
 
 print("---------continue----------")
 print()
@@ -26,7 +30,8 @@ students = ['김철수', '이영희', '박민수', '최유진']
 
 for student in students:
     try:
-        with open(f'{student}_성적.txt', 'r') as f:
+        file_path = os.path.join(script_dir, f'{student}_성적.txt')
+        with open(file_path, 'r') as f:
             score = f.read()
             print(f'{student}의 성적: {score} 점')
     
@@ -38,12 +43,11 @@ print("---------pass----------")
 print()
 
 try:
-    f = open("설정파일.txt", 'r')
+    file_path = os.path.join(script_dir, "설정파일.txt")
+    f = open(file_path, 'r')
     config = f.read()
     f.close()
 except FileNotFoundError:
     pass
 
 print("프로그램이 정상적으로 실행됩니다.")
-
-

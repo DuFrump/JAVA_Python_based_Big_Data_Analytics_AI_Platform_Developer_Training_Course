@@ -1,4 +1,10 @@
 # 예외처리
+import os
+
+# 현재 파일의 디렉토리 경로
+script_dir = os.path.dirname(os.path.abspath(__file__))
+# 저장할 파일의 전체 경로
+file_path = os.path.join(script_dir, "file.txt")
 
 # FileNotFoundError
 # f = open("나는 없는 파일", 'r')
@@ -88,7 +94,7 @@ print("----- 여러가지 예외 처리하기 2 -----")
 #     print("잘 마쳤습니다.")
 
 try:
-    f = open("fiel.txt", "r")
+    f = open(file_path, "r")
     data = f.read()
     # 기타 로직 수행
 
