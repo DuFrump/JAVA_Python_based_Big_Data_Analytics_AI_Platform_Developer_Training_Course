@@ -28,6 +28,16 @@ ndf = df.reindex(columns=['이름', '영어'])
 --- 없던 컬럼이라면 NaN 값으로 채워짐
 --- fill_value=80 --- 옵션 값으로 채워짐
 
+### <reset_index> -- 인덱스 초기화
+ndf = df.reset_index() -- 기존 인덱스를 칼럼으로 이동시키고, 1, 2, 3... 기본 숫자가 인덱스 자리를 대신 함.
+ndf = df.reset_index(names=['id']) --- 기존 인덱스를 칼럼으로 이동 시키면서 칼럼 이름 추가
+ndf = df.reset_index(drop=True) --- 기존 인덱스를 삭제
+
+### <sort_index/values> -- 인덱스/특정컬럼 기준으로 정렬
+ndf = df.sort_index(ascending=False) -- 인덱스 순서로 내림 정렬
+ndf = df.sort_values(by='수학', ascending=False) -- '수학' 컬럼 기준으로 내림 정렬
+ndf = ndf.sort_values(by=['수학', '영어'], ascending=False) -- '수학' 컬럼 기준으로 내림 정렬 이후 '영어' 기준으로 내림 재정렬
+
 ##########################################################
 
 ### <drop> -- 삭제
@@ -84,3 +94,9 @@ df.loc['동수', '음악':'미술'] = [45, 78, 94]
 df = df.transpose()
 df = df.T
 
+###########################################################
+
+titanic = sns.load_dataset('titanic')
+print(df.head()) --- 상위 5개 뽑기
+print(df.tail()) --- 하위 5개 뽑기
+df.info() --- 데이터 프레임 정보 보기

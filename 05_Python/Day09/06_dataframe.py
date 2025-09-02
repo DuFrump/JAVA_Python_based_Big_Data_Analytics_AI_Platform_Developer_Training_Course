@@ -89,5 +89,60 @@ print()
 
 ndf = ndf.astype({'수학':'int64', '영어':'int64'})
 print(ndf)
-print(ndf.info())
+print()
+ndf.info()
+print()
+
+print()
+print('----- 인덱스 초기화 -----')
+print()
+
+print(df)
+print()
+
+ndf = df.reset_index() # 인덱스를 컬럼으로, + 숫자 인덱스가 인덱스 자리를 대신 함.
+print(ndf)
+print()
+print(ndf.shape)
+print(ndf.columns)
+print(ndf.columns.tolist())
+print()
+
+ndf = df.reset_index(names=['id']) # 인덱스를 컬럼으로 바꾸면서 이름도 지정.
+print(ndf)
+print()
+
+ndf = df.reset_index(drop=True) # 기존 인덱스 지우고, + 숫자 인덱스 추가
+print(ndf)
+print()
+
+
+print()
+print('----- 인덱스 기준으로 정렬 -----')
+print()
+
+ndf = df.sort_index(ascending=False)
+print(ndf)
+print()
+
+ndf = df.sort_index(ascending=True)
+print(ndf)
+print()
+
+
+print()
+print('----- 특정 컬럼을 기준으로 정렬 -----')
+print()
+
+ndf = df.sort_values(by='수학', ascending=False)
+print(ndf)
+print()
+
+ndf = df.sort_values(by='수학', ascending=True)
+print(ndf)
+print()
+
+ndf.loc['s3', '수학'] = 86
+ndf = ndf.sort_values(by=['수학', '영어'], ascending=False)
+print(ndf)
 print()
