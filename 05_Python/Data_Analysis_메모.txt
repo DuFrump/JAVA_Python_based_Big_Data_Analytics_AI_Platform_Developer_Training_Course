@@ -116,3 +116,31 @@ df.to_excel("./data/df_sample.xlsx")
 
 #################################################
 
+df['deck].value_counts(dropna=False)
+
+df.isnull() --- Null 값이면 True, False
+df.isnull().sum(axis=0) --- 모든 컬럼 Null 합계
+
+df.dropna() --- Null 값이 하나라도 있는 row(행)은 Drop(삭제)
+df.dropna(axis=1) --- Null 값이 하나라도 있는 column(열)은 Drop(삭제)
+df_age = df.dropna(subset=['age'], axis=0) --- age가 Null 값인 행만 삭제
+df_age_deck = df.dropna(subset=['age', 'deck'], axis=0) --- age, deck 중 하나라도 Null 값이 있으면 삭제
+
+df['embark_town'].mode()[0]
+
+df['age'].fillna(mean_age)
+df['embark_town'].ffill
+df['embark_town'].bfill
+
+#################################################
+
+df.duplicated()
+df['c2'].duplicated()
+df.duplicated(subset=['c2'])
+
+df.drop_duplicates()
+df.drop_duplicates(subset=['c2', 'c3'])
+
+#################################################
+
+print(df['horsepower'].unique())

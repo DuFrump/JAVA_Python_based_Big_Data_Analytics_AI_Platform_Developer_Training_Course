@@ -1,0 +1,89 @@
+import pandas as pd
+
+df = pd.read_csv('./Day12/data/auto-mpg.csv', header=None)
+
+df.columns = ['mpg', 'cylinders', 'displacement', 'horsepower', 'weight', 'acceleration', 
+              'model year', 'origin', 'name']
+
+print()
+print('---------- 단위 환산 ----------')
+print()
+
+print(df.head(3))
+print()
+
+mpg_to_kpl = None
+
+# mpg = mile per gallon / kpl = killometer per liter
+# 1 mile = 1.61 km      1 gallon = 3.79 L
+mpg_to_kpl = 1.61 / 3.79
+df['kpl'] = round(df['mpg'] * mpg_to_kpl, 2)
+
+print(df.head(3))
+print()
+
+
+print()
+print('---------- 자료형 변환 ----------')
+print()
+
+# 각 열의 자료형 확인
+print(df.dtypes)
+print()
+df.info()
+print()
+
+# horsepower 열의 고유값 확인
+print(df['horsepower'].unique())
+print()
+
+import numpy as np 
+
+# 누락데이터('?') 삭제
+df['horsepower'] = df['horsepower'].replace('?', np.nan)
+df = df.dropna(subset=['horsepower'], axis=0)
+df['horsepower'] = df['horsepower'].astype('float')
+
+df.info()
+print()
+print(df['horsepower'].dtypes)
+print()
+
+
+# --------------------------------------------------------------------------
+
+# origin 컬럼 고유값 확인
+print(df['origin'].unique())
+
+# 정수형 데이터를 문자형 데이터로 변환
+df['origin'] = df['origin'].replace({1:'USA', 2:'EU', 3:'JPN'})
+print(df['origin'].unique())
+print(df)
+print()
+df.info()
+print()
+print(df.dtypes)
+print()
+print('origin 칼럼 데이터 타입: ', df['origin'].dtypes)
+print()
+
+
+# --------------------------------------------------------------------------
+
+# object -- 행마다 문자열 전체를 저장 -- 메모리 낭비.
+# category -- 내부적으로 정수 코드로 저장하고, 실제 값은 별도로 보관.
+# 연산 속도 향상 / 순서가 있는 범주 표현 가능
+df['origin'] = df['origin'].astype('category')
+print(df.dtypes)
+print()
+
+
+# --------------------------------------------------------------------------
+
+print(df['model year'].sample(3))
+print()
+
+# 카테고리 타입으로 바꿔보기
+df['model year'] = df['model year'].astype('category')
+print(df.dtypes)
+print()
