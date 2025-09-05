@@ -149,3 +149,38 @@ df['horsepower'] = df['horsepower'].astype('float')
 df['origin'] = df['origin'].replace({1:'USA', 2:'EU', 3:'JPN'})
 
 df['origin'] = df['origin'].astype('category')
+
+#################################################
+
+label_encoder.fit_transform(data1)
+onehot_encoder.fit_transform(data2)
+
+scaler = MinMaxScaler()
+scaler.fit_transform(df[['horsepower']])
+
+scaler = StandardScaler()
+scaler.fit_transform(df[['horsepower']])
+
+#################################################
+
+df['new_Date'] = pd.to_datetime(df['Date'])
+
+=================================================
+
+전처리 (auto-mpg.csv) [horsepower]
+누락 데이터 확인하기
+단위 변환
+누락 데이터 처리하기 (행을 지우거나, 채워 넣거나)
+필요 없는 컬럼 삭제하기
+범주 나눠보기 -> 범주별로 인코딩하기
+중복행 확인 (및 제거)
+데이터 스케일링 (minmax, standard)
+
+터미널 - 캡처 - 바탕화면에 저장
+
+=================================================
+
+시계열 데이터
+dt.year
+dt.month
+dt.day
