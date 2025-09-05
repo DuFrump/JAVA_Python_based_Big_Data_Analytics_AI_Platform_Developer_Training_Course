@@ -144,3 +144,8 @@ df.drop_duplicates(subset=['c2', 'c3'])
 #################################################
 
 print(df['horsepower'].unique())
+df['horsepower'] = df['horsepower'].replace('?', np.nan)
+df['horsepower'] = df['horsepower'].astype('float')
+df['origin'] = df['origin'].replace({1:'USA', 2:'EU', 3:'JPN'})
+
+df['origin'] = df['origin'].astype('category')

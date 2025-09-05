@@ -44,3 +44,54 @@ df['hp_bin'] = pd.cut(x=df['horsepower'],
                       labels=bin_names,
                       include_lowest=True)
 print(df)
+print()
+
+
+# -------------------- 더미 변수 --------------------
+
+# hp_bin 컬럼의 범주형 데이터를 더미 변수로 변환 
+horsepower_dummies = pd.get_dummies(df['hp_bin'])
+print(horsepower_dummies.head(15))
+print()
+
+# hp_bin 컬럼의 범주형 데이터를 더미 변수로 변환 (float)
+horsepower_dummies = pd.get_dummies(df['hp_bin'], dtype=float)
+print(horsepower_dummies.head(15))
+print()
+
+# hp_bin 컬럼의 범주형 데이터를 더미 변수로 변환 (float)
+horsepower_dummies_drop = pd.get_dummies(df['hp_bin'], dtype=float, drop_first=True)
+print(horsepower_dummies_drop.head())
+print()
+
+
+# ----------------------------------------------------------------------------
+
+# sklearn 라이브러리 불러오기
+from sklearn import preprocessing as ppc
+
+label_encoder = ppc.LabelEncoder()
+onehot_encoder = ppc.OneHotEncoder()
+
+# label encoder로 문자열 범주를 숫자형 범주로 변환
+onehot_labeled = label_encoder.fit_transform(df['hp_bin'].head(15))
+print(onehot_labeled)
+print(type(onehot_labeled))
+print()
+
+# 2차원 행렬로 형태 변경
+onehot_reshaped = onehot_labeled.reshape(len(onehot_labeled), 1)
+print(onehot_reshaped)
+print(type(onehot_reshaped))
+print()
+
+onehot_fitted = onehot_encoder.fit_transform(onehot_reshaped)
+print(onehot_fitted) # 희소 행렬 반환
+print(type(onehot_fitted))
+print()
+# print(onehot_fitted.toarray())
+print()
+# OneHotEncoder(sparse_output=False) 옵션을 주면 바로 어레이로 반환함
+
+encoded_df = pd.DataFrame(onehot_fitted.toarray(), columns=onehot_encoder.get_feature_names_out(df[['hp_bin']].columns))
+print(encoded_df)
