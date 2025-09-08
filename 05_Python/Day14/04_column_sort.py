@@ -1,0 +1,41 @@
+import seaborn as sns
+import pandas as pd
+
+pd.set_option('display.unicode.east_asian_width', True)
+
+# 열 순서 바꾸기
+# titanic 데이터 셋 로드 및 'survived'부터 'age' df 생성
+titanic = sns.load_dataset('titanic')
+df = titanic.loc[:, 'survived':'age']
+
+print(df.head())
+print()
+
+# 열 이름의 리스트 만들기
+print(df.columns)
+print()
+print(df.columns.to_list())
+print(list(df.columns))
+print(df.columns.values) # numpy 배열이여서 길이가 다름
+columns = list(df.columns.values)
+print(columns)
+print()
+
+# 알파벳 순으로 정렬하기
+columns_sorted = sorted(columns, reverse=False)
+print(columns_sorted)
+print()
+
+df_sorted = df[columns_sorted]
+print(df_sorted.head())
+print()
+
+# 알파벳 역순으로 정렬하기
+columns_reversed = sorted(columns, reverse=True)
+df_reversed = df[columns_reversed]
+print(df_reversed.head())
+
+# 수동으로 배치하기
+df = df[['pclass', 'age', 'survived']]
+print(df)
+print()
