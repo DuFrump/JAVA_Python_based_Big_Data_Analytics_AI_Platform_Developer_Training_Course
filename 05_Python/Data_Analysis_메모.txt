@@ -184,3 +184,13 @@ df['new_Date'] = pd.to_datetime(df['Date'])
 dt.year
 dt.month
 dt.day
+
+apply = Series/DataFrame의 행/열 전체를 받아서 함수 적용
+map = Series의 각 요소를 받아서 새로운 Series를 반환 (1:1 반환)
+pipe = 함수를 연결지어서 연속 적용할 때 사용.
+agg = 그룹별로 계산해서 그룹별로 집계
+
+주 기능: apply() = 행/열 단위 연산
+        map() = 요소 단위 변환 (1:1)
+        pipe() = 코드 가독성 향상
+        agg() = 그룹별 연산

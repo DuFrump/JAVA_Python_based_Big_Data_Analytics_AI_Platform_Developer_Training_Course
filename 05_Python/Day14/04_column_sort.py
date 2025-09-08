@@ -36,6 +36,8 @@ df_reversed = df[columns_reversed]
 print(df_reversed.head())
 
 # 수동으로 배치하기
+# 원하는 컬럼만 선택이므로, drop의 효과도 같이 볼 수 있음.
+# reindex와 비교하여 볼 필요가 있다. 
 df = df[['pclass', 'age', 'survived']]
 print(df)
 print()
