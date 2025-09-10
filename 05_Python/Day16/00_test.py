@@ -58,8 +58,8 @@ print(df_loc)
 
 # 6.  iloc을 사용해 행 10~14(포함), 열 0~3(포함)을 추출해 df_iloc에 저장하고, 출력하시오.
 print()
-print("--------------- 6번 문제 ---------------")
-print()
+print("--------------- 6번 문제 ---------------")  
+print()  
 
 df_iloc = titanic.iloc[10:15, 0:4]
 print(df_iloc)

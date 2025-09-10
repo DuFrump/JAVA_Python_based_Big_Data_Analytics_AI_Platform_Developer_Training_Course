@@ -55,7 +55,18 @@ print()
 
 df['연령대'] = df['나이'] // 10 * 10
 print(df)
+print()
+
+df_sorted = df.sort_values(by='점수', ascending=False)
+print(df_sorted)
+print()
 
 print()
 print("----- 미션 3 -----")
+print()
+
+print(df[df['나이'] >= 18])
+print()
+
+print(df[(df['점수']>= 90) & (df['반'] == '1반')])
 print()
