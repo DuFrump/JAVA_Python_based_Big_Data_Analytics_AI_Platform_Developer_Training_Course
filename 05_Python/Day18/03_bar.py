@@ -40,8 +40,29 @@ plt.style.use('ggplot')
 # 막대 그래프 그리기
 df_4.plot(kind='bar', figsize=(16, 8), width=0.5, color=['orange', 'green', 'skyblue', '#004855'])
 
-plt.title('서울 - 지방권 인구 이동', size=20)
+plt.title('서울 - 지방권 인구 이동', size=20, pad=10, fontweight='bold')
 plt.xlabel('연도', size=13)
 plt.ylabel('인구 수', size=13)
+plt.ylim(5000, 30000)
+plt.tick_params(axis='x', rotation=0)
+plt.legend(title='전입지', fontsize=10)
 
+plt.show()
+
+
+# -------------------- 가로형 막대 그래프 --------------------
+
+col_years = list(map(str, range(2010, 2018)))
+df_4 = df_seoul.loc[['충청남도', '경상북도', '강원도', '전라남도'], col_years]
+print(df_4.head())
+
+df_4['합계'] = df_4.sum(axis=1)
+print(df_4)
+print()
+
+df_total = df_4[['합계']].sort_values(by='합계', ascending=True)
+print(df_total)
+print()
+
+df_total.plot(kind='barh', figsize=(10, 5))
 plt.show()
