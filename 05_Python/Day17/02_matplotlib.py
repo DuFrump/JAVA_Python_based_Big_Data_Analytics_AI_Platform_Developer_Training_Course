@@ -49,14 +49,27 @@ samsung_revenue['value'].plot(ax=axes[1], marker='<')
 plt.show()
 
 fig, axes = plt.subplots(2,2, figsize=(12,6))
-axes[0, 0].plot(samsung_revenue['quarter'], samsung_revenue['value'])
 axes[0, 1].plot(samsung_revenue['quarter'], samsung_revenue['value'])
-axes[1, 0].plot(samsung_revenue['quarter'], samsung_revenue['value'])
-axes[1, 1].plot(samsung_revenue['quarter'], samsung_revenue['value'])
+plt.show()
+
+# ---------- subplot_mosaic ---------
+
+fig, axes = plt.subplot_mosaic([['top_left', 'right'], ['bottom_left', 'right']], figsize=(12, 4))
+
+axes['right'].plot(samsung_revenue['quarter'], samsung_revenue['value'])
+axes['top_left'].plot()
+axes['bottom_left'].plot()
+
+print(fig)
+print(axes)
+print()
+
 plt.show()
 
 '''
 import matplotlib.pyplot as plt
+
+plt.plot() -- 디폴트는 선 그래프
 
 plt.plot(시리즈) -- x축에 index, y축에 value
 plt.show() -- 그래프 그리기
