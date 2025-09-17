@@ -24,7 +24,6 @@ YEARS = range(2020, 2025)
 
 # 국가 이름 표준화를 위한 매핑 딕셔너리 (world_bank_data_25.csv 기준)
 COUNTRY_NAME_MAPPING = {
-    # 다른 데이터 소스(WHR, Sleep) -> World Bank 표준으로 통일
     # WHR Data
     "Taiwan Province of China": "Taiwan",
     "Hong Kong S.A.R. of China": "Hong Kong SAR, China",
@@ -49,13 +48,11 @@ COUNTRY_NAME_MAPPING = {
 # --- 데이터 로딩 및 전처리 함수 ---
 
 def load_gdp_data(path):
-    """GDP 데이터를 로드하고 기본 전처리를 수행합니다."""
     print("--- 2-1. GDP 데이터 로딩 및 전처리 ---")
     df_gdp = pd.read_csv(path / 'world_bank_data_25.csv')
     df_gdp = df_gdp.rename(columns={'country_name': 'Country name'}).copy()
     df_gdp = df_gdp.query("2020 <= year <= 2024").copy()
 
-    # GDP와 1인당 GDP에 대해 시계열 보간(interpolate)을 적용하여 결측치 채우기
     gdp_cols = ['GDP (Current USD)', 'GDP per Capita (Current USD)']
     df_gdp.sort_values(by=['Country name', 'year'], inplace=True)
     for col in gdp_cols:
@@ -109,6 +106,7 @@ def load_sleep_data(path, name_mapping):
     # 국가명 표준화
     df_ash['Country name'] = df_ash['Country name'].replace(name_mapping)
     
+    # 분 단위 데이터 시간 단위로 변경
     df_ash['avg_sleeping_hours'] = df_ash['avg_sleeping_minutes'] / 60
     
     print("수면 시간 데이터 처리 완료.\n")
@@ -143,14 +141,15 @@ for year in YEARS:
     df_year = df_combined[df_combined['year'] == year].copy()
 
     # 3-1. GDP 성장률 분석 (2021-2023년)
-    if year in range(2021, 2024):
+    if year in range(2020, 2025):
         df_year_gdp = df_year.query('gdp_growth_rate != 0')
         if not df_year_gdp.empty:
             top_gdp = df_year_gdp.nlargest(6, 'gdp_growth_rate')
             bottom_gdp = df_year_gdp.nsmallest(6, 'gdp_growth_rate')
 
-            print(f"[{year}년] GDP 성장률 상위 6개국:\n{top_gdp[['Country name', 'gdp_growth_rate']]}")
-            print(f"[{year}년] GDP 성장률 하위 6개국:\n{bottom_gdp[['Country name', 'gdp_growth_rate']]}\n")
+            print(f"[{year}년] GDP 성장률 상위 6개국과 행복 지수:\n{top_gdp[['Country name', 'gdp_growth_rate', 'Ladder score']]}")
+            print()
+            print(f"[{year}년] GDP 성장률 하위 6개국과 행복 지수:\n{bottom_gdp[['Country name', 'gdp_growth_rate', 'Ladder score']]}\n")
 
             # 시각화: 그룹별 행복지수 평균 비교 바 차트
             df_gdp_compare = pd.concat([top_gdp.assign(Group='Top 6 Growth'), 
