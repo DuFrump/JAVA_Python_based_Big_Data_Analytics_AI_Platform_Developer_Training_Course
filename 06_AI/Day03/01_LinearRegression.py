@@ -113,3 +113,39 @@ plt.show()
 # >>> 길이의 제곱 컬럼을 만들어서, 특성 2개로 학습시키기.
 
 # -------------------- 다항 회귀 --------------------
+# 독립 변수에 대해서 제공, 세제곱.... 에 초점을 맞춘 용어
+
+train_poly = np.column_stack((train_input**2, train_input))
+test_poly = np.column_stack((test_input**2, test_input))
+
+print(train_poly)
+print(train_poly.shape, test_poly.shape)
+print()
+
+lrp = LinearRegression()
+lrp.fit(train_poly, train_target)
+
+print("다항 회귀 - 50짜리 농어 예측해보기")
+print(lrp.predict([[50**2, 50]]))
+print()
+print('다항 회귀 - 파라미터 값 확인')
+print(lrp.coef_, lrp.intercept_)
+print()
+
+# 곡선 그려보기
+point = np.arange(15, 50)
+
+plt.scatter(train_input, train_target)
+plt.plot(point, 1.01*point**2 - 21.6*point + 116.05)
+plt.scatter([50], [1574], marker='*')
+plt.show()
+
+print('선형 회귀 훈련/테스트 스코어')
+print(lr.score(train_input, train_target))
+print(lr.score(test_input, test_target))
+print()
+
+print('다항회귀 훈련/테스트 스코어')
+print(lrp.score(train_poly, train_target))
+print(lrp.score(test_poly, test_target))
+print()
