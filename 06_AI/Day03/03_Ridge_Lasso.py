@@ -56,6 +56,7 @@ test_scaled = ss.transform(test_poly)
 
 # --------------- 릿지 모델 ---------------
 # 손실함수 = MSE + L2 정규항
+# 상관 관계에 의해 자연적으로(수식적으로) 영향이 없는 특성은 파라미터가 작아짐
 
 from sklearn.linear_model import Ridge
 
@@ -100,3 +101,52 @@ print('릿지회귀 규제 0.1 훈련/테스트 스코어')
 print(ridge.score(train_scaled, train_target))
 print(ridge.score(test_scaled, test_target))
 print()
+
+
+# -------------------- 라쏘 회귀 --------------------
+# 손실함수 = MSE + L1 정규항
+
+from sklearn.linear_model import Lasso
+
+lasso = Lasso()
+lasso.fit(train_scaled, train_target)
+
+print('라쏘회귀 훈련/테스트 스코어')
+print(lasso.score(train_scaled, train_target))
+print(lasso.score(test_scaled, test_target))
+print()
+
+print('라쏘회귀 기본 규제값 찾기')
+defaultReg = Lasso().alpha
+print(f'라쏘 회귀 기본 규제값: {defaultReg}')
+print()
+
+train_score = []
+test_score = []
+
+alpha_list = [0.1, 1, 10, 100]
+
+for alpha in alpha_list:
+    lasso = Lasso(alpha=alpha, max_iter=10000)
+    lasso.fit(train_scaled, train_target)
+    train_score.append(lasso.score(train_scaled, train_target))
+    test_score.append(lasso.score(test_scaled, test_target))
+
+plt.plot(alpha_list, train_score, label='train')
+plt.plot(alpha_list, test_score, label='test')
+plt.xscale('log')
+plt.xlabel('alpha')
+plt.ylabel('R^2')
+plt.legend()
+plt.show()
+
+lasso = Lasso(alpha=0.1, max_iter=10000)
+lasso.fit(train_scaled, train_target)
+ 
+print('라쏘회귀 규제 0.1 훈련/테스트 스코어')
+print(lasso.score(train_scaled, train_target))
+print(lasso.score(test_scaled, test_target))
+print()
+
+# 파라미터 개수가 0
+print(np.sum(lasso.coef_ == 0))  
