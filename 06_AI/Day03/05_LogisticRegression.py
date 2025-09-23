@@ -64,6 +64,7 @@ import numpy as np
 # 클래스별 확률 출력
 proba = kn.predict_proba(test_scaled[:5])
 print(np.round(proba, decimals=4))
+print()
 
 # --------------- 로지스틱 리그레션 ---------------
 
@@ -79,3 +80,62 @@ plt.plot(z, phi)
 plt.xlabel('z')
 plt.ylabel('phi')
 plt.show()
+
+
+# -------------------- 넘피 배열의 불리언 인덱싱 --------------------
+
+char_arr = np.array(['A', 'B', 'C', 'D', 'E'])
+
+print(char_arr[[True, False, True, False, False]])
+print()
+
+# 브림, 스멜트만 필터링 (조건)
+bream_smelt_indexes = (train_target == 'Bream') | (train_target == 'Smelt')
+# 필터링 조건 적용 (훈련 인풋)
+train_bream_smelt = train_scaled[bream_smelt_indexes]
+# 필터링 조건 적용 (훈련 타겟)
+target_bream_smelt = train_target[bream_smelt_indexes]
+
+print('훈련 데이터')
+print(train_bream_smelt)
+print()
+print('훈련 타겟 데이터')
+print(target_bream_smelt)
+print()
+
+
+# Logistic Regression
+from sklearn.linear_model import LogisticRegression
+
+# 훈련
+lr = LogisticRegression()
+lr.fit(train_bream_smelt, target_bream_smelt)
+
+print('LR 상위 5개 행 예측')
+print(lr.predict(train_bream_smelt[:5]))
+print()
+
+print('LR 상위 5행 예측의 확률')
+proba = lr.predict_proba(train_bream_smelt[:5])
+print(proba.round(4))
+print()
+
+print('LR 클래스 확인')
+print(lr.classes_)
+print()
+
+print('파라미터 확인 ((가중치, 편향))')
+print(lr.coef_)
+print(lr.intercept_)
+print()
+
+
+# z 값 뽑아보기 (시그모이드 통과 전 값)
+decisions = lr.decision_function(train_bream_smelt[:5])
+print(decisions)
+
+from scipy.special import expit # 시그모이드 함수
+
+print('상위 5행 시그모이드 값 - 양성(1)일 확률')
+print(expit(decisions))
+print()
