@@ -151,4 +151,67 @@ print()
 
 
 # ----------------------------------------------------
-# 의사 결정 트리로 분류하기   
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.model_selection import cross_validate
+
+et = ExtraTreesClassifier(n_jobs=-1, random_state=42)
+score = cross_validate(et, train_input, train_target, return_train_score=True, n_jobs=-1)
+
+print()
+print(np.mean(score['train_score']), np.mean(score['test_score']))
+print()
+
+et.fit(train_input, train_target)
+print(et.feature_importances_)
+print()
+
+print('테스트 스코어')
+print(et.score(test_input, test_target))
+# ----------------------------------------------------
+
+
+# ----------------------------------------------------
+# XGBoost를 이용해 학습시켜보기
+
+from xgboost import XGBRegressor
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import uniform, randint
+
+params = {'n_estimators': randint(low=100, high=500),
+          'max_depth': randint(low=3, high=10),
+          'learning_rate': uniform(0.01, 0.2),
+          'subsample': uniform(0.6, 0.4),
+          'colsample_bytree': uniform(0.6, 0.4)}
+
+xgb_rscv = RandomizedSearchCV(
+    XGBRegressor(n_jobs=-1, random_state=42), 
+    param_distributions=params, 
+    n_iter=50, 
+    cv=5,
+    n_jobs=-1, 
+    random_state=42,
+    verbose=2
+)
+
+# 최적화 실행
+xgb_rscv.fit(train_input, train_target)
+
+# 결과 출력
+print()
+print()
+print("-------------------------------------------------")
+print('가장 점수가 높은 조합 (XGBoost):')
+print(xgb_rscv.best_params_)
+print()
+
+print('가장 높은 검증 스코어 (R^2):')
+print(xgb_rscv.best_score_)
+print()
+
+# 4. 최종 모델을 사용하여 테스트 세트 평가
+best_xgb = xgb_rscv.best_estimator_
+print('최적화된 XGBoost의 테스트 스코어:')
+print()
+print(best_xgb.score(test_input, test_target))
+print("-------------------------------------------------")
+# ----------------------------------------------------
