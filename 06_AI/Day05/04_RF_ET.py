@@ -87,8 +87,8 @@ params = {
     'min_samples_split': [2, 5]
 }
 
-gs_rf = GridSearchCV(RandomForestRegressor(n_jobs=-1), params, n_jobs=-1, verbose=2)
-gs_et = GridSearchCV(ExtraTreesRegressor(n_jobs=-1), params, n_jobs=-1, verbose=2)
+gs_rf = GridSearchCV(RandomForestRegressor(n_jobs=-1), params, n_jobs=1, verbose=2)
+gs_et = GridSearchCV(ExtraTreesRegressor(n_jobs=-1), params, n_jobs=1, verbose=2)
 
 gs_rf.fit(train_scaled, train_target)
 gs_et.fit(train_scaled, train_target)
@@ -120,6 +120,17 @@ print("------------- et 성능 평가 (최적화 후) -------------")
 print(dt_et.score(train_scaled, train_target))
 print(dt_et.score(test_scaled, test_target))
 print()
+
+'''
+*********** 머신 성능 평가표 ***********
+------------- rf 성능 평가 (최적화 후) -------------
+0.9628713063141074
+0.8049642575267658
+
+------------- et 성능 평가 (최적화 후) -------------
+0.9874802444044052
+0.8049422634354539
+'''
 
 
 
@@ -182,6 +193,17 @@ print()
 # 4. 최종 모델을 사용하여 테스트 세트 평가
 best_xgb = xgb_rscv.best_estimator_
 print('최적화된 XGBoost의 테스트 스코어:')
-print()
 print(best_xgb.score(test_scaled, test_target))
 print("-------------------------------------------------")
+
+# XGBoost 스코어
+'''
+가장 점수가 높은 조합 (XGBoost):
+{'colsample_bytree': np.float64(0.7478617824245618), 'learning_rate': np.float64(0.05843198765548518), 'max_depth': 8, 'n_estimators': 379, 'subsample': np.float64(0.7881202537784153)}
+
+가장 높은 검증 스코어 (R^2):
+0.8491822818190311
+
+최적화된 XGBoost의 테스트 스코어:
+0.8516521653244182
+'''
