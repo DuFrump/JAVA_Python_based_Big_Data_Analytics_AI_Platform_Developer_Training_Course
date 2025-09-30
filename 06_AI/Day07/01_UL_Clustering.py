@@ -129,23 +129,19 @@ print(abs_banana_mean.shape)
 # '차이' 값이 작은 그림 Top 100의 인덱스를 뽑아서, 그 인덱스를 이용해, 원본 사진 불러오기
 pineapple_index = np.argsort(abs_pine_mean)[:100]
 pineapple_index = pineapple_index.reshape(10, 10)
-fig, axs = plt.subplots(10, 10, figsize=(10, 10))
+
+banana_index = np.argsort(abs_banana_mean)[:100]
+banana_index = banana_index.reshape(10, 10)
+
+fig, axs = plt.subplots(10, 20, figsize=(10, 20))
 
 for i in range(10):
     for j in range(10):
         axs[i, j].imshow(fruits[pineapple_index[i, j]], cmap='gray_r')
         axs[i, j].axis('off')
 
-plt.show()
-
-
-banana_index = np.argsort(abs_banana_mean)[:100]
-banana_index = banana_index.reshape(10, 10)
-fig, axs = plt.subplots(10, 10, figsize=(10, 10))
-
-for i in range(10):
-    for j in range(10):
-        axs[i, j].imshow(fruits[banana_index[i, j]], cmap='gray_r')
-        axs[i, j].axis('off')
+    for r in range(10, 20):
+        axs[i, r].imshow(fruits[banana_index[i, j]], cmap='gray_r')
+        axs[i, r].axis('off')
 
 plt.show()
