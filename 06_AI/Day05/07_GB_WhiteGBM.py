@@ -14,7 +14,7 @@ dataset = pd.read_csv("./Day05/data/LungCancer.csv")
 # -------------------------------------------------------------------
 # 1. 데이터 클리닝 및 특성 공학 (Feature Engineering)
 # -------------------------------------------------------------------
-
+ 
 # 불필요한 열 제거
 dataset = dataset.drop(['id', 'diagnosis_date', 'end_treatment_date'], axis=1)
 
