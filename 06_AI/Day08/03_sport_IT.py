@@ -217,6 +217,7 @@ it = [
     "새로운 API 프레임워크가 공개됐다"
 ]
 
+
 X_train = sports + it # 전체 문장 합쳐놓기
 y_train = [0]*len(sports) + [1]*len(it) # 0 = sports, 1 = it
 label_names = {0:'스포츠', 1:'IT'} # 편의성을 위해 라벨 준비
