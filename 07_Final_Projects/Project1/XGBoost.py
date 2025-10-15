@@ -1,23 +1,25 @@
+import os 
 import pandas as pd
+import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder # 레이블 인코더 임포트
-from xgboost import XGBClassifier
+from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, f1_score
-import numpy as np
-import os 
-from collections import Counter # 데이터 확인용 임포트
-from konlpy.tag import Okt # Okt 형태소 분석기 임포트
+from xgboost import XGBClassifier
+from collections import Counter
+from konlpy.tag import Okt
 from matplotlib import font_manager, rc
 import matplotlib.pyplot as plt
+from imblearn.over_sampling import SMOTE
 
+# --- 폰트 설정 (기존과 동일) ---
 font_path = 'C:/Windows/Fonts/malgun.ttf'
 font_name = font_manager.FontProperties(fname=font_path).get_name()
 rc('font', family=font_name)
 plt.rcParams['axes.unicode_minus'] = False
 
 # -------------------------------------------------------------------
-# 1. 데이터 로드 및 통합 (5개 파일)
+# 1. 데이터 로드 및 통합 (기존과 동일)
 # -------------------------------------------------------------------
 print("---------- 데이터 로드 및 통합 시작 ----------")
 
@@ -31,15 +33,12 @@ file_map = {
     'NaN' : 'NaN.txt'
 }
 
-# 실제 파일 경로는 개발자님의 환경에 맞게 설정해주세요!
 base_dir = './Project1/dataSet/created_dataset' 
-
 X_train_text = []
 y_train = []
 
 for topic, file_name in file_map.items():
     file_path = os.path.join(base_dir, file_name)
-    
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             lines = [line.strip() for line in f if line.strip()]
@@ -53,72 +52,106 @@ print(f"총 학습 문장 개수: {len(X_train_text)}개")
 print(f"라벨 분포: {Counter(y_train)}")
 print("------------------------------------------")
 
-
 # -------------------------------------------------------------------
-# 2. 데이터 분할 (훈련/검증용)
+# 2. 데이터 분할 (기존과 동일)
 # -------------------------------------------------------------------
 X_train, X_val, y_train_labels, y_val_labels = train_test_split(
     X_train_text, y_train, test_size=0.2, random_state=42, stratify=y_train
 )
 
 # -------------------------------------------------------------------
-# 3. 텍스트 벡터화 (TF-IDF) 및 라벨 인코딩 (Okt 적용)
+# 3. 텍스트 벡터화 및 피처 엔지니어링
 # -------------------------------------------------------------------
-print("Okt 형태소 분석기로 명사 추출을 시작합니다...")
-
-# Okt 형태소 분석기 객체 생성
 okt = Okt()
 
-# 명사만 추출하는 토크나이저 함수 정의
 def tokenize(text):
-    return okt.nouns(text)
+    return [word for word, pos in okt.pos(text, stem=True) if pos in ['Noun', 'Verb', 'Adjective']]
 
-my_stopwords = [
-    '요즘', '관심', '마음', '이번', '것', '게', '난', '내', '많은',
-    '생각', '느낌', '궁금', '이유', '하나', '정도', '사실', '문제', '질문', '정말', '진짜',
-    '저', '나', '우리', '그', '이', '거', '수', '곳', '때', '뭐',
-    '오늘', '어제', '내일', '지금', '때문', '이후', '처음', '시작',
-    '하기', '보기', '사용', '이용', '관련', '위해', '대한', '대해', '통해'
-]
+# 불용어 처리
+stopwords_path = './Project1/dataSet/stopwords-ko.txt'
+try:
+    with open(stopwords_path, 'r', encoding='utf-8') as f:
+        my_stopwords = [line.strip() for line in f if line.strip()]
+    print(f"불용어 {len(my_stopwords)}개를 파일에서 성공적으로 불러왔습니다.")
+except FileNotFoundError:
+    print(f"경고: 불용어 파일('{stopwords_path}')을 찾을 수 없습니다. 불용어 처리 없이 진행합니다.")
+    my_stopwords = []
 
-# TfidfVectorizer가 Okt 토크나이저를 사용하도록 설정
-vectorizer = TfidfVectorizer(tokenizer=tokenize, max_df=0.9, min_df=2, stop_words=my_stopwords)
+vectorizer = TfidfVectorizer(tokenizer=tokenize, max_df=0.85, min_df=2, stop_words=my_stopwords, ngram_range=(1, 2))
+
 X_train_vec = vectorizer.fit_transform(X_train)
 X_val_vec = vectorizer.transform(X_val)
 
-# 라벨 인코딩: 문자열 라벨을 모델이 이해할 수 있는 숫자로 변환
+keyword_weights = {
+    '스포츠': [
+        '감독', '경기', '구단', '농구', '득점', '리그', '선수', '승리', '야구',
+        '운동', '월드컵', '올림픽', '응원', '이적', '챔피언', '축구', '훈련'
+    ],
+    '경제/제테크': [
+        '경제', '금리', '나스닥', '대출', '매도', '매수', '부동산', '세금', 
+        '수익', '시장', '예금', '적금', '주가', '주식', '증시', '채권', '투자', 
+        '펀드', '환율', 'ETF', '코스피', '기술주'
+    ],
+    '기술/IT': [
+        '네트워크', '데이터', '드라이버', '반도체', '서버', '소프트웨어',
+        '스마트폰', '알고리즘', '어플', '업데이트', '인공지능', '코딩',
+        '프로그래밍', '하드웨어', 'AI', 'CPU', 'GPU', '해킹', '해커', '프로그래머',
+        '개발자', '드라이버', '컴퓨터', '데스크탑', '노트북'
+    ],
+    '영화/미디어': [
+        '감독', '개봉', '극장', '넷플릭스', '드라마', '리뷰', '배우', '시나리오',
+        '애니메이션', '연기', '예고편', '영화', '작품', '주연', '촬영', 'OTT', '구독료', '다큐멘터리'
+    ],
+    '일상/여행': [
+        '항공권', '호텔', '휴가', '해외여행', '국내여행', '공항', '전시회',
+        '콘서트', '반려동물', '요리', '여행', '카페', '맛집', '친구', 
+        '주말', '취미', '산책', '헬스장', '유산소', '근력'
+    ]
+}
+KEYWORD_BOOST_WEIGHT = 2.5  # 가중치 값
+
+print(f"\n핵심 키워드에 가중치(x{KEYWORD_BOOST_WEIGHT})를 적용합니다...")
+for topic, keywords in keyword_weights.items():
+    for keyword in keywords:
+        try:
+            keyword_index = vectorizer.vocabulary_[keyword]
+            X_train_vec[:, keyword_index] *= KEYWORD_BOOST_WEIGHT
+            X_val_vec[:, keyword_index] *= KEYWORD_BOOST_WEIGHT
+        except KeyError:
+            pass
+
+# 라벨 인코딩
 label_encoder = LabelEncoder()
 y_train_encoded = label_encoder.fit_transform(y_train_labels)
-y_val_encoded = label_encoder.transform(y_val_labels) 
+y_val_encoded = label_encoder.transform(y_val_labels)
 
 print(f"학습 데이터셋 크기 (Features): {X_train_vec.shape}")
 print("------------------------------------------")
 
-
-from imblearn.over_sampling import SMOTE
-
-# 1. SMOTE 객체 생성
-# random_state를 고정해야 매번 실행해도 같은 결과를 얻을 수 있어요.
-smote = SMOTE(random_state=42)
-
-# 2. 훈련 데이터에 SMOTE 적용 (벡터화 이후, 모델 학습 이전)
-# X_train_vec와 y_train_encoded를 넣어서 양을 늘려줍니다.
+# -------------------------------------------------------------------
+# SMOTE 오버샘플링
+# -------------------------------------------------------------------
 print("\nSMOTE 오버샘플링 적용 시작...")
+smote = SMOTE(random_state=42)
 X_train_resampled, y_train_resampled = smote.fit_resample(X_train_vec, y_train_encoded)
-
-print(f"SMOTE 적용 전 학습 데이터: {X_train_vec.shape}, 라벨: {y_train_encoded.shape}")
 print(f"SMOTE 적용 후 학습 데이터: {X_train_resampled.shape}, 라벨: {y_train_resampled.shape}")
 print(f"오버샘플링 후 라벨 분포: {Counter(y_train_resampled)}")
 print("------------------------------------------")
 
+# -------------------------------------------------------------------
+# 4. XGBoost 분류 모델 학습 (파라미터 튜닝)
+# -------------------------------------------------------------------
+# RS를 통해 찾아낸 최적의 파라미터 값
+best_params = {
+    'reg_lambda': 2.0, 
+    'n_estimators': 1000, 
+    'max_depth': 7, 
+    'learning_rate': 0.1, 
+    'gamma': 0.1
+}
 
-# -------------------------------------------------------------------
-# 4. XGBoost 분류 모델 학습 (최종)
-# -------------------------------------------------------------------
 xgb_classifier = XGBClassifier(
-    n_estimators=300,
-    max_depth=6,
-    learning_rate=0.1,
+    **best_params,
     n_jobs=-1,
     random_state=42,
     eval_metric='mlogloss',
@@ -128,27 +161,28 @@ xgb_classifier = XGBClassifier(
 print("XGBoost 분류 모델 학습 시작...")
 xgb_classifier.fit(X_train_resampled, y_train_resampled)
 
-# 5. 모델 성능 검증
+# -------------------------------------------------------------------
+# 5. 모델 성능 검증 및 예측 (기존과 동일)
+# -------------------------------------------------------------------
 y_pred_encoded = xgb_classifier.predict(X_val_vec)
 accuracy = accuracy_score(y_val_encoded, y_pred_encoded)
 macro_f1 = f1_score(y_val_encoded, y_pred_encoded, average='macro')
+y_train_pred_encoded = xgb_classifier.predict(X_train_resampled)
+train_accuracy = accuracy_score(y_train_resampled, y_train_pred_encoded)
 
 print("\n------------------- 학습 및 검증 결과 -------------------")
+print(f"학습 데이터 정확도: {train_accuracy:.4f}")
 print(f"최종 정확도 (Accuracy): {accuracy:.4f}")
 print(f"Macro F1-Score: {macro_f1:.4f} (클래스별 균형 성능)")
 print("---------------------------------------------------------")
-    
-# 참고: 예측된 숫자를 다시 문자열 라벨로 복원하는 방법
+
 predicted_labels = label_encoder.inverse_transform(y_pred_encoded[:5])
 print("상위 5개 예측 라벨 (복원):", predicted_labels) 
 print("---------------------------------------------------------")
 
-# -------------------------------------------------------------------
-# 6. 새로운 문장으로 예측 수행하기
-# -------------------------------------------------------------------
 samples = [
     '아, 요즘 엔비디아랑 AMD 주식에 관심이 있어.',
-    '요즘 바르셀로나가 너무 못해서 마음이 아파..',
+    '요즘 스페인 축구 구단 FC 바르셀로나가 너무 못해서 마음이 아파..',
     '이번에 개봉된 영화 봤어? 재밌더라.',
     '물리학의 전반적인 역사에 대해 알고 싶어. 그게 관심이 가는 주제야.',
     '삼엽충 화석의 고생물학적 연구가 최근 고려대학교에서 발표되었대.',
@@ -186,11 +220,48 @@ samples_vec = vectorizer.transform(samples)
 predicted_encoded = xgb_classifier.predict(samples_vec)
 predicted_labels = label_encoder.inverse_transform(predicted_encoded)
 
-print("\n----------- 새로운 문장 예측 결과 -----------")
+print("\n----------- XGBoost 문장 예측 결과 -----------")
 for text, label in zip(samples, predicted_labels):
     print(f"'{text}'  ->  예측: **{label}**")
 print("-------------------------------------------")
 
-# # 단어 사전
-# print('단어 사전')
-# print(vectorizer.vocabulary_)
+new_samples = [
+    "E-스포츠 팀의 데이터 분석가가 되려고 파이썬 코딩을 배우고 있어.",
+    "최근 개봉한 영화의 흥행 실패로 관련 미디어 기업의 주가가 하락했어.",
+    "영화 '반지의 제왕' 촬영지인 뉴질랜드로 배낭여행을 떠나려고 항공권을 알아봤다.",
+    "인기 축구 선수가 광고하는 최신 스마트폰의 카메라 성능이 그렇게 좋대.",
+    "다음 투자처로 엔터테인먼트 산업의 성장 가능성을 분석하는 리포트를 읽었다.",
+    "이번 주말에 다 같이 유니폼 입고 경기장 가서 목청껏 소리 지르자.",
+    "요즘 같은 시기에는 원금 보장되는 상품에 돈을 묶어두는 게 제일 안전해.",
+    "그 배우의 차기작이 정말 기대돼. 이번엔 어떤 캐릭터를 연기할지 궁금하다.",
+    "퇴근하고 동네 공원에서 잠깐 바람 쐬는 게 요즘 내 유일한 행복이야.",
+    "머신러닝 모델의 과적합 문제를 해결하기 위한 수학적 원리가 궁금하다.",
+    "조선시대 후기 민화에 나타난 해학적 표현 양식에 대해 토론해보자.",
+    "애덤 스미스의 '국부론'이 현대 자본주의에 미친 영향은 무엇일까?",
+    "고대 그리스 철학자들이 생각한 '행복'의 정의에 대해 논하시오."
+]  
+
+new_samples_vec = vectorizer.transform(new_samples)
+new_predicted_encoded = xgb_classifier.predict(new_samples_vec)
+new_predicted_labels = label_encoder.inverse_transform(new_predicted_encoded)
+
+print("\n----------- XGBoost 새로운 문장 예측 결과 -----------")
+for text, label in zip(new_samples, new_predicted_labels):
+    print(f"'{text}'  ->  예측: **{label}**")
+print("-------------------------------------------")
+
+# -------------------------------------------------------------------
+# 6. 학습된 모델 및 필요 도구 저장하기
+# -------------------------------------------------------------------
+import joblib # joblib 라이브러리를 임포트합니다.
+
+print("\n학습된 모델과 도구들을 저장합니다...")
+
+# 모델, 벡터라이저, 라벨 인코더를 각각 파일로 저장합니다.
+# 이 3개는 예측할 때 세트로 필요해요!
+joblib.dump(xgb_classifier, './Project1/models/XGBoost/korean_topic_model.pkl')
+joblib.dump(vectorizer, './Project1/models/XGBoost/tfidf_vectorizer.pkl')
+joblib.dump(label_encoder, './Project1/models/XGBoost/label_encoder.pkl')
+
+print("모델과 도구들이 성공적으로 저장되었습니다.")
+print("이제 XGBoost_predict_topic.py 파일을 실행하여 예측을 시작할 수 있습니다.")
