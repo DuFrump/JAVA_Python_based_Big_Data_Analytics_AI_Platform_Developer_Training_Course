@@ -23,14 +23,14 @@ plt.rcParams['axes.unicode_minus'] = False
 # -------------------------------------------------------------------
 print("---------- 데이터 로드 및 통합 시작 ----------")
 
-topics = ['기술/IT', '스포츠', '영화/미디어', '경제/제테크', '일상/여행', 'NaN']
+topics = ['기술/IT', '스포츠', '영화/미디어', '경제/제테크', '일상/여행', '기타_주제']
 file_map = {
     '기술/IT': '기술_IT.txt', 
     '스포츠': '스포츠.txt', 
     '영화/미디어': '영화_미디어.txt', 
     '경제/제테크': '경제_제테크.txt', 
     '일상/여행': '일상_여행.txt',
-    'NaN' : 'NaN.txt'
+    '기타_주제' : '기타_주제.txt'
 }
 
 base_dir = './Project1/dataSet/created_dataset' 
@@ -108,7 +108,7 @@ keyword_weights = {
         '주말', '취미', '산책', '헬스장', '유산소', '근력'
     ]
 }
-KEYWORD_BOOST_WEIGHT = 2.5  # 가중치 값
+KEYWORD_BOOST_WEIGHT = 3.0  # 가중치 값
 
 print(f"\n핵심 키워드에 가중치(x{KEYWORD_BOOST_WEIGHT})를 적용합니다...")
 for topic, keywords in keyword_weights.items():
@@ -143,11 +143,11 @@ print("------------------------------------------")
 # -------------------------------------------------------------------
 # RS를 통해 찾아낸 최적의 파라미터 값
 best_params = {
-    'reg_lambda': 2.0, 
-    'n_estimators': 1000, 
-    'max_depth': 7, 
+    'reg_lambda': 3.0, 
+    'n_estimators': 1200, 
+    'max_depth': 6, 
     'learning_rate': 0.1, 
-    'gamma': 0.1
+    'gamma': 0.4
 }
 
 xgb_classifier = XGBClassifier(
@@ -213,7 +213,10 @@ samples = [
     '인공지능 윤리 문제는 기술 개발 속도를 따라가지 못하고 있는 것 같아.',
     'E-스포츠 구단의 운영 방식이 전통적인 스포츠 구단과 어떻게 다른지 알아보고 있어.',
     '분위기 좋은 카페에서 책 읽는 것만큼 좋은 재충전 방법도 없는 것 같아.',
-    '고대 로마의 수도 시설이 당시 공중보건에 기여한 바가 크다고 생각해.'
+    '고대 로마의 수도 시설이 당시 공중보건에 기여한 바가 크다고 생각해.',
+    '인공지능이 좋아',
+    '엔비디아 GPU 드라이버 업데이트',
+    '인공지능 프로그래밍!'
 ]
 
 samples_vec = vectorizer.transform(samples)
