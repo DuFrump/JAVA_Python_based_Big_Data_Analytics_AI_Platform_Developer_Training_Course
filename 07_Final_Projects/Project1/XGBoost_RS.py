@@ -13,14 +13,15 @@ from matplotlib import font_manager, rc
 import matplotlib.pyplot as plt
 from imblearn.over_sampling import SMOTE
 
-# --- 폰트 설정 (기존과 동일) ---
+# --- 폰트 설정 ---
 font_path = 'C:/Windows/Fonts/malgun.ttf'
 font_name = font_manager.FontProperties(fname=font_path).get_name()
 rc('font', family=font_name)
 plt.rcParams['axes.unicode_minus'] = False
 
+
 # -------------------------------------------------------------------
-# 1. 데이터 로드 및 통합 (기존과 동일)
+# 1. 데이터 로드 및 통합
 # -------------------------------------------------------------------
 print("---------- 데이터 로드 및 통합 시작 ----------")
 
@@ -53,12 +54,14 @@ print(f"총 학습 문장 개수: {len(X_train_text)}개")
 print(f"라벨 분포: {Counter(y_train)}")
 print("------------------------------------------")
 
+
 # -------------------------------------------------------------------
-# 2. 데이터 분할 (기존과 동일)
+# 2. 데이터 분할
 # -------------------------------------------------------------------
 X_train, X_val, y_train_labels, y_val_labels = train_test_split(
     X_train_text, y_train, test_size=0.2, random_state=42, stratify=y_train
 )
+
 
 # -------------------------------------------------------------------
 # 3. 텍스트 벡터화 및 피처 엔지니어링
@@ -116,7 +119,7 @@ keyword_weights = {
         '주말', '취미', '산책', '헬스장', '유산소', '근력'
     ]
 }
-KEYWORD_BOOST_WEIGHT = 3.0  # 가중치 값
+KEYWORD_BOOST_WEIGHT = 3.0  # 가중치
 
 print(f"\n핵심 키워드에 가중치(x{KEYWORD_BOOST_WEIGHT})를 적용합니다...")
 for topic, keywords in keyword_weights.items():
@@ -145,6 +148,7 @@ X_train_resampled, y_train_resampled = smote.fit_resample(X_train_vec, y_train_e
 print(f"SMOTE 적용 후 학습 데이터: {X_train_resampled.shape}, 라벨: {y_train_resampled.shape}")
 print(f"오버샘플링 후 라벨 분포: {Counter(y_train_resampled)}")
 print("------------------------------------------")
+
 
 # -------------------------------------------------------------------
 # 4. 랜덤 서치를 이용한 최적 하이퍼파라미터 탐색
@@ -195,6 +199,7 @@ print("------------------------------------")
 
 # 4-6. 찾은 최적의 모델을 최종 모델로 사용합니다.
 best_model = random_search.best_estimator_
+
 
 # -------------------------------------------------------------------
 # 5. '최적 모델'로 성능 검증 및 예측

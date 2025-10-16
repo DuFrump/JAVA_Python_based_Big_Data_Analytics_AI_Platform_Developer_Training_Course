@@ -120,19 +120,17 @@ print("------------------------------------------")
 
 
 # -------------------------------------------------------------------
-# 4. XGBoost 분류 모델 학습 (최적 파라미터 최종 적용)
+# 4. XGBoost 분류 모델 학습
 # -------------------------------------------------------------------
 print("\n최적화된 파라미터로 최종 모델 학습을 시작합니다...")
 
-# RandomSearch를 통해 찾아낸 최적의 파라미터 값.
+# RandomSearch를 통해 찾아낸 최적의 파라미터 값
 best_params = {
     'reg_lambda': 3.0, 
     'n_estimators': 1000, 
     'max_depth': 6, 
     'learning_rate': 0.1, 
-    'gamma': 0.4,
-    'subsample' : 0.9,
-    'colsample_bytree' : 0.8
+    'gamma': 0.4, 
 }
 
 final_model = XGBClassifier(
@@ -146,7 +144,7 @@ final_model.fit(X_train_resampled, y_train_resampled, verbose=2)
 
 
 # -------------------------------------------------------------------
-# 5. 모델 성능 검증 및 예측 (final_model 사용)
+# 5. 모델 성능 검증 및 예측
 # -------------------------------------------------------------------
 y_pred_encoded = final_model.predict(X_val_vec)
 accuracy = accuracy_score(y_val_encoded, y_pred_encoded)
