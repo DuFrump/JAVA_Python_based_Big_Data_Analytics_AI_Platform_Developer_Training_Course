@@ -141,7 +141,7 @@ print("------------------------------------------")
 # -------------------------------------------------------------------
 # 4. XGBoost 분류 모델 학습 (파라미터 튜닝)
 # -------------------------------------------------------------------
-# RS를 통해 찾아낸 최적의 파라미터 값
+# RandomSearch를 통해 찾아낸 최적의 파라미터 값
 best_params = {
     'reg_lambda': 3.0, 
     'n_estimators': 1200, 
@@ -256,15 +256,13 @@ print("-------------------------------------------")
 # -------------------------------------------------------------------
 # 6. 학습된 모델 및 필요 도구 저장하기
 # -------------------------------------------------------------------
-import joblib # joblib 라이브러리를 임포트합니다.
+import joblib
 
 print("\n학습된 모델과 도구들을 저장합니다...")
 
-# 모델, 벡터라이저, 라벨 인코더를 각각 파일로 저장합니다.
-# 이 3개는 예측할 때 세트로 필요해요!
+# 모델, 벡터라이저, 라벨 인코더 (머신러닝 세트)
 joblib.dump(xgb_classifier, './Project1/models/XGBoost/korean_topic_model.pkl')
 joblib.dump(vectorizer, './Project1/models/XGBoost/tfidf_vectorizer.pkl')
 joblib.dump(label_encoder, './Project1/models/XGBoost/label_encoder.pkl')
 
 print("모델과 도구들이 성공적으로 저장되었습니다.")
-print("이제 XGBoost_predict_topic.py 파일을 실행하여 예측을 시작할 수 있습니다.")
