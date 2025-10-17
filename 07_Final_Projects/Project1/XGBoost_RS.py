@@ -48,7 +48,7 @@ for topic, file_name in file_map.items():
             y_train.extend([topic] * len(lines))
     except FileNotFoundError:
         print(f"경고: 파일 {file_name}을(를) 찾을 수 없습니다. 경로를 확인하세요.")
-        continue
+        continue  
 
 print(f"총 학습 문장 개수: {len(X_train_text)}개")
 print(f"라벨 분포: {Counter(y_train)}")

@@ -91,7 +91,7 @@ keyword_weights = {
     '영화/미디어': ['감독', '개봉', '극장', '넷플릭스', '드라마', '리뷰', '배우', '시나리오', '애니메이션', '연기', '예고편', '영화', '작품', '주연', '촬영', 'OTT', '구독료', '다큐멘터리'],
     '일상/여행': ['항공권', '호텔', '휴가', '해외여행', '국내여행', '공항', '전시회', '콘서트', '반려동물', '요리', '여행', '카페', '맛집', '친구', '주말', '취미', '산책', '헬스장', '유산소', '근력']
 }
-KEYWORD_BOOST_WEIGHT = 3.0
+KEYWORD_BOOST_WEIGHT = 2.5
 print(f"\n핵심 키워드에 가중치(x{KEYWORD_BOOST_WEIGHT})를 적용합니다...")
 for topic, keywords in keyword_weights.items():
     for keyword in keywords:

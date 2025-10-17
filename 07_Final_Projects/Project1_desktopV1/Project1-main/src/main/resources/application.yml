@@ -1,0 +1,19 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+  web:
+    resources:
+      static-locations: classpath:/static/
+server:
+  port: 8080
+
+openai:
+  api-key: ${OPENAI_API_KEY}
+  model: gpt-4o-mini
+  url: https://api.openai.com/v1/chat/completions
+
+python:
+  script:
+    path: C:\Program Files (x86)\__DuFrump__\DuFrump_산대특_과정\07_Final_Projects\Project1\models\XGBoost\api_server.py
