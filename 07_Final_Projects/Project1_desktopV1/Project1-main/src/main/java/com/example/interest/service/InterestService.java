@@ -79,23 +79,12 @@ public class InterestService {
       ProcessBuilder processBuilder = new ProcessBuilder("python", scriptFile.getName());
       processBuilder.directory(scriptFile.getParentFile()); // 실행 디렉토리를 스크립트가 있는 폴더로 설정
       processBuilder.environment().put("PYTHONIOENCODING", "UTF-8"); // Python의 입출력 인코딩을 UTF-8로 설정
-      processBuilder.redirectErrorStream(true); // 에러 스트림을 표준 출력 스트림으로 병합
 
       Process process = processBuilder.start();
 
       // Python 스크립트에 문장을 표준 입력으로 전달
       try (OutputStream os = process.getOutputStream()) {
         os.write(userInput.getBytes(StandardCharsets.UTF_8));
-      }
-
-      // Python 스크립트의 통합된 출력을 읽어옴
-      StringBuilder output = new StringBuilder();
-      try (BufferedReader reader =
-          new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-          output.append(line);
-        }
       }
 
       // 프로세스가 끝날 때까지 최대 30초 대기
@@ -105,16 +94,16 @@ public class InterestService {
         throw new RuntimeException("Python 스크립트 실행 시간이 초과되었습니다.");
       }
 
-      // 병합된 출력에서 실제 JSON 결과만 추출해야 할 수 있음
-      String outputString = output.toString();
+      // 프로세스 종료 후 스트림 읽기 (교착 상태 방지)
+      String jsonOutput = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+      String errorOutput = new String(process.getErrorStream().readAllBytes(), StandardCharsets.UTF_8);
+
       if (process.exitValue() != 0) {
         log.error("Python 스크립트 실행 중 에러 발생. Exit Code: {}", process.exitValue());
-        log.error("Python 통합 출력: {}", outputString);
-        throw new RuntimeException("Python 스크립트 실행에 실패했습니다: " + outputString);
+        log.error("Python 에러 출력: {}", errorOutput);
+        throw new RuntimeException("Python 스크립트 실행에 실패했습니다: " + errorOutput);
       }
 
-      // Python 스크립트의 마지막 줄이 JSON이라고 가정
-      String jsonOutput = outputString.substring(outputString.lastIndexOf("{"));
       log.info("Python 스크립트 실행 완료. JSON 출력: {}", jsonOutput);
 
       // 결과 JSON을 Map으로 파싱

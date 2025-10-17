@@ -14,7 +14,7 @@
     <div class="chat-area" id="chatArea"></div>
     <div class="input-area">
         <input type="text" id="userInput" class="form-control" placeholder="답변을 입력하세요...">
-        <button id="sendButton" class="btn btn-primary">전송</button>
+        <button id="sendButton" class="btn btn-primary" type="button">전송</button>
     </div>
 </div>
 
@@ -112,7 +112,8 @@
         });
     }
 
-    function handleUserInput() {
+    function handleUserInput(event) {
+        event.preventDefault(); // 브라우저의 기본 동작을 막습니다.
         const text = userInput.value.trim();
         if (!text) return;
 
@@ -132,8 +133,12 @@
         .catch(() => addMessage("서버와 연결할 수 없습니다.", "bot"));
     }
 
-    sendButton.addEventListener("click", handleUserInput);
-    userInput.addEventListener("keypress", e => e.key === "Enter" && handleUserInput());
+    sendButton.addEventListener("click", (e) => handleUserInput(e));
+    userInput.addEventListener("keypress", e => {
+        if (e.key === "Enter") {
+            handleUserInput(e);
+        }
+    });
 
     document.addEventListener("DOMContentLoaded", () => {
         qIndex = 0;
