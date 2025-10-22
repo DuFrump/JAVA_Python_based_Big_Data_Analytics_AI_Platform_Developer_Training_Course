@@ -7,11 +7,15 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, f1_score
 from xgboost import XGBClassifier
 from collections import Counter
-from konlpy.tag import Okt
 from matplotlib import font_manager, rc
 import matplotlib.pyplot as plt
 from imblearn.over_sampling import SMOTE
 import joblib
+
+import sys # 1. sys 모듈 임포트
+# 2. 'topic_utils.py'가 있는 폴더의 경로를 Python이 찾을 수 있도록 추가
+sys.path.append('./Project1/models/XGBoost') 
+from topic_utils import tokenize # 3. 새로 바꾼 파일 이름에서 임포트
 
 # --- 폰트 설정 ---
 font_path = 'C:/Windows/Fonts/malgun.ttf'
@@ -62,10 +66,6 @@ X_train, X_val, y_train_labels, y_val_labels = train_test_split(
 # -------------------------------------------------------------------
 # 3. 텍스트 벡터화 및 피처 엔지니어링
 # -------------------------------------------------------------------
-okt = Okt()
-def tokenize(text):
-    return [word for word, pos in okt.pos(text, stem=True) if pos in ['Noun', 'Verb', 'Adjective']]
-
 stopwords_path = './Project1/dataSet/stopwords-ko.txt'
 try:
     with open(stopwords_path, 'r', encoding='utf-8') as f:
