@@ -6,7 +6,13 @@ from flask_cors import CORS
 
 # --- Flask 앱 생성 ---
 app = Flask(__name__)
-CORS(app, origins=["https://interest-56pc.onrender.com"])
+CORS(app, origins=["https://interest-56pc.onrender.com"])\
+
+
+@app.route('/')
+def home():
+    return 'Flask server is runnig'
+
 
 # === 모델 전역 변수 (지연 로딩용) ===
 model = None
