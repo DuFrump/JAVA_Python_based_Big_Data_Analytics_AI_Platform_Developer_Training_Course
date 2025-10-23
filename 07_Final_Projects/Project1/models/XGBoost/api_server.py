@@ -9,21 +9,21 @@ from topic_utils import tokenize
 app = Flask(__name__)
 CORS(app, origins=["https://interest-56pc.onrender.com"])
 
-@app.route('/api/get-topic', methods=['POST'])
-def analyze_topic():
-    data = request.get_json()
-    sentence = data.get('sentence', '')
-    # 예시: 더미 데이터 반환
-    return jsonify({
-        "scores": {
-            "영화/미디어": 30,
-            "스포츠": 20.0,
-            "경제/재테크": 10.0,
-            "기술/IT": 25.0,
-            "일상/여행": 14.5,
-            "기타_주제" : 0.5
-        }
-    })
+# @app.route('/api/get-topic', methods=['POST'])
+# def analyze_topic():
+#     data = request.get_json()
+#     sentence = data.get('sentence', '')
+#     # 예시: 더미 데이터 반환
+#     return jsonify({
+#         "scores": {
+#             "영화/미디어": 30,
+#             "스포츠": 20.0,
+#             "경제/재테크": 10.0,
+#             "기술/IT": 25.0,
+#             "일상/여행": 14.5,
+#             "기타_주제" : 0.5
+#         }
+#     })
 
 # --- 2. 학습 때와 동일한 토크나이저 함수 정의 ---
 # okt = Okt()

@@ -1,6 +1,7 @@
 package com.example.interest.service;
 
 import com.example.interest.domain.InterestResult;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -9,6 +10,12 @@ import java.util.*;
 
 @Service
 public class InterestService {
+
+
+    // ✅ application.yml 값 주입 (Render 환경변수 or 기본값)
+    @Value("${python.ai.server.url}")
+    private String flaskBaseUrl;
+
 
     public InterestResult analyze(List<String> answers) {
 
@@ -54,7 +61,9 @@ public class InterestService {
 
     public Map<String, Double> analyzeWithPython(String userInput) {
         RestTemplate restTemplate = new RestTemplate();
-        String apiUrl = "http://192.168.100.224:5000/predict";
+
+        // Render 환경변수에서 읽은 기본 URL + predict 경로 조합
+        String apiUrl = flaskBaseUrl + "/predict";
 
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("sentence", userInput);

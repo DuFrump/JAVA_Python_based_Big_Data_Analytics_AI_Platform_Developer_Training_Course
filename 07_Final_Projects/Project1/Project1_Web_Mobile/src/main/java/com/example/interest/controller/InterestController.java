@@ -2,9 +2,13 @@ package com.example.interest.controller;
 
 import com.example.interest.service.InterestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.*;
 
@@ -13,6 +17,7 @@ import java.util.*;
 public class InterestController {
 
     private final InterestService service;
+
 
     @GetMapping("/")
     public String home() {
@@ -25,12 +30,13 @@ public class InterestController {
     }
 
     @GetMapping("/question")
-    public String question() {
-        return "chat";  // 👉 templates/chat.html 렌더링
+    public String redirectQuestion() {
+        return "redirect:/chat";
     }
 
+
     // 🔥 Flask와 통신하는 API 추가
-    @PostMapping("/api/get-topic")
+    @PostMapping("/predict")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> analyze(@RequestBody Map<String, String> payload) {
         try {
