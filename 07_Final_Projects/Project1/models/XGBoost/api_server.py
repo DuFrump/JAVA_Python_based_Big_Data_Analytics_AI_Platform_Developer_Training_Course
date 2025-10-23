@@ -7,7 +7,7 @@ from topic_utils import tokenize
 
 # --- Flask 앱 생성 ---
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://interest-56pc.onrender.com"])
 
 @app.route('/api/get-topic', methods=['POST'])
 def analyze_topic():
