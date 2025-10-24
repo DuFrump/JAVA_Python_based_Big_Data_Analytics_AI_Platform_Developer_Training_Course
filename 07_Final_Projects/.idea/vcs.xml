@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../04_JAVA/04_JAVA/JAVA_LastPJ_newboard" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project1/models/XGBoost" vcs="Git" />
   </component>
 </project>
