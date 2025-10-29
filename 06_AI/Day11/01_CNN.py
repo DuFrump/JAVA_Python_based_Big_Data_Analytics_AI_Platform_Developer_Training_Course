@@ -42,17 +42,26 @@ train_scaled, val_scaled, train_target, val_target = train_test_split(train_scal
 # ---------- 합성곱 신경망 만들기 ----------
 model = keras.Sequential()
 model.add(keras.layers.Input(shape=(28,28,1))) # 3차원 입력을 기대 // 입력층
+
+# 출력부 1
 model.add(keras.layers.Conv2D(32, kernel_size=3, activation='relu', padding='same')) # 도장 32개, 커널사이즈 3x3 // 은닉층 시작
 # >>> 28 x 28 x 32 (특성맵 32장)
 model.add(keras.layers.MaxPool2D(2)) # 4개 중 가장 큰 값으로 대체
-# >>> 14 x 14 x 32 (특성맵 32장)
+# >>> 14 x 14 x 32
+
+# 출력부 2
+model.add(keras.layers.Conv2D(64, kernel_size=(3,3), activation='relu', padding='same')) # 도장 64개, 커널사이즈 3x3
+# >>> 14 x 14 x 64 (특성맵 64장)
+model.add(keras.layers.MaxPool2D(2)) # 4개 중 가장 큰 값으로 대체
+# >>> 7 x 7 x 64
+
 model.add(keras.layers.Flatten())
 # >>> 6272 x 1 (14 x 14 x 32를 1열로 펼치기)
 model.add(keras.layers.Dense(100, activation='relu')) # 뉴런 100개
 model.add(keras.layers.Dropout(0.4)) # Dropout method를 이용해서 일반화 성능 향상 // 은닉층 종료
 model.add(keras.layers.Dense(10, activation='softmax')) # 클래스 10개 // 출력층
-print()
 
+print()
 model.summary()
 
 # 3X3X32 + 32 = 320
@@ -84,7 +93,7 @@ print(model.evaluate(val_scaled, val_target)) # - accuracy: 0.9142 - loss: 0.245
 print('\n첫 번째 사진의 차원: ', val_scaled[0].shape) # 28, 28, 1
 
 plt.imshow(val_scaled[0].reshape(28, 28), cmap='gray_r')
-plt.show() # 실제 사진 ==> 가방
+plt.show() # 실재 사진 ==> 가방
 
 
 # 훈련된 모델로 첫 번째 사진 클래스 예측해보기 (결과값: 확률)
