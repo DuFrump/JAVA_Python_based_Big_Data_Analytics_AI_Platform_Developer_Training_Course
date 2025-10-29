@@ -150,16 +150,16 @@ print('\n------ 모델 훈련 (에포크 11) ------')
 history = model.fit(train_scaled, train_target, epochs=11, validation_data=(val_scaled, val_target))
 
 # 모델 구조와 파라미터를 함께 저장하는 방법
-model.save('model-whole.keras')
+model.save('./Day10/models/model-whole.keras')
 
 # 모델의 파라미터만 저장
-model.save_weights('model.weights.h5')
+model.save_weights('./Day10/models/model.weights.h5')
 
 
 # 실험1 - 새로운 모델을 만들어서 파라미터 이식하기
 # 구조가 정확히 같아야 한다. 
 model = model_fit(keras.layers.Dropout(0.3))
-model.load_weights('model.weights.h5')
+model.load_weights('./Day10/models/model.weights.h5')
 
 # 학습을 한 모델이 아니여서 evaluate() 함수를 쓸 수 없다.
 # 그래서 아래와 같이 진행..
@@ -182,7 +182,7 @@ model.compile(optimizer='adam', loss...)....
 
 
 # 실험2 - 모델 전체를 불러오기
-model = keras.models.load_model('model-whole.keras')
+model = keras.models.load_model('./Day10/models/model-whole.keras')
 # 이미 컴파일이 되어 있기 때문에 evaluate이 가능하다!
 print('\n----- evaluate 값 -----')
 model.evaluate(val_scaled, val_target)
@@ -194,14 +194,14 @@ model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=
 
 # ModelCheckpoint - 각 epoch마다 모델을 계속 저장한다 (덮어씌움)
 # 마지막 save_best_only를 True로 주면서 가장 좋은 모델은 남겨둔다.
-checkpoint_cb = keras.callbacks.ModelCheckpoint('best-model.keras', save_best_only=True)
+checkpoint_cb = keras.callbacks.ModelCheckpoint('./Day10/models/best-model.keras', save_best_only=True)
 
 print('\n----- 모델 훈련 (베스트 모델 저장) -----')
 model.fit(train_scaled, train_target, epochs=20, validation_data=(val_scaled, val_target), callbacks=[checkpoint_cb])
 # 베스트 모델 선정 디폴트 = 검증 로스 가장 낮은 모델
 
 # 위에서 저장된 베스트 모델을 로드하여 evaluate 해보기
-model = keras.models.load_model('best-model.keras')
+model = keras.models.load_model('./Day10/models/best-model.keras')
 print('\n----- 베스트 모델 evaluate -----')
 model.evaluate(val_scaled, val_target)
 
@@ -214,7 +214,7 @@ scc = 'sparse_categorical_crossentropy'
 
 model = model_fit(keras.layers.Dropout(0.3))
 model.compile(optimizer='adam', loss=scc, metrics=['accuracy'])
-checkpoint_cb = keras.callbacks.ModelCheckpoint('best-model.keras', save_best_only=True)
+checkpoint_cb = keras.callbacks.ModelCheckpoint('./Day10/models/best-model.keras', save_best_only=True)
 early_stopping_cb = keras.callbacks.EarlyStopping(patience=2, restore_best_weights=True)
 
 print('\n----- 모델 훈련 (콜백 2개) -----')
