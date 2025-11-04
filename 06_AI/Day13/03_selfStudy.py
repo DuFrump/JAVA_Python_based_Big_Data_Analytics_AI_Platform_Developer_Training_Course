@@ -1,9 +1,9 @@
 import torch
-from transformers import BertTokenizer, BertForSequenceClassification
+from transformers import GPT2Tokenizer, GptOssForSequenceClassification
 
-MODEL_NAME = "WhitePeak/bert-base-cased-Korean-sentiment"
-tokenizer = BertTokenizer.from_pretrained(MODEL_NAME)
-model =BertForSequenceClassification.from_pretrained(MODEL_NAME, num_labels=2)
+MODEL_NAME = "heegyu/kodialogpt-v1"
+tokenizer = GPT2Tokenizer.from_pretrained(MODEL_NAME)
+model = GptOssForSequenceClassification.from_pretrained(MODEL_NAME, num_labels=2)
 
 device = torch.device("cpu")
 model.to(device)
