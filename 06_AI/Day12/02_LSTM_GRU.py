@@ -28,7 +28,7 @@ model_lstm.summary()
 
 model_lstm.compile(optimizer='adam', loss='binary_crossentropy',
                    metrics=['accuracy'])
-checkpoint_cb = keras.callbacks.ModelCheckpoint('best-lstm-model.keras',
+checkpoint_cb = keras.callbacks.ModelCheckpoint('./Day12/models/best-lstm-model.keras',
                                                 save_best_only=True)
 early_stopping_cb = keras.callbacks.EarlyStopping(patience=3,
                                                   restore_best_weights=True)
@@ -55,7 +55,7 @@ model_dropout.add(keras.layers.Dense(1, activation='sigmoid'))
 
 model_dropout.compile(optimizer='adam', loss='binary_crossentropy',
                    metrics=['accuracy'])
-checkpoint_cb = keras.callbacks.ModelCheckpoint('best-dropout-model.keras',
+checkpoint_cb = keras.callbacks.ModelCheckpoint('./Day12/models/best-dropout-model.keras',
                                                 save_best_only=True)
 early_stopping_cb = keras.callbacks.EarlyStopping(patience=3,
                                                   restore_best_weights=True)
@@ -85,7 +85,7 @@ model_2lstm.summary()
 
 model_2lstm.compile(optimizer='adam', loss='binary_crossentropy',
                    metrics=['accuracy'])
-checkpoint_cb = keras.callbacks.ModelCheckpoint('best-2lstm-model.keras',
+checkpoint_cb = keras.callbacks.ModelCheckpoint('./Day12/models/best-2lstm-model.keras',
                                                 save_best_only=True)
 early_stopping_cb = keras.callbacks.EarlyStopping(patience=3,
                                                   restore_best_weights=True)
@@ -115,7 +115,7 @@ model_gru.summary()
 
 model_gru.compile(optimizer='adam', loss='binary_crossentropy',
                    metrics=['accuracy'])
-checkpoint_cb = keras.callbacks.ModelCheckpoint('best-gru-model.keras',
+checkpoint_cb = keras.callbacks.ModelCheckpoint('./Day12/models/best-gru-model.keras',
                                                 save_best_only=True)
 early_stopping_cb = keras.callbacks.EarlyStopping(patience=3,
                                                   restore_best_weights=True)
@@ -135,6 +135,6 @@ plt.show()
 # ---------- 마무리 ----------
 
 test_seq = pad_sequences(test_input, maxlen=100)
-best_model = keras.models.load_model('best-gru-model.keras')
+best_model = keras.models.load_model('./Day12/models/best-gru-model.keras')
 print('\n----- 테스트셋 평가 (GRU) -----')
 print(best_model.evaluate(test_seq, test_target))
