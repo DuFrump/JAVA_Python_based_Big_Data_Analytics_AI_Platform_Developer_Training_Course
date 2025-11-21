@@ -3,6 +3,9 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../04_JAVA/04_JAVA/JAVA_LastPJ_newboard" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Project1/models/XGBoost" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project01/models/XGBoost" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project02/recycling/ai" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project02/recycling/backend" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project02/recycling/frontend" vcs="Git" />
   </component>
 </project>
